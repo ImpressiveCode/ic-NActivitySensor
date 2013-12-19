@@ -8,17 +8,31 @@ namespace NActivitySensor
     internal class Logger
     {
         private string _FilePath;
-
-        public Logger()
+        private string _ProcessId;
+        
+        public Logger(int ProcessId)
         {
-            _FilePath = @"C:\Temp\NActivityLog.txt";    
+            if (ProcessId < 0 || ProcessId == int.MaxValue)
+            {
+                ProcessId = 0;
+            }
+            _FilePath = @"C:\Temp\NActivityLog.txt";
+            _ProcessId = ProcessId.ToString("D10");
         }
 
         public void Log(string message)
         {
+            StringBuilder FullMessage = new StringBuilder();
+            FullMessage.Append(_ProcessId);
+            FullMessage.Append(" ");
+            FullMessage.Append(" ");
+             
+            FullMessage.Append(message);
+            FullMessage.Append(Environment.NewLine);
+
             if (!string.IsNullOrWhiteSpace(message))
             {
-                System.IO.File.AppendAllText(_FilePath, message + Environment.NewLine);
+                System.IO.File.AppendAllText(_FilePath, FullMessage.ToString());
             }
         }
     }

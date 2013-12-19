@@ -108,7 +108,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\Users\marcin\Documents\Visual Studio 2012\Addins\NActivitySensor - For Testing.AddIn">
+    <Content Include="c:\Users\marcin\Documents\Visual Studio 2012\Addins\NActivitySensor - For Testing.AddIn">
       <Link>NActivitySensor - For Testing.AddIn</Link>
     </Content>
     <Content Include="NActivitySensor.AddIn" />
