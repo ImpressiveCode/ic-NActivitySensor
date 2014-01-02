@@ -18,11 +18,18 @@ namespace NActivitySensor
         private bool _IsActive;
         System.Timers.Timer _Timer;
         private int _ProcessId;
+        private readonly IEnumerable<IActivitySensor> _Sensors;
         #endregion
 
         #region Constructors
         public Distributor(IEnumerable<IActivitySensor> sensors)
         {
+            if (sensors == null)
+            {
+                throw new ArgumentNullException("sensors");
+            }
+
+            _Sensors = sensors;
             _ProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
             _Timer = new System.Timers.Timer(_NumberOfSecondsToSetInactive * 1000);
             _IsActive = true;
@@ -32,90 +39,175 @@ namespace NActivitySensor
         #region Solution events
         void solutionEvents_Opened()
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSolutionOpened(String.Empty);
+            }
+
             TickAlive();
         }
 
         void solutionEvents_BeforeClosing()
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSolutionBeforeClosing(String.Empty);
+            }
+
             TickAlive();
         }
         #endregion
 
         #region Build events
-        void _buildEvents_OnBuildProjConfigDone(string Project, string ProjectConfig, string Platform, string SolutionConfig, bool Success)
+        void BuildEvents_OnBuildProjConfigDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnBuildProjConfigDone(project, projectConfig, platform, solutionConfig, success);
+            }
+
             TickAlive();
         }
 
-        void _buildEvents_OnBuildDone(vsBuildScope Scope, vsBuildAction Action)
+        void BuildEvents_OnBuildDone(vsBuildScope scope, vsBuildAction action)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnBuildDone(scope, action);
+            }
+
             TickAlive();
         }
 
-        void buildEvents_OnBuildBegin(vsBuildScope Scope, vsBuildAction Action)
+        void BuildEvents_OnBuildBegin(vsBuildScope scope, vsBuildAction action)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnBuildBegin(scope, action);
+            }
+
             TickAlive();
         }
 
-        void _buildEvents_OnBuildProjConfigBegin(string Project, string ProjectConfig, string Platform, string SolutionConfig)
+        void BuildEvents_OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnBuildProjConfigBegin(project, projectConfig, platform, solutionConfig);
+            }
+
             TickAlive();
         }
         #endregion
 
         #region Various (tick only) events
-        void WindowEvents_WindowMoved(Window Window, int Top, int Left, int Width, int Height)
+        void WindowEvents_WindowMoved(Window window, int top, int left, int width, int height)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnWindowMoved(window, top, left, width, height);
+            }
+
             TickAlive();
         }
 
-        void WindowEvents_WindowCreated(Window Window)
+        void WindowEvents_WindowCreated(Window window)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnWindowCreated(window);
+            }
+
             TickAlive();
         }
 
-        void WindowEvents_WindowClosing(Window Window)
+        void WindowEvents_WindowClosing(Window window)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnWindowClosing(window);
+            }
+
             TickAlive();
         }
 
-        void WindowEvents_WindowActivated(Window GotFocus, Window LostFocus)
+        void WindowEvents_WindowActivated(Window gotFocus, Window lostFocus)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnWindowActivated(gotFocus, lostFocus);
+            }
+
             TickAlive();
         }
 
-        void TextEditorEvents_LineChanged(TextPoint StartPoint, TextPoint EndPoint, int Hint)
+        void TextEditorEvents_LineChanged(TextPoint startPoint, TextPoint endPoint, int hint)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnLineChanged(startPoint, endPoint, hint);
+            }
+
             TickAlive();
         }
 
-        void TaskListEvents_TaskRemoved(TaskItem TaskItem)
+        void TaskListEvents_TaskRemoved(TaskItem taskItem)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnTaskRemoved(taskItem);
+            }
+
             TickAlive();
         }
 
-        void TaskListEvents_TaskNavigated(TaskItem TaskItem, ref bool NavigateHandled)
+        void TaskListEvents_TaskNavigated(TaskItem taskItem, ref bool navigateHandled)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnTaskNavigated(taskItem, ref navigateHandled);
+            }
+
             TickAlive();
         }
 
-        void TaskListEvents_TaskModified(TaskItem TaskItem, vsTaskListColumn ColumnModified)
+        void TaskListEvents_TaskModified(TaskItem taskItem, vsTaskListColumn columnModified)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnTaskModified(taskItem, columnModified);
+            }
+
             TickAlive();
         }
 
-        void TaskListEvents_TaskAdded(TaskItem TaskItem)
+        void TaskListEvents_TaskAdded(TaskItem taskItem)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnTaskAdded(taskItem);
+            }
+
             TickAlive();
         }
 
-        void SolutionItemsEvents_ItemRenamed(ProjectItem ProjectItem, string OldName)
+        void SolutionItemsEvents_ItemRenamed(ProjectItem projectItem, string oldName)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnFileItemRenamed(projectItem, oldName);
+            }
+
             TickAlive();
         }
 
-        void SolutionItemsEvents_ItemRemoved(ProjectItem ProjectItem)
+        void SolutionItemsEvents_ItemRemoved(ProjectItem projectItem)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnFileItemRemoved(projectItem);
+            }
+
             TickAlive();
         }
 
@@ -124,128 +216,263 @@ namespace NActivitySensor
             TickAlive();
         }
 
-        void SolutionEvents_Renamed(string OldName)
+        void SolutionEvents_Renamed(string oldName)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSolutionRenamed(oldName);
+            }
+
             TickAlive();
         }
 
         void SolutionEvents_QueryCloseSolution(ref bool fCancel)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSolutionQueryClose(ref fCancel);
+            }
+
             TickAlive();
         }
 
-        void SolutionEvents_ProjectRenamed(Project Project, string OldName)
+        void SolutionEvents_ProjectRenamed(Project project, string oldName)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSolutionProjectRenamed(project, oldName);
+            }
+
             TickAlive();
         }
 
-        void SolutionEvents_ProjectRemoved(Project Project)
+        void SolutionEvents_ProjectRemoved(Project project)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSolutionProjectRemoved(project);
+            }
+
             TickAlive();
         }
 
-        void SolutionEvents_ProjectAdded(Project Project)
+        void SolutionEvents_ProjectAdded(Project project)
         {
-            TickAlive();
-        }
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSolutionProjectAdded(project);
+            }
 
-        void SolutionEvents_Opened()
-        {
             TickAlive();
         }
 
         void SolutionEvents_BeforeClosing()
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSolutionBeforeClosing(String.Empty);
+            }
+
             TickAlive();
         }
 
         void SolutionEvents_AfterClosing()
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSolutionAfterClosing(String.Empty);
+            }
+
             TickAlive();
         }
 
         void SelectionEvents_OnChange()
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnSelectionChange();
+            }
+
             TickAlive();
         }
 
         void OutputWindowEvents_PaneUpdated(OutputWindowPane pPane)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnWindowPaneAdded(pPane);
+            }
+
             TickAlive();
         }
 
         void OutputWindowEvents_PaneClearing(OutputWindowPane pPane)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnWindowPaneClearing(pPane);
+            }
+
             TickAlive();
         }
 
         void OutputWindowEvents_PaneAdded(OutputWindowPane pPane)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnWindowPaneAdded(pPane);
+            }
+
             TickAlive();
         }
 
-        void MiscFilesEvents_ItemRenamed(ProjectItem ProjectItem, string OldName)
+        void MiscFilesEvents_ItemRenamed(ProjectItem projectItem, string oldName)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnFileItemRenamed(projectItem, oldName);
+            }
+
             TickAlive();
         }
 
-        void MiscFilesEvents_ItemRemoved(ProjectItem ProjectItem)
+        void MiscFilesEvents_ItemRemoved(ProjectItem projectItem)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnFileItemRemoved(projectItem);
+            }
+
             TickAlive();
         }
 
-        void MiscFilesEvents_ItemAdded(ProjectItem ProjectItem)
+        void MiscFilesEvents_ItemAdded(ProjectItem projectItem)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnFileItemAdded(projectItem);
+            }
+
             TickAlive();
         }
 
-        void FindEvents_FindDone(vsFindResult Result, bool Cancelled)
+        void FindEvents_FindDone(vsFindResult result, bool cancelled)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnFindDone(result, cancelled);
+            }
+
             TickAlive();
         }
 
-        void DebuggerEvents_OnExceptionThrown(string ExceptionType, string Name, int Code, string Description, ref dbgExceptionAction ExceptionAction)
+        void DebuggerEvents_OnExceptionThrown(string exceptionType, string name, int code, string description, ref dbgExceptionAction exceptionAction)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDebuggerExceptionThrown(exceptionType, name, code, description, ref exceptionAction);
+            }
+
             TickAlive();
         }
 
-        void DebuggerEvents_OnExceptionNotHandled(string ExceptionType, string Name, int Code, string Description, ref dbgExceptionAction ExceptionAction)
+        void DebuggerEvents_OnExceptionNotHandled(string exceptionType, string name, int code, string description, ref dbgExceptionAction exceptionAction)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDebuggerExceptionNotHandled(exceptionType, name, code, description, ref exceptionAction);
+            }
+
             TickAlive();
         }
 
-        void DebuggerEvents_OnEnterRunMode(dbgEventReason Reason)
+        void DebuggerEvents_OnEnterRunMode(dbgEventReason reason)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDebuggerEnterRunMode(reason);
+            }
+
             TickAlive();
         }
 
-        void DebuggerEvents_OnEnterDesignMode(dbgEventReason Reason)
+        void DebuggerEvents_OnEnterDesignMode(dbgEventReason reason)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDebuggerEnterDesignMode(reason);
+            }
+
             TickAlive();
         }
 
-        void DebuggerEvents_OnEnterBreakMode(dbgEventReason Reason, ref dbgExecutionAction ExecutionAction)
+        void DebuggerEvents_OnEnterBreakMode(dbgEventReason reason, ref dbgExecutionAction executionAction)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDebuggerEnterBreakMode(reason, ref executionAction);
+            }
+
             TickAlive();
         }
 
-        void DebuggerEvents_OnContextChanged(EnvDTE.Process NewProcess, Program NewProgram, Thread NewThread, EnvDTE.StackFrame NewStackFrame)
+        void DebuggerEvents_OnContextChanged(EnvDTE.Process newProcess, Program newProgram, Thread newThread, EnvDTE.StackFrame newStackFrame)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDebuggerContextChanged(newProcess, newProgram, newThread, newStackFrame);
+            }
+
             TickAlive();
         }
 
-        void CommandEvents_BeforeExecute(string Guid, int ID, object CustomIn, object CustomOut, ref bool CancelDefault)
+        void CommandEvents_BeforeExecute(string guid, int id, object customIn, object customOut, ref bool cancelDefault)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnCommandBeforeExecute(guid, id, customIn, customOut, ref cancelDefault);
+            }
+
             TickAlive();
         }
 
-        void CommandEvents_AfterExecute(string Guid, int ID, object CustomIn, object CustomOut)
+        void CommandEvents_AfterExecute(string guid, int id, object customIn, object customOut)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnCommandAfterExecute(guid, id, customIn, customOut);
+            }
+
             TickAlive();
         }
 
-        void DocumentEventsTick(Document Document)
+        void OnDocumentClosing(Document document)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDocumentClosing(document);
+            }
+
+            TickAlive();
+        }
+
+        void OnDocumentSaved(Document document)
+        {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDocumentSaved(document);
+            }
+
+            TickAlive();
+        }
+
+        void OnDocumentOpened(Document document)
+        {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDocumentOpened(document);
+            }
+
             TickAlive();
         }
 
@@ -259,15 +486,14 @@ namespace NActivitySensor
         /// <seealso class='IDTExtensibility2' />
         public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-
-            _Timer.Elapsed += _timer_Elapsed;
+            _Timer.Elapsed += OnTimerElapsed;
             _Timer.Start();
 
             _ApplicationObject = (DTE2)application;
 
-            _ApplicationObject.Events.DocumentEvents.DocumentClosing += DocumentEventsTick;
-            _ApplicationObject.Events.DocumentEvents.DocumentSaved += DocumentEventsTick;
-            _ApplicationObject.Events.DocumentEvents.DocumentOpened += DocumentEventsTick;
+            _ApplicationObject.Events.DocumentEvents.DocumentClosing += OnDocumentClosing;
+            _ApplicationObject.Events.DocumentEvents.DocumentSaved += OnDocumentSaved;
+            _ApplicationObject.Events.DocumentEvents.DocumentOpened += OnDocumentOpened;
 
             _ApplicationObject.Events.CommandEvents.AfterExecute += CommandEvents_AfterExecute;
             _ApplicationObject.Events.CommandEvents.BeforeExecute += CommandEvents_BeforeExecute;
@@ -293,7 +519,7 @@ namespace NActivitySensor
 
             _ApplicationObject.Events.SolutionEvents.AfterClosing += SolutionEvents_AfterClosing;
             _ApplicationObject.Events.SolutionEvents.BeforeClosing += SolutionEvents_BeforeClosing;
-            _ApplicationObject.Events.SolutionEvents.Opened += SolutionEvents_Opened;
+            _ApplicationObject.Events.SolutionEvents.Opened += solutionEvents_Opened;
             _ApplicationObject.Events.SolutionEvents.ProjectAdded += SolutionEvents_ProjectAdded;
             _ApplicationObject.Events.SolutionEvents.ProjectRemoved += SolutionEvents_ProjectRemoved;
             _ApplicationObject.Events.SolutionEvents.ProjectRenamed += SolutionEvents_ProjectRenamed;
@@ -317,15 +543,14 @@ namespace NActivitySensor
             _ApplicationObject.Events.WindowEvents.WindowMoved += WindowEvents_WindowMoved;
             // Add solution item events
             _SolutionEvents = _ApplicationObject.Events.SolutionEvents;
-            _SolutionEvents.Opened += solutionEvents_Opened;
             _SolutionEvents.BeforeClosing += solutionEvents_BeforeClosing;
 
             // Add build events
             _BuildEvents = _ApplicationObject.Events.BuildEvents;
-            _BuildEvents.OnBuildBegin += buildEvents_OnBuildBegin;
-            _BuildEvents.OnBuildProjConfigDone += _buildEvents_OnBuildProjConfigDone;
-            _BuildEvents.OnBuildDone += _buildEvents_OnBuildDone;
-            _BuildEvents.OnBuildProjConfigBegin += _buildEvents_OnBuildProjConfigBegin;
+            _BuildEvents.OnBuildBegin += BuildEvents_OnBuildBegin;
+            _BuildEvents.OnBuildProjConfigDone += BuildEvents_OnBuildProjConfigDone;
+            _BuildEvents.OnBuildDone += BuildEvents_OnBuildDone;
+            _BuildEvents.OnBuildProjConfigBegin += BuildEvents_OnBuildProjConfigBegin;
 
             string s = _ApplicationObject.FullName;
 
@@ -333,16 +558,18 @@ namespace NActivitySensor
 
         }
 
-        void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        void OnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             if (!_IsActive)
             {
-                // Send user inactive
+                foreach (var Sensor in _Sensors)
+                {
+                    Sensor.OnUserInactive();
+                }
             }
 
             _IsActive = false;
         }
-
 
         private void TickAlive()
         {
@@ -356,6 +583,12 @@ namespace NActivitySensor
         /// <seealso class='IDTExtensibility2' />
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnDisconnection(disconnectMode, ref custom);
+            }
+
+            TickAlive();
         }
 
         /// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary>
@@ -363,6 +596,12 @@ namespace NActivitySensor
         /// <seealso class='IDTExtensibility2' />		
         public void OnAddInsUpdate(ref Array custom)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnAddInsUpdate(ref custom);
+            }
+
+            TickAlive();
         }
 
         /// <summary>Implements the OnStartupComplete method of the IDTExtensibility2 interface. Receives notification that the host application has completed loading.</summary>
@@ -370,6 +609,12 @@ namespace NActivitySensor
         /// <seealso class='IDTExtensibility2' />
         public void OnStartupComplete(ref Array custom)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnStartupComplete(ref custom);
+            }
+
+            TickAlive();
         }
 
         /// <summary>Implements the OnBeginShutdown method of the IDTExtensibility2 interface. Receives notification that the host application is being unloaded.</summary>
@@ -377,6 +622,12 @@ namespace NActivitySensor
         /// <seealso class='IDTExtensibility2' />
         public void OnBeginShutdown(ref Array custom)
         {
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnBeginShutdown(ref custom);
+            }
+
+            TickAlive();
         }
         #endregion
     }
