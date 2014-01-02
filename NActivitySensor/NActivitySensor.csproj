@@ -37,6 +37,12 @@
     <RootNamespace>NActivitySensor</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.3.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mef">
+      <HintPath>..\packages\Autofac.Mef.3.0.2\lib\net40\Autofac.Integration.Mef.dll</HintPath>
+    </Reference>
     <Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -45,6 +51,7 @@
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -54,11 +61,20 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Logger.cs" />
-    <Compile Include="ReportItem.cs" />
+    <Compile Include="Distributor.cs" />
+    <Compile Include="_Source\_ActivitySensors\NullActivitySensor.cs" />
+    <Compile Include="_Source\_Exceptions\ReporterException.cs" />
+    <Compile Include="_Source\_Exceptions\SensorException.cs" />
+    <Compile Include="_Source\_Interfaces\IActivitySensor.cs" />
+    <Compile Include="_Source\_Interfaces\IReporter.cs" />
+    <Compile Include="_Source\_Loggers\ConsoleLogger.cs" />
+    <Compile Include="_Source\_Loggers\FileLogger.cs" />
+    <Compile Include="_Source\_Interfaces\ILogger.cs" />
+    <Compile Include="_Source\_Models\Report.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="EnvDTE">
@@ -108,9 +124,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="c:\Users\marcin\Documents\Visual Studio 2012\Addins\NActivitySensor - For Testing.AddIn">
-      <Link>NActivitySensor - For Testing.AddIn</Link>
-    </Content>
     <Content Include="NActivitySensor.AddIn" />
   </ItemGroup>
   <ItemGroup>

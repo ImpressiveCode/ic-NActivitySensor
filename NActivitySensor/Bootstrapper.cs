@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NActivitySensor
 {
-    public class ReportItem
+    public class Bootstrapper
     {
 
     }

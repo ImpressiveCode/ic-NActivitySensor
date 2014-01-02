@@ -5,12 +5,12 @@ using System.Text;
 using log4net;
 namespace NActivitySensor
 {
-    internal class Logger
+    public class FileLogger : ILogger
     {
         private string _FilePath;
         private string _ProcessId;
         
-        public Logger(int ProcessId)
+        public FileLogger(int ProcessId)
         {
             if (ProcessId < 0 || ProcessId == int.MaxValue)
             {
