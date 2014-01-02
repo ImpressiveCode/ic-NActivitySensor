@@ -21,7 +21,7 @@ namespace NActivitySensor
 		{
             var Sensors = new List<IActivitySensor>();
             Sensors.Add(NullActivitySensor.Instance);
-            _Distributor = new Distributor(new List<IActivitySensor>());
+            _Distributor = new Distributor(Sensors);
 		}
 
 		/// <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>

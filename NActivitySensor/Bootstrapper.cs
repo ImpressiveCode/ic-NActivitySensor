@@ -8,5 +8,10 @@ namespace NActivitySensor
     public class Bootstrapper
     {
 
+
+        public Bootstrapper()
+        {
+
+        }
     }
 }
