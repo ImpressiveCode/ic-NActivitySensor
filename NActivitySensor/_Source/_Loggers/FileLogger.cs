@@ -10,8 +10,10 @@ namespace NActivitySensor
         private string _FilePath;
         private string _ProcessId;
         
-        public FileLogger(int ProcessId)
+        public FileLogger()
         {
+            int ProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
+
             if (ProcessId < 0 || ProcessId == int.MaxValue)
             {
                 ProcessId = 0;

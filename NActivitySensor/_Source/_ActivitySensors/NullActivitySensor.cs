@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NActivitySensor
 {
-    public class NullActivitySensor : IActivitySensor
+    public sealed class NullActivitySensor : IActivitySensor
     {
         #region Private variables
         private static NullActivitySensor _Instance = null;

@@ -1,3 +1,7 @@
 /NActivitySensor/bin
 /NActivitySensor/obj
+/NActivitySensor.BuildActivitySensor/bin
+/NActivitySensor.BuildActivitySensor/obj
+/NActivitySensor.MsSqlReporter/bin
+/NActivitySensor.MsSqlReporter/obj
 /*.suo

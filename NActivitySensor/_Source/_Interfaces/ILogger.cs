@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NActivitySensor
 {
-    interface ILogger
+    public interface ILogger
     {
         void Log(string message);
     }
