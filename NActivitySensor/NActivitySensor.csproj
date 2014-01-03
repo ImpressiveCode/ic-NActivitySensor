@@ -22,6 +22,8 @@
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
     <DocumentationFile>NActivitySensor.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\CodeAnalysis\CodefusionRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -32,6 +34,8 @@
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
     <DocumentationFile>NActivitySensor.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\CodeAnalysis\CodefusionRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>NActivitySensor</RootNamespace>
@@ -130,9 +134,9 @@
       <Project>{aad90564-3f17-42d1-b345-a949a260732c}</Project>
       <Name>NActivitySensor.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NActivitySensor.MsSqlReporter\NActivitySensor.MsSqlReporter.csproj">
+    <ProjectReference Include="..\NActivitySensor.MsSql\NActivitySensor.MsSql.csproj">
       <Project>{72d8a4ea-573e-4a83-8bb2-c67f97d3ea16}</Project>
-      <Name>NActivitySensor.MsSqlReporter</Name>
+      <Name>NActivitySensor.MsSql</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

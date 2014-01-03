@@ -1,4 +1,5 @@
 ﻿using System;
+using Autofac;
 using Extensibility;
 using EnvDTE;
 using EnvDTE80;
@@ -13,14 +14,15 @@ namespace NActivitySensor
 	{
         #region Private variables
         private Distributor _Distributor;
+        private BootStrapper _BootStrapper;
         #endregion
 
         #region Public
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
 		public Connect()
 		{
-            BootStrapper Boot = new BootStrapper();
-            _Distributor = new Distributor(Boot.Sensors);
+            _BootStrapper = new BootStrapper();
+            _Distributor = new Distributor(_BootStrapper.Scope.Resolve<IEnumerable<IActivitySensor>>());
 		}
 
 		/// <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>

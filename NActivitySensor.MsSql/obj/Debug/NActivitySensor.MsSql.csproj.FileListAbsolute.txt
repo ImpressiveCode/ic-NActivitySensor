@@ -1,0 +1,17 @@
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSqlReporter\obj\Debug\NActivitySensor.MsSql.csprojResolveAssemblyReference.cache
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSqlReporter\obj\Debug\NActivitySensor.MsSqlReporter.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSqlReporter\obj\Debug\NActivitySensor.MsSqlReporter.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\NActivitySensor.MsSql.dll.config
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\NActivitySensor.MsSql.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\NActivitySensor.MsSql.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\EntityFramework.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\EntityFramework.SqlServer.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\NActivitySensor.Core.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\Newtonsoft.Json.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\NActivitySensor.Core.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\EntityFramework.xml
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\EntityFramework.SqlServer.xml
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\bin\Debug\Newtonsoft.Json.xml
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\obj\Debug\NActivitySensor.MsSql.csprojResolveAssemblyReference.cache
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\obj\Debug\NActivitySensor.MsSql.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.MsSql\obj\Debug\NActivitySensor.MsSql.pdb

@@ -14,12 +14,12 @@
             Initializes a new instance of the <see cref="T:NActivitySensor.BootStrapper"/> class.
             </summary>
         </member>
-        <member name="P:NActivitySensor.BootStrapper.Sensors">
+        <member name="P:NActivitySensor.BootStrapper.Scope">
             <summary>
-            Gets the sensors.
+            Gets the scope.
             </summary>
             <value>
-            The sensors.
+            The scope.
             </value>
         </member>
         <member name="T:NActivitySensor.Connect">

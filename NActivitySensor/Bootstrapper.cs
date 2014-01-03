@@ -9,6 +9,7 @@ using System.Text;
 using System.Reflection;
 using NActivitySensor.ActivitySensors;
 using NActivitySensor.Loggers;
+using NActivitySensor.MsSql;
 
 namespace NActivitySensor
 {
@@ -17,18 +18,21 @@ namespace NActivitySensor
     /// </summary>
     public class BootStrapper
     {
+        #region Properties
         /// <summary>
-        /// Gets the sensors.
+        /// Gets the scope.
         /// </summary>
         /// <value>
-        /// The sensors.
+        /// The scope.
         /// </value>
-        public IEnumerable<IActivitySensor> Sensors
+        public ILifetimeScope Scope
         {
             get;
             private set;
         }
+        #endregion
 
+        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="BootStrapper"/> class.
         /// </summary>
@@ -42,9 +46,9 @@ namespace NActivitySensor
 
             var Container = Builder.Build();
 
-            var Scope = Container.BeginLifetimeScope();
-
-            Sensors = Scope.Resolve<IEnumerable<IActivitySensor>>();
+            Scope = Container.BeginLifetimeScope();
         }
+        #endregion
+
     }
 }
