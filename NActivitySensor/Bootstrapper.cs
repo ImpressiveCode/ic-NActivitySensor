@@ -6,10 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace NActivitySensor
 {
-    public class Bootstrapper
+    public class BootStrapper
     {
         public IContainer Container
         {
@@ -23,21 +24,27 @@ namespace NActivitySensor
             private set;
         }
 
-        public Bootstrapper()
+        public IEnumerable<IActivitySensor> Sensors
+        {
+            get;
+            private set;
+        }
+
+        public BootStrapper()
         {
             var Builder = new ContainerBuilder();
-            var PluginsCatalog = new DirectoryCatalog(".");
+            var AssemblyDirectory = Assembly.GetExecutingAssembly().GetCurrentAssemblyDirectory();
+            var PluginsCatalog = new DirectoryCatalog(AssemblyDirectory);
 
-            // Register logger
-            Builder.RegisterType<FileLogger>().Exported(g => g.As<ILogger>().WithMetadata("FileLogger", new object()));
 
-            // Register plugins
-            Builder.RegisterComposablePartCatalog(PluginsCatalog);
+            Builder.RegisterType<FileLogger>().As<ILogger>();
+            Builder.RegisterType<MsSqlReporter>().As<IReporter>();
+            Builder.RegisterType<BuildActivitySensor>().As<IActivitySensor>();
 
             Container = Builder.Build();
 
-            // TODO
-            var Scope = Container.BeginLifetimeScope();
+            Scope = Container.BeginLifetimeScope();
+            Sensors = Scope.Resolve<IEnumerable<IActivitySensor>>();
         }
     }
 }

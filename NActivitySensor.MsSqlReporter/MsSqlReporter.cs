@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 
-namespace NActivitySensor.MsSqlReporter
+namespace NActivitySensor
 {
-    [Export(typeof(IReporter))]
     public class MsSqlReporter : IReporter
     {
         #region Private variables
@@ -14,7 +12,6 @@ namespace NActivitySensor.MsSqlReporter
         #endregion
 
         #region Constructors
-        [ImportingConstructor]
         public MsSqlReporter(ILogger logger)
         {
             if (logger == null)
@@ -29,7 +26,7 @@ namespace NActivitySensor.MsSqlReporter
         #region IReporter methods
         public void Report(Report report)
         {
-            var ReportEntity = (ReportEntity)report;
+            var ReportEntity = new ReportEntity(report);
 
             using (Context Context = new Context())
             {

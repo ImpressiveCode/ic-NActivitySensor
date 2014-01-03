@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 
-namespace NActivitySensor.BuildActivitySensor
+namespace NActivitySensor
 {
-    [Export(typeof(IActivitySensor))]
     public class BuildActivitySensor : IActivitySensor
     {
         #region Private variables
@@ -15,7 +13,6 @@ namespace NActivitySensor.BuildActivitySensor
         #endregion
 
         #region Constructors
-        [ImportingConstructor]
         public BuildActivitySensor(ILogger logger, IEnumerable<IReporter> reporters)
         {
             if (logger == null)
@@ -36,15 +33,31 @@ namespace NActivitySensor.BuildActivitySensor
         #region IAcvititySensor implemented methods
         public void OnBuildDone(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
         {
-            Report BuildDoneReport = new Report();
-            BuildDoneReport.Content = String.Format("Scope: {0}, Action: {1}", scope.ToString(), action.ToString());
-            BuildDoneReport.ContentType = "PlainText";
-            BuildDoneReport.Date = DateTime.Now;
-
+            Report BuildDoneReport = new Report(new BuildReportContent
+            {
+                Action = action.ToString(),
+                Scope = scope.ToString()
+            }, "BuildDone");
+            
             foreach (var Reporter in _Reporters)
             {
                 Reporter.Report(BuildDoneReport);
             }
+        }
+
+        public void OnBuildProjConfigDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
+        {
+
+        }
+
+        public void OnBuildBegin(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
+        {
+
+        }
+
+        public void OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
+        {
+
         }
         #endregion
 
@@ -85,21 +98,6 @@ namespace NActivitySensor.BuildActivitySensor
         }
 
         public void OnSolutionProjectAdded(EnvDTE.Project project)
-        {
-            
-        }
-
-        public void OnBuildProjConfigDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
-        {
-            
-        }
-
-        public void OnBuildBegin(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
-        {
-            
-        }
-
-        public void OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
         {
             
         }

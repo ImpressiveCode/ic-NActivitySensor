@@ -21,7 +21,10 @@ namespace NActivitySensor
 		{
             var Sensors = new List<IActivitySensor>();
             Sensors.Add(NullActivitySensor.Instance);
-            _Distributor = new Distributor(Sensors);
+
+            BootStrapper Boot = new BootStrapper();
+
+            _Distributor = new Distributor(Boot.Sensors);
 		}
 
 		/// <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>

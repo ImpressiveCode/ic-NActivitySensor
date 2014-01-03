@@ -5,21 +5,15 @@ using System.Text;
 
 namespace NActivitySensor
 {
-    public class Report
+    public class BuildReportContent
     {
-        public string Content
+        public string Scope
         {
             get;
             set;
         }
 
-        public string ContentType
-        {
-            get;
-            set;
-        }
-
-        public DateTime Date
+        public string Action
         {
             get;
             set;

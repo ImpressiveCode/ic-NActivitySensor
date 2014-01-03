@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NActivitySensor.BuildActivi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors", "Sensors", "{B4C761B3-B442-44F5-BA9B-AA9B3CB64797}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NActivitySensor.Core", "NActivitySensor.Core\NActivitySensor.Core.csproj", "{AAD90564-3F17-42D1-B345-A949A260732C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{A80DC199-CA81-4F63-A87A-4CE7EEE420E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A80DC199-CA81-4F63-A87A-4CE7EEE420E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A80DC199-CA81-4F63-A87A-4CE7EEE420E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAD90564-3F17-42D1-B345-A949A260732C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD90564-3F17-42D1-B345-A949A260732C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD90564-3F17-42D1-B345-A949A260732C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD90564-3F17-42D1-B345-A949A260732C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

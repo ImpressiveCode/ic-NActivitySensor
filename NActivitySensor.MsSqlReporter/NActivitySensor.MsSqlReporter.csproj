@@ -37,7 +37,6 @@
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,14 +52,14 @@
     <Compile Include="ReportEntity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NActivitySensor\NActivitySensor.csproj">
-      <Project>{54c786e5-fd14-4036-92ae-e9f25b71534b}</Project>
-      <Name>NActivitySensor</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NActivitySensor.Core\NActivitySensor.Core.csproj">
+      <Project>{aad90564-3f17-42d1-b345-a949a260732c}</Project>
+      <Name>NActivitySensor.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

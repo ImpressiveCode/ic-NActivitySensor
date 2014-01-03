@@ -4,4 +4,6 @@
 /NActivitySensor.BuildActivitySensor/obj
 /NActivitySensor.MsSqlReporter/bin
 /NActivitySensor.MsSqlReporter/obj
+/NAcrivitySensor.NActivitySensor.Core/bin
+/NActivitySensor.NActivitySensor.Core/obj
 /*.suo

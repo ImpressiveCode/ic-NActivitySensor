@@ -61,20 +61,12 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="BootStrapper.cs" />
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Distributor.cs" />
-    <Compile Include="_Source\_ActivitySensors\NullActivitySensor.cs" />
-    <Compile Include="_Source\_Exceptions\ReporterException.cs" />
-    <Compile Include="_Source\_Exceptions\SensorException.cs" />
-    <Compile Include="_Source\_Interfaces\IActivitySensor.cs" />
-    <Compile Include="_Source\_Interfaces\IReporter.cs" />
-    <Compile Include="_Source\_Loggers\ConsoleLogger.cs" />
-    <Compile Include="_Source\_Loggers\FileLogger.cs" />
-    <Compile Include="_Source\_Interfaces\ILogger.cs" />
-    <Compile Include="_Source\_Models\Report.cs" />
+    <Compile Include="_Source\_Extensions\AssemblyHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="EnvDTE">
@@ -128,6 +120,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="_Source\_Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NActivitySensor.BuildActivitySensor\NActivitySensor.BuildActivitySensor.csproj">
+      <Project>{a80dc199-ca81-4f63-a87a-4ce7eee420e1}</Project>
+      <Name>NActivitySensor.BuildActivitySensor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NActivitySensor.Core\NActivitySensor.Core.csproj">
+      <Project>{aad90564-3f17-42d1-b345-a949a260732c}</Project>
+      <Name>NActivitySensor.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NActivitySensor.MsSqlReporter\NActivitySensor.MsSqlReporter.csproj">
+      <Project>{72d8a4ea-573e-4a83-8bb2-c67f97d3ea16}</Project>
+      <Name>NActivitySensor.MsSqlReporter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>

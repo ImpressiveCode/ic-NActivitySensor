@@ -4,10 +4,18 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 
-namespace NActivitySensor.MsSqlReporter
+namespace NActivitySensor
 {
     class Context : DbContext
     {
+        #region Hacks
+        /// <summary>
+        /// Make sure "EntityFramework.SqlServer.dll" library will be copied
+        /// to bin directory
+        /// </summary>
+        private Type _Hack = typeof(System.Data.Entity.SqlServer.SqlProviderServices);
+        #endregion
+
         #region Constructors
         public Context()
             : base()
