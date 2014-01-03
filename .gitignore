@@ -1,7 +1,7 @@
 /NActivitySensor/bin
 /NActivitySensor/obj
-/NActivitySensor.BuildActivitySensor/bin
-/NActivitySensor.BuildActivitySensor/obj
+/NActivitySensor.DTEActivitySensor/bin
+/NActivitySensor.DTEActivitySensor/obj
 /NActivitySensor.MSSql/bin
 /NActivitySensor.MSSql/obj
 /NActivitySensor.Core/bin
