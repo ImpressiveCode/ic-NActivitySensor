@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="_Source\Models\BuildProjConfigContent.cs" />
     <Compile Include="_Source\Models\BuildReportContent.cs" />
     <Compile Include="_Source\Models\Report.cs" />

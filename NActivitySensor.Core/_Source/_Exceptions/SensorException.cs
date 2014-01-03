@@ -6,6 +6,7 @@ using System.Text;
 
 namespace NActivitySensor
 {
+    [Serializable]
     public class ReporterException : Exception
     {
         public ReporterException()
@@ -24,7 +25,7 @@ namespace NActivitySensor
 
         }
 
-        public ReporterException(SerializationInfo info, StreamingContext context)
+        protected ReporterException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

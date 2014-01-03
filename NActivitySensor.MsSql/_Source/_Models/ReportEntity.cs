@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
-namespace NActivitySensor.MsSql.Models
+namespace NActivitySensor.MSSql.Models
 {
     [Table("Reports")]
-    class ReportEntity : Report
+    public class ReportEntity : Report
     {
         #region Private variables
         private Report _ReportBase;

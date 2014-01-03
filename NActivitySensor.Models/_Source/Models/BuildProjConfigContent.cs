@@ -5,6 +5,7 @@ using System.Text;
 
 namespace NActivitySensor.Models
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Proj")]
     public class BuildProjConfigContent
     {
         public string Project

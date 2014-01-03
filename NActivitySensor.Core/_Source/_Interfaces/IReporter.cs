@@ -8,6 +8,6 @@ namespace NActivitySensor
 {
     public interface IReporter
     {
-        void Report(Report report);
+        void Report(Report reportModel);
     }
 }

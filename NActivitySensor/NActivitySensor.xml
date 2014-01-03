@@ -4,17 +4,17 @@
         <name>NActivitySensor</name>
     </assembly>
     <members>
-        <member name="T:NActivitySensor.BootStrapper">
+        <member name="T:NActivitySensor.Bootstrapper">
             <summary>
             The bootstrapper
             </summary>
         </member>
-        <member name="M:NActivitySensor.BootStrapper.#ctor">
+        <member name="M:NActivitySensor.Bootstrapper.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:NActivitySensor.BootStrapper"/> class.
+            Initializes a new instance of the <see cref="T:NActivitySensor.Bootstrapper"/> class.
             </summary>
         </member>
-        <member name="P:NActivitySensor.BootStrapper.Scope">
+        <member name="P:NActivitySensor.Bootstrapper.Scope">
             <summary>
             Gets the scope.
             </summary>

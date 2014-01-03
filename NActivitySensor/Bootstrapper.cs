@@ -8,15 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using NActivitySensor.ActivitySensors;
-using NActivitySensor.Loggers;
-using NActivitySensor.MsSql;
+using NActivitySensor.MSSql;
 
 namespace NActivitySensor
 {
     /// <summary>
     /// The bootstrapper
     /// </summary>
-    public class BootStrapper
+    public class Bootstrapper
     {
         #region Properties
         /// <summary>
@@ -34,14 +33,14 @@ namespace NActivitySensor
 
         #region Constructors
         /// <summary>
-        /// Initializes a new instance of the <see cref="BootStrapper"/> class.
+        /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
         /// </summary>
-        public BootStrapper()
+        public Bootstrapper()
         {
             var Builder = new ContainerBuilder();
 
             Builder.RegisterType<FileLogger>().As<ILogger>();
-            Builder.RegisterType<MsSqlReporter>().As<IReporter>();
+            Builder.RegisterType<MSSqlReporter>().As<IReporter>();
             Builder.RegisterType<BuildActivitySensor>().As<IActivitySensor>();
 
             var Container = Builder.Build();

@@ -1,20 +1,20 @@
 ﻿using NActivitySensor.Models;
-using NActivitySensor.MsSql.Models;
+using NActivitySensor.MSSql.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NActivitySensor.MsSql
+namespace NActivitySensor.MSSql
 {
-    public class MsSqlReporter : IReporter
+    public class MSSqlReporter : IReporter
     {
         #region Private variables
         private ILogger _Logger;
         #endregion
 
         #region Constructors
-        public MsSqlReporter(ILogger logger)
+        public MSSqlReporter(ILogger logger)
         {
             if (logger == null)
             {
@@ -26,11 +26,11 @@ namespace NActivitySensor.MsSql
         #endregion
 
         #region IReporter methods
-        public void Report(Report report)
+        public void Report(Report reportModel)
         {
             try
             {
-                var ReportEntity = new ReportEntity(report);
+                var ReportEntity = new ReportEntity(reportModel);
 
                 using (Context Context = new Context())
                 {

@@ -84,17 +84,18 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_Source\Enums\Enums.cs" />
-    <Compile Include="_Source\ActivitySensors\NullActivitySensor.cs" />
+    <Compile Include="_Source\_Enums\Enums.cs" />
+    <Compile Include="_Source\_ActivitySensors\NullActivitySensor.cs" />
     <Compile Include="_Source\_Exceptions\ReporterException.cs" />
     <Compile Include="_Source\_Exceptions\SensorException.cs" />
-    <Compile Include="_Source\Helpers\ReportSerializationHelper.cs" />
+    <Compile Include="_Source\_Helpers\ReportSerializationHelper.cs" />
     <Compile Include="_Source\_Interfaces\IActivitySensor.cs" />
     <Compile Include="_Source\_Interfaces\ILogger.cs" />
     <Compile Include="_Source\_Interfaces\IReporter.cs" />
-    <Compile Include="_Source\Loggers\ConsoleLogger.cs" />
-    <Compile Include="_Source\Loggers\FileLogger.cs" />
+    <Compile Include="_Source\_Loggers\ConsoleLogger.cs" />
+    <Compile Include="_Source\_Loggers\FileLogger.cs" />
     <Compile Include="_Source\Models\BuildReportContent.cs" />
     <Compile Include="_Source\Models\BuildProjConfigContent.cs" />
     <Compile Include="_Source\Models\Report.cs" />

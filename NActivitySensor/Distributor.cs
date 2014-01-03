@@ -11,12 +11,12 @@ namespace NActivitySensor
     /// <summary>
     /// Distributes events to the sensors
     /// </summary>
-    public class Distributor
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
+    public class Distributor : IDisposable
     {
         #region Private variables
         private int _NumberOfSecondsToSetInactive = 60;
         private DTE2 _ApplicationObject;
-        private SolutionEvents _SolutionEvents;
         private BuildEvents _BuildEvents;
         private bool _IsActive;
         System.Timers.Timer _Timer;
@@ -482,6 +482,7 @@ namespace NActivitySensor
         /// <param term='connectMode'>Describes how the Add-in is being loaded.</param>
         /// <param term='addInInst'>Object representing this Add-in.</param>
         /// <seealso class='IDTExtensibility2' />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "addInInst"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "custom"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "connectMode"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Inst")]
         public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
             _Timer.Elapsed += OnTimerElapsed;
@@ -576,6 +577,7 @@ namespace NActivitySensor
         /// <param term='disconnectMode'>Describes how the Add-in is being unloaded.</param>
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "1#")]
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
         {
             foreach (var Sensor in _Sensors)
@@ -589,6 +591,7 @@ namespace NActivitySensor
         /// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary>
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />		
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#")]
         public void OnAddInsUpdate(ref Array custom)
         {
             foreach (var Sensor in _Sensors)
@@ -602,6 +605,7 @@ namespace NActivitySensor
         /// <summary>Implements the OnStartupComplete method of the IDTExtensibility2 interface. Receives notification that the host application has completed loading.</summary>
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#")]
         public void OnStartupComplete(ref Array custom)
         {
             foreach (var Sensor in _Sensors)
@@ -615,6 +619,7 @@ namespace NActivitySensor
         /// <summary>Implements the OnBeginShutdown method of the IDTExtensibility2 interface. Receives notification that the host application is being unloaded.</summary>
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#")]
         public void OnBeginShutdown(ref Array custom)
         {
             foreach (var Sensor in _Sensors)
@@ -623,6 +628,26 @@ namespace NActivitySensor
             }
 
             TickAlive();
+        }
+        #endregion
+
+        #region IDisposable methods
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_Timer != null)
+                {
+                    _Timer.Dispose();
+                    _Timer = null;
+                }
+            }
         }
         #endregion
     }

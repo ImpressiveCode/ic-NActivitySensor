@@ -1,5 +1,4 @@
-﻿using NActivitySensor.Enums;
-using NActivitySensor.Models;
+﻿using NActivitySensor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +10,16 @@ namespace NActivitySensor.ActivitySensors
     {
         #region Private variables
         private readonly IEnumerable<IReporter> _Reporters;
-        private readonly ILogger _Logger;
         #endregion
 
         #region Constructors
-        public BuildActivitySensor(ILogger logger, IEnumerable<IReporter> reporters)
+        public BuildActivitySensor(IEnumerable<IReporter> reporters)
         {
-            if (logger == null)
-            {
-                throw new ArgumentNullException("logger");
-            }
-
             if (reporters == null)
             {
                 throw new ArgumentNullException("reporters");
             }
 
-            _Logger = logger;
             _Reporters = reporters;
         }
         #endregion
@@ -122,7 +114,7 @@ namespace NActivitySensor.ActivitySensors
             
         }
 
-        public void OnSolutionBeforeClosing(string solutionFulName)
+        public void OnSolutionBeforeClosing(string solutionFullName)
         {
             
         }
@@ -267,7 +259,7 @@ namespace NActivitySensor.ActivitySensors
             
         }
 
-        public void OnFindDone(EnvDTE.vsFindResult result, bool cancelled)
+        public void OnFindDone(EnvDTE.vsFindResult result, bool canceled)
         {
             
         }
@@ -301,27 +293,27 @@ namespace NActivitySensor.ActivitySensors
             
         }
 
-        public void OnCommandBeforeExecute(string guid, int iD, object customIn, object customOut, ref bool cancelDefault)
+        public void OnCommandBeforeExecute(string guid, int id, object customIn, object customOut, ref bool cancelDefault)
         {
             
         }
 
-        public void OnCommandAfterExecute(string guid, int iD, object customIn, object customOut)
+        public void OnCommandAfterExecute(string guid, int id, object customIn, object customOut)
         {
             
         }
 
-        public void OnDocumentClosing(EnvDTE.Document Document)
+        public void OnDocumentClosing(EnvDTE.Document document)
         {
             
         }
 
-        public void OnDocumentSaved(EnvDTE.Document Document)
+        public void OnDocumentSaved(EnvDTE.Document document)
         {
            
         }
 
-        public void OnDocumentOpened(EnvDTE.Document Document)
+        public void OnDocumentOpened(EnvDTE.Document document)
         {
             
         }

@@ -26,7 +26,7 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <Optimize>true</Optimize>
     <OutputPath>.\bin\Release\</OutputPath>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
@@ -36,6 +36,7 @@
     <DocumentationFile>NActivitySensor.xml</DocumentationFile>
     <CodeAnalysisRuleSet>..\CodeAnalysis\CodefusionRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>NActivitySensor</RootNamespace>
@@ -65,11 +66,12 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BootStrapper.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Distributor.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="EnvDTE">
@@ -134,9 +136,9 @@
       <Project>{aad90564-3f17-42d1-b345-a949a260732c}</Project>
       <Name>NActivitySensor.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NActivitySensor.MsSql\NActivitySensor.MsSql.csproj">
+    <ProjectReference Include="..\NActivitySensor.MSSql\NActivitySensor.MSSql.csproj">
       <Project>{72d8a4ea-573e-4a83-8bb2-c67f97d3ea16}</Project>
-      <Name>NActivitySensor.MsSql</Name>
+      <Name>NActivitySensor.MSSql</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

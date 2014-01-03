@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 //
 // General Information about an assembly is controlled through the following 
@@ -27,6 +29,8 @@ using System.Runtime.CompilerServices;
 // by using the '*' as shown below:
 
 [assembly: AssemblyVersion("1.0.*")]
+[assembly: CLSCompliant(true)]
+[assembly: ComVisible(false)]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

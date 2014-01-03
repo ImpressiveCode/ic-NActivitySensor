@@ -1,5 +1,4 @@
-﻿using NActivitySensor.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,14 +13,14 @@ namespace NActivitySensor.Models
 
         }
 
-        public Report(object content, string rEvent)
+        public Report(object content, string eventName)
         {
             if (content == null)
             {
                 throw new ArgumentNullException("content");
             }
 
-            if (string.IsNullOrEmpty(rEvent))
+            if (string.IsNullOrEmpty(eventName))
             {
                 throw new ArgumentNullException("rEvent");
             }
@@ -29,29 +28,29 @@ namespace NActivitySensor.Models
             this.Content = ReportSerializationHelper.SerializeToJson(content);
             this.ContentType = content.GetType().Name;
             this.Date = DateTime.Now;
-            this.Event = rEvent;
+            this.Event = eventName;
         }
         #endregion
 
-        public string Content
+        public virtual string Content
         {
             get;
             set;
         }
 
-        public string ContentType
+        public virtual string ContentType
         {
             get;
             set;
         }
 
-        public string Event
+        public virtual string Event
         {
             get;
             set;
         }
 
-        public DateTime Date
+        public virtual DateTime Date
         {
             get;
             set;
