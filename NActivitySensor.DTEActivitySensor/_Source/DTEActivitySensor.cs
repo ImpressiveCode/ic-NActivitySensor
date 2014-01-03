@@ -1,11 +1,13 @@
-﻿using NActivitySensor.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NActivitySensor
+﻿namespace NActivitySensor
 {
+    #region Usings
+    using NActivitySensor.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    #endregion
+
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DTE")]
     public class DTEActivitySensor : IActivitySensor
     {

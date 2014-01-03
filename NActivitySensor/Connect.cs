@@ -1,14 +1,16 @@
-﻿using System;
-using Autofac;
-using Extensibility;
-using EnvDTE;
-using EnvDTE80;
-using System.Collections.Generic;
-using System.Diagnostics;
-
-namespace NActivitySensor
+﻿namespace NActivitySensor
 {
-	/// <summary>The object for implementing an Add-in.</summary>
+    #region Usings
+    using System;
+    using Autofac;
+    using Extensibility;
+    using EnvDTE;
+    using EnvDTE80;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    #endregion
+
+    /// <summary>The object for implementing an Add-in.</summary>
 	/// <seealso class='IDTExtensibility2' />
 	public class Connect : IDTExtensibility2, IDisposable
 	{

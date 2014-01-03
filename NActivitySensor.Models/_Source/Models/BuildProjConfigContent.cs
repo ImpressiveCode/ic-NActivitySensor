@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NActivitySensor.Models
+﻿namespace NActivitySensor.Models
 {
+    #region Usings
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    #endregion
+
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Proj")]
     public class BuildProjConfigContent
     {
+        #region Properties
         public string Project
         {
             get;
@@ -37,5 +40,6 @@ namespace NActivitySensor.Models
             get;
             set;
         }
+        #endregion
     }
 }

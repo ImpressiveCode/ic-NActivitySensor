@@ -1,5 +1,6 @@
 ﻿namespace NActivitySensor
 {
+    #region Sensor events enums
     public enum SensorSolutionEvent
     {
         SolutionAfterClosing,
@@ -98,9 +99,10 @@
     }
 
     public enum SensorDocumentEvent
-    {                                               
+    {
         DocumentClosing,
         DocumentSaved,
         DocumentOpened
     }
+    #endregion
 }

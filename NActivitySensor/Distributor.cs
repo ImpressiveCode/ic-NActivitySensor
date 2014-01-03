@@ -1,13 +1,15 @@
-﻿using EnvDTE;
-using EnvDTE80;
-using Extensibility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NActivitySensor
+﻿namespace NActivitySensor
 {
+    #region Usings
+    using EnvDTE;
+    using EnvDTE80;
+    using Extensibility;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    #endregion
+
     /// <summary>
     /// Distributes events to the sensors
     /// </summary>
@@ -495,7 +497,7 @@ namespace NActivitySensor
         }
         #endregion
 
-        #region Public
+        #region Methods
         /// <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>
         /// <param term='application'>Root object of the host application.</param>
         /// <param term='connectMode'>Describes how the Add-in is being loaded.</param>

@@ -1,12 +1,14 @@
-﻿using NActivitySensor.Models;
-using NActivitySensor.MSSql.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NActivitySensor.MSSql
+﻿namespace NActivitySensor.MSSql
 {
+    #region Usings
+    using NActivitySensor.Models;
+    using NActivitySensor.MSSql.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    #endregion
+
     public class MSSqlReporter : IReporter
     {
         #region Private variables

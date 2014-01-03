@@ -1,11 +1,12 @@
-﻿using NActivitySensor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NActivitySensor.Models
+﻿namespace NActivitySensor.Models
 {
+    #region Usings
+    using NActivitySensor;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    #endregion
     public class Report
     {
         #region Constructors
@@ -33,6 +34,7 @@ namespace NActivitySensor.Models
         }
         #endregion
 
+        #region Properties
         public string Content
         {
             get;
@@ -56,5 +58,6 @@ namespace NActivitySensor.Models
             get;
             set;
         }
+        #endregion
     }
 }
