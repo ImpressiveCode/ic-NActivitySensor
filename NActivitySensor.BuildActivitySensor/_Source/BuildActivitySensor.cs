@@ -35,51 +35,79 @@ namespace NActivitySensor.ActivitySensors
         #region IAcvititySensor implemented methods
         public void OnBuildDone(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
         {
-            var Report = new Report(new BuildReportContent
+            try
             {
-                Action = action.ToString(),
-                Scope = scope.ToString()
-            }, SensorBuildEvent.BuildDone.ToString());
+                var Report = new Report(new BuildReportContent
+                {
+                    Action = action.ToString(),
+                    Scope = scope.ToString()
+                }, SensorBuildEvent.BuildDone.ToString());
 
-            MyReportAll(Report);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnBuildProjConfigDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
         {
-            var Report = new Report(new BuildProjConfigContent
+            try
             {
-                Project = project,
-                ProjectConfig = projectConfig,
-                Platform = platform,
-                SolutionConfig = solutionConfig,
-                Success = success
-            }, SensorBuildEvent.BuildProjConfigDone.ToString());
+                var Report = new Report(new BuildProjConfigContent
+                {
+                    Project = project,
+                    ProjectConfig = projectConfig,
+                    Platform = platform,
+                    SolutionConfig = solutionConfig,
+                    Success = success
+                }, SensorBuildEvent.BuildProjConfigDone.ToString());
 
-            MyReportAll(Report);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnBuildBegin(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
         {
-            var Report = new Report(new BuildReportContent
+            try
             {
-                Scope = scope.ToString(),
-                Action = action.ToString()
-            }, SensorBuildEvent.BuildBegin.ToString());
+                var Report = new Report(new BuildReportContent
+                {
+                    Scope = scope.ToString(),
+                    Action = action.ToString()
+                }, SensorBuildEvent.BuildBegin.ToString());
 
-            MyReportAll(Report);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
         {
-            var Report = new Report(new BuildProjConfigContent
+            try
             {
-                Project = project,
-                ProjectConfig = projectConfig,
-                Platform = platform,
-                SolutionConfig = solutionConfig,
-            }, SensorBuildEvent.BuildProjConfigBegin.ToString());
+                var Report = new Report(new BuildProjConfigContent
+                {
+                    Project = project,
+                    ProjectConfig = projectConfig,
+                    Platform = platform,
+                    SolutionConfig = solutionConfig,
+                }, SensorBuildEvent.BuildProjConfigBegin.ToString());
 
-            MyReportAll(Report);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
         #endregion
 

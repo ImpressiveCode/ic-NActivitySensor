@@ -27,12 +27,19 @@ namespace NActivitySensor
         #region IReporter methods
         public void Report(Report report)
         {
-            var ReportEntity = new ReportEntity(report);
-
-            using (Context Context = new Context())
+            try
             {
-                Context.Reports.Add(ReportEntity);
-                Context.SaveChanges();
+                var ReportEntity = new ReportEntity(report);
+
+                using (Context Context = new Context())
+                {
+                    Context.Reports.Add(ReportEntity);
+                    Context.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
             }
         }
         #endregion

@@ -4,6 +4,24 @@
         <name>NActivitySensor</name>
     </assembly>
     <members>
+        <member name="T:NActivitySensor.BootStrapper">
+            <summary>
+            The bootstrapper
+            </summary>
+        </member>
+        <member name="M:NActivitySensor.BootStrapper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NActivitySensor.BootStrapper"/> class.
+            </summary>
+        </member>
+        <member name="P:NActivitySensor.BootStrapper.Sensors">
+            <summary>
+            Gets the sensors.
+            </summary>
+            <value>
+            The sensors.
+            </value>
+        </member>
         <member name="T:NActivitySensor.Connect">
             <summary>The object for implementing an Add-in.</summary>
             <seealso class='IDTExtensibility2' />
@@ -38,6 +56,18 @@
             <summary>Implements the OnBeginShutdown method of the IDTExtensibility2 interface. Receives notification that the host application is being unloaded.</summary>
             <param term='custom'>Array of parameters that are host application specific.</param>
             <seealso class='IDTExtensibility2' />
+        </member>
+        <member name="T:NActivitySensor.Distributor">
+            <summary>
+            Distributes events to the sensors
+            </summary>
+        </member>
+        <member name="M:NActivitySensor.Distributor.#ctor(System.Collections.Generic.IEnumerable{NActivitySensor.IActivitySensor})">
+            <summary>
+            Initializes a new instance of the <see cref="T:NActivitySensor.Distributor"/> class.
+            </summary>
+            <param name="sensors">The sensors.</param>
+            <exception cref="T:System.ArgumentNullException">sensors</exception>
         </member>
         <member name="M:NActivitySensor.Distributor.OnConnection(System.Object,Extensibility.ext_ConnectMode,System.Object,System.Array@)">
             <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>

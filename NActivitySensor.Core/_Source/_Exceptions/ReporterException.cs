@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NActivitySensor
 {
-    class SensorException : Exception
+    public class SensorException : Exception
     {
         public SensorException()
             : base()

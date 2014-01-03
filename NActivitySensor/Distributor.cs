@@ -8,6 +8,9 @@ using System.Text;
 
 namespace NActivitySensor
 {
+    /// <summary>
+    /// Distributes events to the sensors
+    /// </summary>
     public class Distributor
     {
         #region Private variables
@@ -22,6 +25,11 @@ namespace NActivitySensor
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Distributor"/> class.
+        /// </summary>
+        /// <param name="sensors">The sensors.</param>
+        /// <exception cref="System.ArgumentNullException">sensors</exception>
         public Distributor(IEnumerable<IActivitySensor> sensors)
         {
             if (sensors == null)
@@ -37,7 +45,7 @@ namespace NActivitySensor
         #endregion
 
         #region Solution events
-        void solutionEvents_Opened()
+        void SolutionEvents_Opened()
         {
             foreach (var Sensor in _Sensors)
             {
@@ -47,7 +55,7 @@ namespace NActivitySensor
             TickAlive();
         }
 
-        void solutionEvents_BeforeClosing()
+        void SolutionEvents_BeforeClosing()
         {
             foreach (var Sensor in _Sensors)
             {
@@ -261,16 +269,6 @@ namespace NActivitySensor
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnSolutionProjectAdded(project);
-            }
-
-            TickAlive();
-        }
-
-        void SolutionEvents_BeforeClosing()
-        {
-            foreach (var Sensor in _Sensors)
-            {
-                Sensor.OnSolutionBeforeClosing(String.Empty);
             }
 
             TickAlive();
@@ -519,7 +517,7 @@ namespace NActivitySensor
 
             _ApplicationObject.Events.SolutionEvents.AfterClosing += SolutionEvents_AfterClosing;
             _ApplicationObject.Events.SolutionEvents.BeforeClosing += SolutionEvents_BeforeClosing;
-            _ApplicationObject.Events.SolutionEvents.Opened += solutionEvents_Opened;
+            _ApplicationObject.Events.SolutionEvents.Opened += SolutionEvents_Opened;
             _ApplicationObject.Events.SolutionEvents.ProjectAdded += SolutionEvents_ProjectAdded;
             _ApplicationObject.Events.SolutionEvents.ProjectRemoved += SolutionEvents_ProjectRemoved;
             _ApplicationObject.Events.SolutionEvents.ProjectRenamed += SolutionEvents_ProjectRenamed;
@@ -541,9 +539,6 @@ namespace NActivitySensor
             _ApplicationObject.Events.WindowEvents.WindowClosing += WindowEvents_WindowClosing;
             _ApplicationObject.Events.WindowEvents.WindowCreated += WindowEvents_WindowCreated;
             _ApplicationObject.Events.WindowEvents.WindowMoved += WindowEvents_WindowMoved;
-            // Add solution item events
-            _SolutionEvents = _ApplicationObject.Events.SolutionEvents;
-            _SolutionEvents.BeforeClosing += solutionEvents_BeforeClosing;
 
             // Add build events
             _BuildEvents = _ApplicationObject.Events.BuildEvents;

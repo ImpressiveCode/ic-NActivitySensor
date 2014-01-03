@@ -12,14 +12,26 @@ using NActivitySensor.Loggers;
 
 namespace NActivitySensor
 {
+    /// <summary>
+    /// The bootstrapper
+    /// </summary>
     public class BootStrapper
     {
+        /// <summary>
+        /// Gets the sensors.
+        /// </summary>
+        /// <value>
+        /// The sensors.
+        /// </value>
         public IEnumerable<IActivitySensor> Sensors
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BootStrapper"/> class.
+        /// </summary>
         public BootStrapper()
         {
             var Builder = new ContainerBuilder();
