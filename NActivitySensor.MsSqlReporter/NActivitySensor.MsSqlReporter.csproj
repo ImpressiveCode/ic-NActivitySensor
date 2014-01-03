@@ -46,10 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context.cs" />
-    <Compile Include="MsSqlReporter.cs" />
+    <Compile Include="_Source\Context.cs" />
+    <Compile Include="_Source\MsSqlReporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportEntity.cs" />
+    <Compile Include="_Source\_Models\ReportEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

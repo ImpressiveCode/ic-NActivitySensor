@@ -33,31 +33,51 @@ namespace NActivitySensor
         #region IAcvititySensor implemented methods
         public void OnBuildDone(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
         {
-            Report BuildDoneReport = new Report(new BuildReportContent
+            var Report = new Report(new BuildReportContent
             {
                 Action = action.ToString(),
                 Scope = scope.ToString()
-            }, "BuildDone");
-            
-            foreach (var Reporter in _Reporters)
-            {
-                Reporter.Report(BuildDoneReport);
-            }
+            }, SensorBuildEvent.BuildDone.ToString());
+
+            MyReportAll(Report);
         }
 
         public void OnBuildProjConfigDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
         {
+            var Report = new Report(new BuildProjConfigContent
+            {
+                Project = project,
+                ProjectConfig = projectConfig,
+                Platform = platform,
+                SolutionConfig = solutionConfig,
+                Success = success
+            }, SensorBuildEvent.BuildProjConfigDone.ToString());
 
+            MyReportAll(Report);
         }
 
         public void OnBuildBegin(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
         {
+            var Report = new Report(new BuildReportContent
+            {
+                Scope = scope.ToString(),
+                Action = action.ToString()
+            }, SensorBuildEvent.BuildBegin.ToString());
 
+            MyReportAll(Report);
         }
 
         public void OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
         {
+            var Report = new Report(new BuildProjConfigContent
+            {
+                Project = project,
+                ProjectConfig = projectConfig,
+                Platform = platform,
+                SolutionConfig = solutionConfig,
+            }, SensorBuildEvent.BuildProjConfigBegin.ToString());
 
+            MyReportAll(Report);
         }
         #endregion
 
@@ -274,6 +294,16 @@ namespace NActivitySensor
         public void OnDocumentOpened(EnvDTE.Document Document)
         {
             
+        }
+        #endregion
+
+        #region My methods
+        private void MyReportAll(Report report)
+        {
+            foreach (var LoopReporter in _Reporters)
+            {
+                LoopReporter.Report(report);
+            }
         }
         #endregion
     }
