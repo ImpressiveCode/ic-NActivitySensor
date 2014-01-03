@@ -2,8 +2,10 @@
 /NActivitySensor/obj
 /NActivitySensor.BuildActivitySensor/bin
 /NActivitySensor.BuildActivitySensor/obj
-/NActivitySensor.MsSqlReporter/bin
-/NActivitySensor.MsSqlReporter/obj
+/NActivitySensor.MSSql/bin
+/NActivitySensor.MSSql/obj
 /NActivitySensor.Core/bin
 /NActivitySensor.Core/obj
+/NActivitySensor.Models/bin
+/NActivitySensor.Models/obj
 /*.suo
