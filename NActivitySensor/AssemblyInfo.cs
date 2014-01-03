@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("1.0.*")]
 [assembly: CLSCompliant(true)]
-[assembly: ComVisible(false)]
+[assembly: ComVisible(true)]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
