@@ -14,15 +14,15 @@ namespace NActivitySensor
 	{
         #region Private variables
         private Distributor _Distributor;
-        private Bootstrapper _BootStrapper;
+        private Bootstrapper _Bootstrapper;
         #endregion
 
         #region Public
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
 		public Connect()
 		{
-            _BootStrapper = new Bootstrapper();
-            _Distributor = new Distributor(_BootStrapper.Scope.Resolve<IEnumerable<IActivitySensor>>());
+            _Bootstrapper = new Bootstrapper();
+            _Distributor = new Distributor(_Bootstrapper.Scope.Resolve<IEnumerable<IActivitySensor>>());
 		}
 
 		/// <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>
@@ -86,6 +86,11 @@ namespace NActivitySensor
                 {
                     _Distributor.Dispose();
                     _Distributor = null;
+                }
+
+                if (_Bootstrapper != null)
+                {
+                    _Bootstrapper.Dispose();
                 }
             }
         }

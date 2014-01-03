@@ -52,7 +52,7 @@ namespace NActivitySensor
                 Sensor.OnSolutionOpened(String.Empty);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void SolutionEvents_BeforeClosing()
@@ -62,7 +62,7 @@ namespace NActivitySensor
                 Sensor.OnSolutionBeforeClosing(String.Empty);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
         #endregion
 
@@ -74,7 +74,7 @@ namespace NActivitySensor
                 Sensor.OnBuildProjConfigDone(project, projectConfig, platform, solutionConfig, success);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void BuildEvents_OnBuildDone(vsBuildScope scope, vsBuildAction action)
@@ -84,7 +84,7 @@ namespace NActivitySensor
                 Sensor.OnBuildDone(scope, action);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void BuildEvents_OnBuildBegin(vsBuildScope scope, vsBuildAction action)
@@ -94,7 +94,7 @@ namespace NActivitySensor
                 Sensor.OnBuildBegin(scope, action);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void BuildEvents_OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
@@ -104,11 +104,11 @@ namespace NActivitySensor
                 Sensor.OnBuildProjConfigBegin(project, projectConfig, platform, solutionConfig);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
         #endregion
 
-        #region Various (tick only) events
+        #region Window events
         void WindowEvents_WindowMoved(Window window, int top, int left, int width, int height)
         {
             foreach (var Sensor in _Sensors)
@@ -116,7 +116,7 @@ namespace NActivitySensor
                 Sensor.OnWindowMoved(window, top, left, width, height);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void WindowEvents_WindowCreated(Window window)
@@ -126,7 +126,7 @@ namespace NActivitySensor
                 Sensor.OnWindowCreated(window);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void WindowEvents_WindowClosing(Window window)
@@ -136,7 +136,7 @@ namespace NActivitySensor
                 Sensor.OnWindowClosing(window);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void WindowEvents_WindowActivated(Window gotFocus, Window lostFocus)
@@ -146,9 +146,11 @@ namespace NActivitySensor
                 Sensor.OnWindowActivated(gotFocus, lostFocus);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region TextEditor events
         void TextEditorEvents_LineChanged(TextPoint startPoint, TextPoint endPoint, int hint)
         {
             foreach (var Sensor in _Sensors)
@@ -156,9 +158,11 @@ namespace NActivitySensor
                 Sensor.OnLineChanged(startPoint, endPoint, hint);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region TaskList events
         void TaskListEvents_TaskRemoved(TaskItem taskItem)
         {
             foreach (var Sensor in _Sensors)
@@ -166,7 +170,7 @@ namespace NActivitySensor
                 Sensor.OnTaskRemoved(taskItem);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void TaskListEvents_TaskNavigated(TaskItem taskItem, ref bool navigateHandled)
@@ -176,7 +180,7 @@ namespace NActivitySensor
                 Sensor.OnTaskNavigated(taskItem, ref navigateHandled);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void TaskListEvents_TaskModified(TaskItem taskItem, vsTaskListColumn columnModified)
@@ -186,7 +190,7 @@ namespace NActivitySensor
                 Sensor.OnTaskModified(taskItem, columnModified);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void TaskListEvents_TaskAdded(TaskItem taskItem)
@@ -196,9 +200,11 @@ namespace NActivitySensor
                 Sensor.OnTaskAdded(taskItem);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region Solution items events
         void SolutionItemsEvents_ItemRenamed(ProjectItem projectItem, string oldName)
         {
             foreach (var Sensor in _Sensors)
@@ -206,7 +212,7 @@ namespace NActivitySensor
                 Sensor.OnFileItemRenamed(projectItem, oldName);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void SolutionItemsEvents_ItemRemoved(ProjectItem projectItem)
@@ -216,14 +222,16 @@ namespace NActivitySensor
                 Sensor.OnFileItemRemoved(projectItem);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void SolutionItemsEvents_ItemAdded(ProjectItem ProjectItem)
         {
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region Solution events
         void SolutionEvents_Renamed(string oldName)
         {
             foreach (var Sensor in _Sensors)
@@ -231,7 +239,7 @@ namespace NActivitySensor
                 Sensor.OnSolutionRenamed(oldName);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void SolutionEvents_QueryCloseSolution(ref bool fCancel)
@@ -241,7 +249,7 @@ namespace NActivitySensor
                 Sensor.OnSolutionQueryClose(ref fCancel);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void SolutionEvents_ProjectRenamed(Project project, string oldName)
@@ -251,7 +259,7 @@ namespace NActivitySensor
                 Sensor.OnSolutionProjectRenamed(project, oldName);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void SolutionEvents_ProjectRemoved(Project project)
@@ -261,7 +269,7 @@ namespace NActivitySensor
                 Sensor.OnSolutionProjectRemoved(project);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void SolutionEvents_ProjectAdded(Project project)
@@ -271,7 +279,7 @@ namespace NActivitySensor
                 Sensor.OnSolutionProjectAdded(project);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void SolutionEvents_AfterClosing()
@@ -281,7 +289,7 @@ namespace NActivitySensor
                 Sensor.OnSolutionAfterClosing(String.Empty);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void SelectionEvents_OnChange()
@@ -291,9 +299,11 @@ namespace NActivitySensor
                 Sensor.OnSelectionChange();
             }
 
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region Output window events
         void OutputWindowEvents_PaneUpdated(OutputWindowPane pPane)
         {
             foreach (var Sensor in _Sensors)
@@ -301,7 +311,7 @@ namespace NActivitySensor
                 Sensor.OnWindowPaneAdded(pPane);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void OutputWindowEvents_PaneClearing(OutputWindowPane pPane)
@@ -311,7 +321,7 @@ namespace NActivitySensor
                 Sensor.OnWindowPaneClearing(pPane);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void OutputWindowEvents_PaneAdded(OutputWindowPane pPane)
@@ -321,9 +331,11 @@ namespace NActivitySensor
                 Sensor.OnWindowPaneAdded(pPane);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region Files events
         void MiscFilesEvents_ItemRenamed(ProjectItem projectItem, string oldName)
         {
             foreach (var Sensor in _Sensors)
@@ -331,7 +343,7 @@ namespace NActivitySensor
                 Sensor.OnFileItemRenamed(projectItem, oldName);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void MiscFilesEvents_ItemRemoved(ProjectItem projectItem)
@@ -341,7 +353,7 @@ namespace NActivitySensor
                 Sensor.OnFileItemRemoved(projectItem);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void MiscFilesEvents_ItemAdded(ProjectItem projectItem)
@@ -351,9 +363,11 @@ namespace NActivitySensor
                 Sensor.OnFileItemAdded(projectItem);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region Find events
         void FindEvents_FindDone(vsFindResult result, bool cancelled)
         {
             foreach (var Sensor in _Sensors)
@@ -361,9 +375,11 @@ namespace NActivitySensor
                 Sensor.OnFindDone(result, cancelled);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region Debugger events
         void DebuggerEvents_OnExceptionThrown(string exceptionType, string name, int code, string description, ref dbgExceptionAction exceptionAction)
         {
             foreach (var Sensor in _Sensors)
@@ -371,7 +387,7 @@ namespace NActivitySensor
                 Sensor.OnDebuggerExceptionThrown(exceptionType, name, code, description, ref exceptionAction);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void DebuggerEvents_OnExceptionNotHandled(string exceptionType, string name, int code, string description, ref dbgExceptionAction exceptionAction)
@@ -381,7 +397,7 @@ namespace NActivitySensor
                 Sensor.OnDebuggerExceptionNotHandled(exceptionType, name, code, description, ref exceptionAction);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void DebuggerEvents_OnEnterRunMode(dbgEventReason reason)
@@ -391,7 +407,7 @@ namespace NActivitySensor
                 Sensor.OnDebuggerEnterRunMode(reason);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void DebuggerEvents_OnEnterDesignMode(dbgEventReason reason)
@@ -401,7 +417,7 @@ namespace NActivitySensor
                 Sensor.OnDebuggerEnterDesignMode(reason);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void DebuggerEvents_OnEnterBreakMode(dbgEventReason reason, ref dbgExecutionAction executionAction)
@@ -411,7 +427,7 @@ namespace NActivitySensor
                 Sensor.OnDebuggerEnterBreakMode(reason, ref executionAction);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void DebuggerEvents_OnContextChanged(EnvDTE.Process newProcess, Program newProgram, Thread newThread, EnvDTE.StackFrame newStackFrame)
@@ -421,9 +437,11 @@ namespace NActivitySensor
                 Sensor.OnDebuggerContextChanged(newProcess, newProgram, newThread, newStackFrame);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region Command events
         void CommandEvents_BeforeExecute(string guid, int id, object customIn, object customOut, ref bool cancelDefault)
         {
             foreach (var Sensor in _Sensors)
@@ -431,7 +449,7 @@ namespace NActivitySensor
                 Sensor.OnCommandBeforeExecute(guid, id, customIn, customOut, ref cancelDefault);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void CommandEvents_AfterExecute(string guid, int id, object customIn, object customOut)
@@ -441,9 +459,11 @@ namespace NActivitySensor
                 Sensor.OnCommandAfterExecute(guid, id, customIn, customOut);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
+        #endregion
 
+        #region Document events
         void OnDocumentClosing(Document document)
         {
             foreach (var Sensor in _Sensors)
@@ -451,7 +471,7 @@ namespace NActivitySensor
                 Sensor.OnDocumentClosing(document);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void OnDocumentSaved(Document document)
@@ -461,7 +481,7 @@ namespace NActivitySensor
                 Sensor.OnDocumentSaved(document);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         void OnDocumentOpened(Document document)
@@ -471,9 +491,8 @@ namespace NActivitySensor
                 Sensor.OnDocumentOpened(document);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
-
         #endregion
 
         #region Public
@@ -485,7 +504,7 @@ namespace NActivitySensor
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "addInInst"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "custom"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "connectMode"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Inst")]
         public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            _Timer.Elapsed += OnTimerElapsed;
+            _Timer.Elapsed += MyOnTimerElapsed;
             _Timer.Start();
 
             _ApplicationObject = (DTE2)application;
@@ -549,29 +568,7 @@ namespace NActivitySensor
             _BuildEvents.OnBuildProjConfigBegin += BuildEvents_OnBuildProjConfigBegin;
 
             string s = _ApplicationObject.FullName;
-
-
-
         }
-
-        void OnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            if (!_IsActive)
-            {
-                foreach (var Sensor in _Sensors)
-                {
-                    Sensor.OnUserInactive();
-                }
-            }
-
-            _IsActive = false;
-        }
-
-        private void TickAlive()
-        {
-            _IsActive = true;
-        }
-
 
         /// <summary>Implements the OnDisconnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being unloaded.</summary>
         /// <param term='disconnectMode'>Describes how the Add-in is being unloaded.</param>
@@ -585,7 +582,7 @@ namespace NActivitySensor
                 Sensor.OnDisconnection(disconnectMode, ref custom);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         /// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary>
@@ -599,7 +596,7 @@ namespace NActivitySensor
                 Sensor.OnAddInsUpdate(ref custom);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         /// <summary>Implements the OnStartupComplete method of the IDTExtensibility2 interface. Receives notification that the host application has completed loading.</summary>
@@ -613,7 +610,7 @@ namespace NActivitySensor
                 Sensor.OnStartupComplete(ref custom);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
 
         /// <summary>Implements the OnBeginShutdown method of the IDTExtensibility2 interface. Receives notification that the host application is being unloaded.</summary>
@@ -627,7 +624,7 @@ namespace NActivitySensor
                 Sensor.OnBeginShutdown(ref custom);
             }
 
-            TickAlive();
+            MyTickAlive();
         }
         #endregion
 
@@ -648,6 +645,26 @@ namespace NActivitySensor
                     _Timer = null;
                 }
             }
+        }
+        #endregion
+
+        #region My methods
+        private void MyOnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (!_IsActive)
+            {
+                foreach (var Sensor in _Sensors)
+                {
+                    Sensor.OnUserInactive();
+                }
+            }
+
+            _IsActive = false;
+        }
+
+        private void MyTickAlive()
+        {
+            _IsActive = true;
         }
         #endregion
     }

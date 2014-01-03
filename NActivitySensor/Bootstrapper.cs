@@ -15,7 +15,7 @@ namespace NActivitySensor
     /// <summary>
     /// The bootstrapper
     /// </summary>
-    public class Bootstrapper
+    public class Bootstrapper : IDisposable
     {
         #region Properties
         /// <summary>
@@ -49,5 +49,23 @@ namespace NActivitySensor
         }
         #endregion
 
+        #region IDisposable methods
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (Scope != null)
+                {
+                    Scope.Dispose();
+                }
+            }
+        }
+        #endregion
     }
 }
