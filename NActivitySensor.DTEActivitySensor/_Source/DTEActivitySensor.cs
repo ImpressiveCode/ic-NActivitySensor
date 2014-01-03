@@ -113,7 +113,14 @@
         #region IActivitySensor methods
         public void OnSolutionAfterClosing(string solutionFullName)
         {
+            if (solutionFullName != null)
+            {
+                _SolutionFullName = solutionFullName;
+            }
 
+            var Report = new Report(new object(), SensorSolutionEvent.SolutionAfterClosing.ToString(), _ProcessId, _SolutionFullName);
+
+            MyReportAll(Report);
         }
 
         public void OnSolutionOpened(string solutionFullName)
@@ -156,6 +163,9 @@
             {
                 _SolutionFullName = solutionFullName;
             }
+
+            var Report = new Report(new object(), SensorSolutionEvent.SolutionBeforeClosing.ToString(), _ProcessId, _SolutionFullName);
+            MyReportAll(Report);
         }
 
         public void OnSolutionRenamed(string oldName)
@@ -185,7 +195,8 @@
 
         public void OnUserInactive()
         {
-
+            var Report = new Report(new object(), SensorUserEvent.UserInactive.ToString(), _ProcessId, _SolutionFullName);
+            MyReportAll(Report);
         }
 
         public void OnConnect(int processId)
