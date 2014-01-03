@@ -14,6 +14,7 @@
         #region Private variables
         private readonly IEnumerable<IReporter> _Reporters;
 
+        private DTE2 _Application;
         private string _SolutionFullName = String.Empty;
         private int? _ProcessId = null;
         #endregion
@@ -122,7 +123,30 @@
                 _SolutionFullName = solutionFullName;
             }
 
-            var Report = new Report(new object(), SensorSolutionEvent.SolutionOpened.ToString(), _ProcessId, _SolutionFullName);
+            List<string> FoundProjects = new List<string>();
+            if (_Application != null && _Application.Solution != null)
+            {
+                if (_Application.Solution.Projects != null)
+                {
+                    foreach (dynamic LoopProject in _Application.Solution.Projects)
+                    {
+                        string ProjectName = String.Empty;
+
+                        if (LoopProject.Name != null && LoopProject.Name is string)
+                        {
+                            ProjectName = LoopProject.Name;
+                        }
+
+                        FoundProjects.Add(ProjectName);
+                    }
+                }
+            }
+
+            var Report = new Report(new SolutionInfoContent
+            {
+                SolutionName = _SolutionFullName,
+                Projects = FoundProjects
+            }, SensorSolutionEvent.SolutionOpened.ToString(), _ProcessId, _SolutionFullName);
             MyReportAll(Report);
         }
 
@@ -171,11 +195,12 @@
 
         public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            var Application = (DTE2)application;
+            _Application = (DTE2)application;
+
             string CurrentSolution = String.Empty;
-            if (Application != null && Application.Solution != null && Application.Solution.FullName != null)
+            if (_Application != null && _Application.Solution != null && _Application.Solution.FullName != null)
             {
-                CurrentSolution = Application.Solution.FullName;
+                CurrentSolution = _Application.Solution.FullName;
             }
 
             var Report = new Report(new object(), SensorPluginEvent.Connection.ToString(), _ProcessId, CurrentSolution);
