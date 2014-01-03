@@ -13,7 +13,7 @@
 
         }
 
-        public Report(object content, string eventName)
+        public Report(object content, string eventName, int? processId, string solution)
         {
             if (content == null)
             {
@@ -25,10 +25,18 @@
                 throw new ArgumentNullException("eventName");
             }
 
+            if (solution == null)
+            {
+                throw new ArgumentNullException("solution");
+            }
+
             this.Content = ReportSerializationHelper.SerializeToJson(content);
             this.ContentType = content.GetType().Name;
             this.Date = DateTime.Now;
             this.Event = eventName;
+            this.ProcessId = processId;
+            this.Solution = solution;
+            this.EnvironmentUserName = Environment.UserName;
         }
         #endregion
 
@@ -52,6 +60,24 @@
         }
 
         public DateTime Date
+        {
+            get;
+            set;
+        }
+
+        public int? ProcessId
+        {
+            get;
+            set;
+        }
+
+        public string Solution
+        {
+            get;
+            set;
+        }
+
+        public string EnvironmentUserName
         {
             get;
             set;

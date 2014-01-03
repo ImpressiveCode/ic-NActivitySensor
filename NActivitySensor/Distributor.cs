@@ -39,9 +39,14 @@
             }
 
             _Sensors = sensors;
-            _ProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
             _Timer = new System.Timers.Timer(_NumberOfSecondsToSetInactive * 1000);
             _IsActive = true;
+
+            _ProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnConnect(_ProcessId);
+            }
         }
         #endregion
 
@@ -50,7 +55,14 @@
         {
             foreach (var Sensor in _Sensors)
             {
-                Sensor.OnSolutionOpened(String.Empty);
+                if (_ApplicationObject != null && _ApplicationObject.Solution != null && _ApplicationObject.Solution.FullName != null)
+                {
+                    Sensor.OnSolutionOpened(_ApplicationObject.Solution.FullName);
+                }
+                else
+                {
+                    Sensor.OnSolutionOpened(String.Empty);
+                }
             }
 
             MyTickAlive();
@@ -60,7 +72,14 @@
         {
             foreach (var Sensor in _Sensors)
             {
-                Sensor.OnSolutionBeforeClosing(String.Empty);
+                if (_ApplicationObject != null && _ApplicationObject.Solution != null && _ApplicationObject.Solution.FullName != null)
+                {
+                    Sensor.OnSolutionBeforeClosing(_ApplicationObject.Solution.FullName);
+                }
+                else
+                {
+                    Sensor.OnSolutionBeforeClosing(String.Empty);
+                }
             }
 
             MyTickAlive();
@@ -569,6 +588,11 @@
             _BuildEvents.OnBuildProjConfigBegin += BuildEvents_OnBuildProjConfigBegin;
 
             string s = _ApplicationObject.FullName;
+
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnConnection(application, connectMode, addInInst, ref custom);
+            }
         }
 
         /// <summary>Implements the OnDisconnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being unloaded.</summary>

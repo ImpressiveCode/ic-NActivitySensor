@@ -87,6 +87,43 @@
                 _ReportBase.Event = value;
             }
         }
+
+        public new int? ProcessId
+        {
+            get
+            {
+                return _ReportBase.ProcessId;
+            }
+            set
+            {
+                _ReportBase.ProcessId = value;
+            }
+
+        }
+
+        public new string Solution
+        {
+            get
+            {
+                return _ReportBase.Solution;
+            }
+            set
+            {
+                _ReportBase.Solution = value;
+            }
+        }
+
+        public new string EnvironmentUserName
+        {
+            get
+            {
+                return _ReportBase.EnvironmentUserName;
+            }
+            set
+            {
+                _ReportBase.EnvironmentUserName = value;
+            }
+        }
         #endregion
     }
 }
