@@ -1,13 +1,10 @@
 ﻿namespace NActivitySensor.MSSql
 {
     #region Usings
-    using NActivitySensor.Models;
     using NActivitySensor.MSSql.Models;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Linq;
-    using System.Text;
+
     #endregion
 
     public class Context : DbContext

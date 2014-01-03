@@ -2,15 +2,8 @@
 {
     #region Usings
     using Autofac;
-    using System.ComponentModel.Composition;
-    using System.ComponentModel.Composition.Hosting;
-    using Autofac.Integration.Mef;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Reflection;
     using NActivitySensor.MSSql;
+    using System;
     #endregion
 
     /// <summary>
