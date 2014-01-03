@@ -90,18 +90,20 @@
     <Compile Include="_Source\_ActivitySensors\NullActivitySensor.cs" />
     <Compile Include="_Source\_Exceptions\ReporterException.cs" />
     <Compile Include="_Source\_Exceptions\SensorException.cs" />
-    <Compile Include="_Source\_Helpers\ReportSerializationHelper.cs" />
     <Compile Include="_Source\_Interfaces\IActivitySensor.cs" />
     <Compile Include="_Source\_Interfaces\ILogger.cs" />
     <Compile Include="_Source\_Interfaces\IReporter.cs" />
     <Compile Include="_Source\_Loggers\ConsoleLogger.cs" />
     <Compile Include="_Source\_Loggers\FileLogger.cs" />
-    <Compile Include="_Source\Models\BuildReportContent.cs" />
-    <Compile Include="_Source\Models\BuildProjConfigContent.cs" />
-    <Compile Include="_Source\Models\Report.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NActivitySensor.Models\NActivitySensor.Models.csproj">
+      <Project>{2de4da6b-b35e-4f26-8ee0-f4b6eac61643}</Project>
+      <Name>NActivitySensor.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

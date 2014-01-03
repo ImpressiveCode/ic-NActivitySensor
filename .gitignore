@@ -8,4 +8,6 @@
 /NActivitySensor.Core/obj
 /NActivitySensor.Models/bin
 /NActivitySensor.Models/obj
+/NActivitySensor.Common/bin
+/NActivitySensor.Common/obj
 /*.suo

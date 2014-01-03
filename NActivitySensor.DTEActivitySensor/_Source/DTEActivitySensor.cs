@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NActivitySensor.ActivitySensors
+namespace NActivitySensor
 {
-    public class BuildActivitySensor : IActivitySensor
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DTE")]
+    public class DTEActivitySensor : IActivitySensor
     {
         #region Private variables
         private readonly IEnumerable<IReporter> _Reporters;
         #endregion
 
         #region Constructors
-        public BuildActivitySensor(IEnumerable<IReporter> reporters)
+        public DTEActivitySensor(IEnumerable<IReporter> reporters)
         {
             if (reporters == null)
             {

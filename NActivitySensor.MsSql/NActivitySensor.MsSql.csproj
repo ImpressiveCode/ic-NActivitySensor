@@ -64,6 +64,10 @@
       <Project>{aad90564-3f17-42d1-b345-a949a260732c}</Project>
       <Name>NActivitySensor.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NActivitySensor.Models\NActivitySensor.Models.csproj">
+      <Project>{2de4da6b-b35e-4f26-8ee0-f4b6eac61643}</Project>
+      <Name>NActivitySensor.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

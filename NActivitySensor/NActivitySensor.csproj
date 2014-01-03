@@ -128,13 +128,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\NActivitySensor.BuildActivitySensor\NActivitySensor.BuildActivitySensor.csproj">
-      <Project>{a80dc199-ca81-4f63-a87a-4ce7eee420e1}</Project>
-      <Name>NActivitySensor.BuildActivitySensor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NActivitySensor.Core\NActivitySensor.Core.csproj">
       <Project>{aad90564-3f17-42d1-b345-a949a260732c}</Project>
       <Name>NActivitySensor.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NActivitySensor.DTEActivitySensor\NActivitySensor.DTEActivitySensor.csproj">
+      <Project>{a80dc199-ca81-4f63-a87a-4ce7eee420e1}</Project>
+      <Name>NActivitySensor.DTEActivitySensor</Name>
     </ProjectReference>
     <ProjectReference Include="..\NActivitySensor.MSSql\NActivitySensor.MSSql.csproj">
       <Project>{72d8a4ea-573e-4a83-8bb2-c67f97d3ea16}</Project>

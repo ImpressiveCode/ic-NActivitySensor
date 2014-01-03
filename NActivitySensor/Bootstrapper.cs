@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
-using NActivitySensor.ActivitySensors;
 using NActivitySensor.MSSql;
 
 namespace NActivitySensor
@@ -41,7 +40,7 @@ namespace NActivitySensor
 
             Builder.RegisterType<FileLogger>().As<ILogger>();
             Builder.RegisterType<MSSqlReporter>().As<IReporter>();
-            Builder.RegisterType<BuildActivitySensor>().As<IActivitySensor>();
+            Builder.RegisterType<DTEActivitySensor>().As<IActivitySensor>();
 
             var Container = Builder.Build();
 

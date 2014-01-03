@@ -1,0 +1,10 @@
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\bin\Debug\NActivitySensor.BuildActivitySensor.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\bin\Debug\NActivitySensor.BuildActivitySensor.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\bin\Debug\NActivitySensor.Core.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\bin\Debug\Newtonsoft.Json.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\bin\Debug\NActivitySensor.Core.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\bin\Debug\Newtonsoft.Json.xml
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\obj\Debug\NActivitySensor.BuildActivitySensor.csprojResolveAssemblyReference.cache
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\obj\Debug\NActivitySensor.BuildActivitySensor.csproj.ResolveComReference.cache
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\obj\Debug\NActivitySensor.BuildActivitySensor.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.BuildActivitySensor\obj\Debug\NActivitySensor.BuildActivitySensor.pdb

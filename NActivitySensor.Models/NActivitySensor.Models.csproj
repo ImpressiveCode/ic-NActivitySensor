@@ -49,9 +49,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NActivitySensor.Core\NActivitySensor.Core.csproj">
-      <Project>{aad90564-3f17-42d1-b345-a949a260732c}</Project>
-      <Name>NActivitySensor.Core</Name>
+    <ProjectReference Include="..\NActivitySensor.Common\NActivitySensor.Common.csproj">
+      <Project>{8f07977b-7194-4699-aa8c-076db2799d94}</Project>
+      <Name>NActivitySensor.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

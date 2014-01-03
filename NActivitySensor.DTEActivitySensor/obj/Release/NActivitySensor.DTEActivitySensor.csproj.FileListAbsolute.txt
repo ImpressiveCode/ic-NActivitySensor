@@ -1,0 +1,16 @@
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\obj\Release\NActivitySensor.DTEActivitySensor.csprojResolveAssemblyReference.cache
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\obj\Release\NActivitySensor.DTEActivitySensor.csproj.ResolveComReference.cache
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.DTEActivitySensor.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.DTEActivitySensor.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.DTEActivitySensor.dll.CodeAnalysisLog.xml
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.Core.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.Models.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.Common.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\Newtonsoft.Json.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.Core.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.Models.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.Common.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\Newtonsoft.Json.xml
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\obj\Release\NActivitySensor.DTEActivitySensor.dll
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\obj\Release\NActivitySensor.DTEActivitySensor.pdb
+C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.DTEActivitySensor\bin\Release\NActivitySensor.DTEActivitySensor.dll.lastcodeanalysissucceeded

@@ -10,18 +10,11 @@ namespace NActivitySensor.MSSql
     public class MSSqlReporter : IReporter
     {
         #region Private variables
-        private ILogger _Logger;
         #endregion
 
         #region Constructors
-        public MSSqlReporter(ILogger logger)
+        public MSSqlReporter()
         {
-            if (logger == null)
-            {
-                throw new ArgumentNullException("logger");
-            }
-
-            _Logger = logger;
         }
         #endregion
 

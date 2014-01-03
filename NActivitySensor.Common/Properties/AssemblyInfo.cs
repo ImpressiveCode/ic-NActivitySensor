@@ -6,23 +6,24 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NActivitySensor.BuildActivitySensor")]
+[assembly: AssemblyTitle("NActivitySensor.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NActivitySensor.BuildActivitySensor")]
+[assembly: AssemblyProduct("NActivitySensor.Common")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+
+[assembly: CLSCompliant(true)]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("336a8bec-bfee-45f6-9087-dd95d9fb62cf")]
+[assembly: Guid("de2fc3de-fa80-4ae6-918b-89311345c26a")]
 
 // Version information for an assembly consists of the following four values:
 //
