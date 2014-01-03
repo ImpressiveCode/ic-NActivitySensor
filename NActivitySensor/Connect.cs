@@ -19,11 +19,7 @@ namespace NActivitySensor
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
 		public Connect()
 		{
-            var Sensors = new List<IActivitySensor>();
-            Sensors.Add(NullActivitySensor.Instance);
-
             BootStrapper Boot = new BootStrapper();
-
             _Distributor = new Distributor(Boot.Sensors);
 		}
 

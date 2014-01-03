@@ -1,4 +1,4 @@
-﻿namespace NActivitySensor
+﻿namespace NActivitySensor.Enums
 {
     public enum SensorSolutionEvent
     {

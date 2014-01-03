@@ -66,7 +66,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Distributor.cs" />
-    <Compile Include="_Source\_Extensions\AssemblyHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="EnvDTE">
@@ -121,9 +120,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="_Source\_Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\NActivitySensor.BuildActivitySensor\NActivitySensor.BuildActivitySensor.csproj">
       <Project>{a80dc199-ca81-4f63-a87a-4ce7eee420e1}</Project>

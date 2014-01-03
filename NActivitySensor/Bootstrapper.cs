@@ -7,23 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using NActivitySensor.ActivitySensors;
+using NActivitySensor.Loggers;
 
 namespace NActivitySensor
 {
     public class BootStrapper
     {
-        public IContainer Container
-        {
-            get;
-            private set;
-        }
-
-        public ILifetimeScope Scope
-        {
-            get;
-            private set;
-        }
-
         public IEnumerable<IActivitySensor> Sensors
         {
             get;
@@ -33,17 +23,15 @@ namespace NActivitySensor
         public BootStrapper()
         {
             var Builder = new ContainerBuilder();
-            var AssemblyDirectory = Assembly.GetExecutingAssembly().GetCurrentAssemblyDirectory();
-            var PluginsCatalog = new DirectoryCatalog(AssemblyDirectory);
-
 
             Builder.RegisterType<FileLogger>().As<ILogger>();
             Builder.RegisterType<MsSqlReporter>().As<IReporter>();
             Builder.RegisterType<BuildActivitySensor>().As<IActivitySensor>();
 
-            Container = Builder.Build();
+            var Container = Builder.Build();
 
-            Scope = Container.BeginLifetimeScope();
+            var Scope = Container.BeginLifetimeScope();
+
             Sensors = Scope.Resolve<IEnumerable<IActivitySensor>>();
         }
     }
