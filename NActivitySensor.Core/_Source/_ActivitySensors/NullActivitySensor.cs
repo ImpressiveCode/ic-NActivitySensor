@@ -98,7 +98,7 @@
             
         }
 
-        public void OnUserActiveAgain()
+        public void OnUserActive()
         {
             
         }

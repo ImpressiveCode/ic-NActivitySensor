@@ -34,12 +34,10 @@
         #endregion
 
         #region Private variables
-        private int _NumberOfSecondsToSetInactive = 10;        
-        private bool _IsActive;
-        private bool _IsActiveNotified;
-        private bool _IsInactiveNotified;
-        System.Timers.Timer _Timer;
-        private static object _TimerLock = new object();
+        private int _NumberOfSecondsToSetInactive = 10;
+
+        private System.Timers.Timer _UserActivityTimer;
+        private static object _UserActivityTimerLock = new object();
 
         private int _ProcessId;
         private IEnumerable<IActivitySensor> _Sensors;
@@ -59,14 +57,14 @@
             }
 
             _Sensors = sensors;
-            _Timer = new System.Timers.Timer(_NumberOfSecondsToSetInactive * 1000);
-            _IsActive = true;
 
             _ProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnConnect(_ProcessId);
             }
+
+            MyTickAlive();
         }
         #endregion
 
@@ -100,7 +98,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBuildProjConfigDone(project, projectConfig, platform, solutionConfig, success);
-            }            
+            }
         }
 
         void BuildEvents_OnBuildDone(vsBuildScope scope, vsBuildAction action)
@@ -110,7 +108,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBuildDone(scope, action);
-            }            
+            }
         }
 
         void BuildEvents_OnBuildBegin(vsBuildScope scope, vsBuildAction action)
@@ -120,7 +118,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBuildBegin(scope, action);
-            }            
+            }
         }
 
         void BuildEvents_OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
@@ -130,7 +128,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBuildProjConfigBegin(project, projectConfig, platform, solutionConfig);
-            }            
+            }
         }
         #endregion
 
@@ -185,7 +183,7 @@
             {
                 MyTickAlive();
             }
-            
+
 
             foreach (var Sensor in _Sensors)
             {
@@ -212,7 +210,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnTaskNavigated(taskItem, ref navigateHandled);
-            }            
+            }
         }
 
         void TaskListEvents_TaskModified(TaskItem taskItem, vsTaskListColumn columnModified)
@@ -232,7 +230,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnTaskAdded(taskItem);
-            }            
+            }
         }
         #endregion
 
@@ -342,7 +340,7 @@
 
         #region Output window events
         void OutputWindowEvents_PaneUpdated(OutputWindowPane pPane)
-        {            
+        {
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowPaneAdded(pPane);
@@ -350,7 +348,7 @@
         }
 
         void OutputWindowEvents_PaneClearing(OutputWindowPane pPane)
-        {            
+        {
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowPaneClearing(pPane);
@@ -358,7 +356,7 @@
         }
 
         void OutputWindowEvents_PaneAdded(OutputWindowPane pPane)
-        {            
+        {
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowPaneAdded(pPane);
@@ -532,8 +530,8 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "addInInst"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "custom"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "connectMode"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Inst")]
         public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            _Timer.Elapsed += MyOnTimerElapsed;
-            _Timer.Start();
+            _UserActivityTimer.Elapsed += MyOnUserActivityTimerElapsed;
+            _UserActivityTimer.Start();
 
             _ApplicationObject = (DTE2)application;
             _Events = _ApplicationObject.Events;
@@ -556,7 +554,7 @@
             _DocumentEvents.DocumentClosing += OnDocumentClosing;
             _DocumentEvents.DocumentSaved += OnDocumentSaved;
             _DocumentEvents.DocumentOpened += OnDocumentOpened;
-            
+
             // Command events
             _CommandEvents.AfterExecute += CommandEvents_AfterExecute;
             _CommandEvents.BeforeExecute += CommandEvents_BeforeExecute;
@@ -772,61 +770,57 @@
         {
             if (disposing)
             {
-                if (_Timer != null)
+                if (_UserActivityTimer != null)
                 {
-                    _Timer.Dispose();
-                    _Timer = null;
+                    _UserActivityTimer.Dispose();
+                    _UserActivityTimer = null;
                 }
             }
         }
         #endregion
 
         #region My methods
-        private void MyOnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void MyOnUserActivityTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            lock (_TimerLock)
+            lock (_UserActivityTimerLock)
             {
-                if (_IsActive)
+                if (_UserActivityTimer.Enabled)
                 {
-                    _IsInactiveNotified = false;
-                }
-
-                // No MyTickAlive() execution between timer elapsed method calls means that user is not active
-                if (!_IsActive && !_IsInactiveNotified)
-                {
+                    // Notify sensors on user inactive
                     foreach (var Sensor in _Sensors)
                     {
                         Sensor.OnUserInactive();
                     }
 
-                    _IsInactiveNotified = true;
+                    // Disable timer
+                    _UserActivityTimer.Enabled = false;
                 }
-
-                // On each timer elapse set active flag to false
-                _IsActive = false;
             }
         }
 
         private void MyTickAlive()
         {
-            lock (_TimerLock)
+            lock (_UserActivityTimerLock)
             {
-                if (_IsActive)
+                // If timer does not exists yet
+                if (_UserActivityTimer == null)
                 {
-                    _IsActiveNotified = false;
+                    _UserActivityTimer = new System.Timers.Timer();
+                    _UserActivityTimer.Elapsed += MyOnUserActivityTimerElapsed;
                 }
 
-                if (!_IsActive && !_IsActiveNotified && _IsInactiveNotified)
+                // Notify if timer is enabling after elapsed
+                if (!_UserActivityTimer.Enabled)
                 {
                     foreach (var Sensor in _Sensors)
                     {
-                        Sensor.OnUserActiveAgain();
+                        Sensor.OnUserActive();
                     }
-
-                    _IsActiveNotified = true;
                 }
 
-                _IsActive = true;
+                // Set timer on each tick
+                _UserActivityTimer.Interval = _NumberOfSecondsToSetInactive * 1000;
+                _UserActivityTimer.Enabled = true;
             }
         }
         #endregion

@@ -33,7 +33,7 @@
         #region User activity events
         void OnUserInactive();
 
-        void OnUserActiveAgain();
+        void OnUserActive();
         #endregion
 
         #region Plugin lifetime events
