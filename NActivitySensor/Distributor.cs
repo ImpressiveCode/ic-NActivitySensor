@@ -556,9 +556,6 @@
             _DocumentEvents = _Events.DocumentEvents;
             // GC.KeepAlive(_DocumentEvents);
 
-            _DTEEvents = _Events.DTEEvents;
-            // GC.KeepAlive(_DTEEvents);
-
             _FindEvents = _Events.FindEvents;
             // GC.KeepAlive(_FindEvents);
 
