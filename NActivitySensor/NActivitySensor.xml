@@ -9,7 +9,7 @@
             The bootstrapper
             </summary>
         </member>
-        <member name="M:NActivitySensor.Bootstrapper.#ctor">
+        <member name="M:NActivitySensor.Bootstrapper.#ctor(System.Object)">
             <summary>
             Initializes a new instance of the <see cref="T:NActivitySensor.Bootstrapper"/> class.
             </summary>

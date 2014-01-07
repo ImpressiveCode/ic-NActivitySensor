@@ -3,6 +3,7 @@
     #region Usings
     using Autofac;
     using NActivitySensor.MSSql;
+    using NActivitySensor.OutputWindow;
     using System;
     #endregion
 
@@ -29,13 +30,28 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
         /// </summary>
-        public Bootstrapper()
+        public Bootstrapper(object application)
         {
+            if (application == null)
+            {
+                throw new ArgumentNullException("application");
+            }
+
             var Builder = new ContainerBuilder();
 
+            Builder.Register(g => new DefaultConnectContext(application)).As<IConnectContext>();
+
+            // Logger
             Builder.RegisterType<FileLogger>().As<ILogger>();
-            Builder.RegisterType<MSSqlReporter>().As<IReporter>();
+
+            // Reporters
+            Builder.RegisterType<MSSqlReporter>().As<IReporter>().WithMetadata("MSSqlReporter", new object());
+            Builder.RegisterType<OutputWindowReporter>().As<IReporter>().WithMetadata("OutputWindowReporter", new object()).PreserveExistingDefaults();
+
+            // Activity sensors
             Builder.RegisterType<DTEActivitySensor>().As<IActivitySensor>();
+
+            // Serializer
             Builder.RegisterType<JsonReportContentSerializer>().As<IReportContentSerializer>();
 
             var Container = Builder.Build();

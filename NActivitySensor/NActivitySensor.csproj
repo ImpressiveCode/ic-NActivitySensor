@@ -141,6 +141,10 @@
       <Project>{72d8a4ea-573e-4a83-8bb2-c67f97d3ea16}</Project>
       <Name>NActivitySensor.MSSql</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NActivitySensor.OutputWindow\NActivitySensor.OutputWindow.csproj">
+      <Project>{c37d78af-c5eb-459a-86fe-d1a6351eb2f4}</Project>
+      <Name>NActivitySensor.OutputWindow</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>

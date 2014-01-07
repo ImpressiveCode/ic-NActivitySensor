@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NActivitySensor.MSSql", "NA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NActivitySensor.DTEActivitySensor", "NActivitySensor.DTEActivitySensor\NActivitySensor.DTEActivitySensor.csproj", "{A80DC199-CA81-4F63-A87A-4CE7EEE420E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NActivitySensor.OutputWindow", "NActivitySensor.OutputWindow\NActivitySensor.OutputWindow.csproj", "{C37D78AF-C5EB-459A-86FE-D1A6351EB2F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,12 +43,17 @@ Global
 		{A80DC199-CA81-4F63-A87A-4CE7EEE420E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A80DC199-CA81-4F63-A87A-4CE7EEE420E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A80DC199-CA81-4F63-A87A-4CE7EEE420E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C37D78AF-C5EB-459A-86FE-D1A6351EB2F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C37D78AF-C5EB-459A-86FE-D1A6351EB2F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C37D78AF-C5EB-459A-86FE-D1A6351EB2F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C37D78AF-C5EB-459A-86FE-D1A6351EB2F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{72D8A4EA-573E-4A83-8BB2-C67F97D3EA16} = {3A461AD0-F6C3-40BA-8DF6-432666BB899A}
+		{C37D78AF-C5EB-459A-86FE-D1A6351EB2F4} = {3A461AD0-F6C3-40BA-8DF6-432666BB899A}
 		{A80DC199-CA81-4F63-A87A-4CE7EEE420E1} = {B4C761B3-B442-44F5-BA9B-AA9B3CB64797}
 	EndGlobalSection
 EndGlobal

@@ -21,8 +21,7 @@
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
         public Connect()
         {
-            _Bootstrapper = new Bootstrapper();
-            _Distributor = new Distributor(_Bootstrapper.Scope.Resolve<IEnumerable<IActivitySensor>>());
+            
         }
 
         /// <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>
@@ -33,6 +32,9 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "2#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#")]
         public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
+            _Bootstrapper = new Bootstrapper(application);
+            _Distributor = new Distributor(_Bootstrapper.Scope.Resolve<IEnumerable<IActivitySensor>>());
+
             _Distributor.OnConnection(application, connectMode, addInInst, ref custom);
         }
 
