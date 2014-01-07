@@ -47,19 +47,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="_Source\Models\ConnectionContent.cs" />
-    <Compile Include="_Source\Models\ProjectInfoContent.cs" />
-    <Compile Include="_Source\Models\ProjectItemInfoContent.cs" />
-    <Compile Include="_Source\Models\ProjectItemRenamedContent.cs" />
-    <Compile Include="_Source\Models\ProjectRenamedContent.cs" />
-    <Compile Include="_Source\Models\SolutionRenamedContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\ConnectionContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\DebuggerContextChanged.cs" />
+    <Compile Include="_Source\Models\_ReportContents\DebuggerExceptionContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\DebuggerModeContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\ProjectInfoContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\ProjectItemInfoContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\ProjectItemRenamedContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\ProjectRenamedContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\SolutionRenamedContent.cs" />
     <Compile Include="_Source\_Interfaces\IReportContentSerializer.cs" />
     <Compile Include="_Source\JsonReportContentSerializer.cs" />
-    <Compile Include="_Source\Models\BuildProjConfigContent.cs" />
-    <Compile Include="_Source\Models\BuildReportContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\BuildProjConfigContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\BuildReportContent.cs" />
     <Compile Include="_Source\Models\Report.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_Source\Models\SolutionInfoContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\SolutionInfoContent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

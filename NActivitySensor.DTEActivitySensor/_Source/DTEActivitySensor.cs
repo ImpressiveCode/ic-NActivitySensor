@@ -464,7 +464,7 @@
         }
 
         public void OnLineChanged(EnvDTE.TextPoint startPoint, EnvDTE.TextPoint endPoint, int hint)
-       {
+        {
             
         }
 
@@ -535,36 +535,142 @@
 
         public void OnFindDone(EnvDTE.vsFindResult result, bool canceled)
         {
-
+            try
+            {
+                var Report = new Report(result, SensorFindEvent.FindDone.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnDebuggerExceptionThrown(string exceptionType, string name, int code, string description, ref EnvDTE.dbgExceptionAction exceptionAction)
         {
+            try
+            {
+                var ExceptionContent = MyCreateDebuggerException(exceptionType, name, code, description, ref exceptionAction);
+                var Report = new Report(ExceptionContent, SensorDebuggerEvent.DebuggerExceptionThrown.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnDebuggerExceptionNotHandled(string exceptionType, string name, int code, string description, ref EnvDTE.dbgExceptionAction exceptionAction)
         {
-
+            try
+            {
+                var ExceptionContent = MyCreateDebuggerException(exceptionType, name, code, description, ref exceptionAction);
+                var Report = new Report(ExceptionContent, SensorDebuggerEvent.DebuggerExceptionNotHandled.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnDebuggerEnterRunMode(EnvDTE.dbgEventReason reason)
         {
+            try
+            {
+                var DebuggerModeContent = new DebuggerModeContent()
+                {
+                    Reason = reason.ToString()
+                };
 
+                var Report = new Report(DebuggerModeContent, SensorDebuggerEvent.DebuggerEnterRunMode.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnDebuggerEnterDesignMode(EnvDTE.dbgEventReason reason)
         {
+            try
+            {
+                var DebuggerModeContent = new DebuggerModeContent()
+                {
+                    Reason = reason.ToString()
+                };
 
+                var Report = new Report(DebuggerModeContent, SensorDebuggerEvent.DebuggerEnterDesignMode.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnDebuggerEnterBreakMode(EnvDTE.dbgEventReason reason, ref EnvDTE.dbgExecutionAction executionAction)
         {
+            try
+            {
+                var DebuggerModeContent = new DebuggerModeContent()
+                {
+                    Reason = reason.ToString(),
+                    ExecutionAction = executionAction.ToString()
+                };
 
+                var Report = new Report(DebuggerModeContent, SensorDebuggerEvent.DebuggerEnterBreakMode.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnDebuggerContextChanged(EnvDTE.Process newProcess, EnvDTE.Program newProgram, EnvDTE.Thread newThread, EnvDTE.StackFrame newStackFrame)
         {
+            try
+            {
+                if (newProcess == null)
+                {
+                    throw new ArgumentNullException("newProcess");
+                }
 
+                if (newProgram == null)
+                {
+                    throw new ArgumentNullException("newProgram");
+                }
+
+                if (newThread == null)
+                {
+                    throw new ArgumentNullException("newThread");
+                }
+
+                if (newStackFrame == null)
+                {
+                    throw new ArgumentNullException("newStackFrame");
+                }
+
+                var DebuggerContextContent = new DebuggerContextChanged()
+                {
+                    ProcessId = newProcess.ProcessID,
+                    ProcessName = newProcess.Name,
+                    ProgramName = newProgram.Name,
+                    ProgramProcessId = newProgram.Process.ProcessID,
+                    ThreadId = newThread.ID,
+                    ThreadName = newThread.Name,
+                    StackFrameFunctionName = newStackFrame.FunctionName
+                };
+
+                var Report = new Report(DebuggerContextContent, SensorDebuggerEvent.DebuggerContextChanged.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnCommandBeforeExecute(string guid, int id, object customIn, object customOut, ref bool cancelDefault)
@@ -607,6 +713,18 @@
             return new ProjectInfoContent()
             {
                 Name = project.UniqueName
+            };
+        }
+
+        private DebuggerExceptionContent MyCreateDebuggerException(string exceptionType, string name, int code, string description, ref EnvDTE.dbgExceptionAction exceptionAction)
+        {
+            return new DebuggerExceptionContent()
+            {
+                Code = code,
+                Description = description,
+                ExceptionAction = exceptionAction.ToString(),
+                ExceptionType = exceptionType,
+                Name = name
             };
         }
 
