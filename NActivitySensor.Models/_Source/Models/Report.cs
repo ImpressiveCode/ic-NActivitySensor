@@ -13,7 +13,7 @@
 
         }
 
-        public Report(object content, string eventName, int? processId, string solution)
+        public Report(object content, string eventName, int? processId, string solution, IReportContentSerializer reportContentSerializer)
         {
             if (content == null)
             {
@@ -30,7 +30,12 @@
                 throw new ArgumentNullException("solution");
             }
 
-            this.Content = ReportSerializationHelper.SerializeToJson(content);
+            if (reportContentSerializer == null)
+            {
+                throw new ArgumentNullException("reportContentSerializer");
+            }
+
+            this.Content = reportContentSerializer.Serialize(content);
             this.ContentType = content.GetType().Name;
             this.Date = DateTime.Now;
             this.Event = eventName;

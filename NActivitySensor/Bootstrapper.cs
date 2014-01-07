@@ -36,6 +36,7 @@
             Builder.RegisterType<FileLogger>().As<ILogger>();
             Builder.RegisterType<MSSqlReporter>().As<IReporter>();
             Builder.RegisterType<DTEActivitySensor>().As<IActivitySensor>();
+            Builder.RegisterType<JsonReportContentSerializer>().As<IReportContentSerializer>();
 
             var Container = Builder.Build();
 

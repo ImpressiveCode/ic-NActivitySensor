@@ -13,6 +13,7 @@
     {
         #region Private variables
         private readonly IEnumerable<IReporter> _Reporters;
+        private readonly IReportContentSerializer _ReportContentSerializer;
 
         private DTE2 _Application;
         private string _SolutionFullName = String.Empty;
@@ -20,14 +21,20 @@
         #endregion
 
         #region Constructors
-        public DTEActivitySensor(IEnumerable<IReporter> reporters)
+        public DTEActivitySensor(IEnumerable<IReporter> reporters, IReportContentSerializer reportContentSerializer)
         {
             if (reporters == null)
             {
                 throw new ArgumentNullException("reporters");
             }
 
+            if (reportContentSerializer == null)
+            {
+                throw new ArgumentNullException("reportContentSerializer");
+            }
+
             _Reporters = reporters;
+            _ReportContentSerializer = reportContentSerializer;
         }
         #endregion
 
@@ -40,7 +47,7 @@
                 {
                     Action = action.ToString(),
                     Scope = scope.ToString()
-                }, SensorBuildEvent.BuildDone.ToString(), _ProcessId, _SolutionFullName);
+                }, SensorBuildEvent.BuildDone.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -61,7 +68,7 @@
                     Platform = platform,
                     SolutionConfig = solutionConfig,
                     Success = success
-                }, SensorBuildEvent.BuildProjConfigDone.ToString(), _ProcessId, _SolutionFullName);
+                }, SensorBuildEvent.BuildProjConfigDone.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -79,7 +86,7 @@
                 {
                     Scope = scope.ToString(),
                     Action = action.ToString()
-                }, SensorBuildEvent.BuildBegin.ToString(), _ProcessId, _SolutionFullName);
+                }, SensorBuildEvent.BuildBegin.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -99,7 +106,7 @@
                     ProjectConfig = projectConfig,
                     Platform = platform,
                     SolutionConfig = solutionConfig,
-                }, SensorBuildEvent.BuildProjConfigBegin.ToString(), _ProcessId, _SolutionFullName);
+                }, SensorBuildEvent.BuildProjConfigBegin.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -113,90 +120,181 @@
         #region IActivitySensor methods
         public void OnSolutionAfterClosing(string solutionFullName)
         {
-            if (solutionFullName != null)
+            try
             {
-                _SolutionFullName = solutionFullName;
+                if (solutionFullName != null)
+                {
+                    _SolutionFullName = solutionFullName;
+                }
+
+                var Report = new Report(new object(), SensorSolutionEvent.SolutionAfterClosing.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+
+                MyReportAll(Report);
             }
-
-            var Report = new Report(new object(), SensorSolutionEvent.SolutionAfterClosing.ToString(), _ProcessId, _SolutionFullName);
-
-            MyReportAll(Report);
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnSolutionOpened(string solutionFullName)
         {
-            if (solutionFullName != null)
+            try
             {
-                _SolutionFullName = solutionFullName;
-            }
-
-            List<string> FoundProjects = new List<string>();
-            if (_Application != null && _Application.Solution != null)
-            {
-                if (_Application.Solution.Projects != null)
+                if (solutionFullName != null)
                 {
-                    foreach (dynamic LoopProject in _Application.Solution.Projects)
+                    _SolutionFullName = solutionFullName;
+                }
+
+                List<string> FoundProjects = new List<string>();
+                if (_Application != null && _Application.Solution != null)
+                {
+                    if (_Application.Solution.Projects != null)
                     {
-                        string ProjectName = String.Empty;
-
-                        if (LoopProject.Name != null && LoopProject.Name is string)
+                        foreach (EnvDTE.Project LoopProject in _Application.Solution.Projects)
                         {
-                            ProjectName = LoopProject.Name;
-                        }
+                            string ProjectName = String.Empty;
 
-                        FoundProjects.Add(ProjectName);
+                            if (LoopProject.Name != null && LoopProject.Name is string)
+                            {
+                                ProjectName = LoopProject.Name;
+                            }
+
+                            FoundProjects.Add(ProjectName);
+                        }
                     }
                 }
-            }
 
-            var Report = new Report(new SolutionInfoContent
+                var Report = new Report(new SolutionInfoContent
+                {
+                    SolutionName = _SolutionFullName,
+                    Projects = FoundProjects
+                }, SensorSolutionEvent.SolutionOpened.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+
+            }
+            catch (Exception exception)
             {
-                SolutionName = _SolutionFullName,
-                Projects = FoundProjects
-            }, SensorSolutionEvent.SolutionOpened.ToString(), _ProcessId, _SolutionFullName);
-            MyReportAll(Report);
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnSolutionBeforeClosing(string solutionFullName)
         {
-            if (solutionFullName != null)
+            try
             {
-                _SolutionFullName = solutionFullName;
-            }
+                if (solutionFullName != null)
+                {
+                    _SolutionFullName = solutionFullName;
+                }
 
-            var Report = new Report(new object(), SensorSolutionEvent.SolutionBeforeClosing.ToString(), _ProcessId, _SolutionFullName);
-            MyReportAll(Report);
+                var Report = new Report(new object(), SensorSolutionEvent.SolutionBeforeClosing.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnSolutionRenamed(string oldName)
         {
+            try
+            {
+                var NewName = _Application.Solution.FullName;
 
+                var Report = new Report(new SolutionRenamedContent()
+                {
+                    NewName = NewName,
+                    OldName = oldName
+                }, SensorSolutionEvent.SolutionRenamed.ToString(), _ProcessId, NewName, _ReportContentSerializer);
+
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnSolutionQueryClose(ref bool fCancel)
         {
-
+            try
+            {
+                var Report = new Report(new object(), SensorSolutionEvent.SolutionQueryClose.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnSolutionProjectRenamed(EnvDTE.Project project, string oldName)
         {
+            try
+            {
+                if (project == null)
+                {
+                    throw new ArgumentNullException("project");
+                }
 
+                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectRenamed.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnSolutionProjectRemoved(EnvDTE.Project project)
         {
+            try
+            {
+                if (project == null)
+                {
+                    throw new ArgumentNullException("project");
+                }
 
+                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectRemoved.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnSolutionProjectAdded(EnvDTE.Project project)
         {
+            try
+            {
+                if (project == null)
+                {
+                    throw new ArgumentNullException("project");
+                }
 
+                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectAdded.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnUserInactive()
         {
-            var Report = new Report(new object(), SensorUserEvent.UserInactive.ToString(), _ProcessId, _SolutionFullName);
-            MyReportAll(Report);
+            try
+            {
+                var Report = new Report(new object(), SensorUserEvent.UserInactive.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnConnect(int processId)
@@ -206,22 +304,38 @@
 
         public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            _Application = (DTE2)application;
-
-            string CurrentSolution = String.Empty;
-            if (_Application != null && _Application.Solution != null && _Application.Solution.FullName != null)
+            try
             {
-                CurrentSolution = _Application.Solution.FullName;
+                _Application = (DTE2)application;
+
+                string CurrentSolution = String.Empty;
+                if (_Application != null && _Application.Solution != null && _Application.Solution.FullName != null)
+                {
+                    CurrentSolution = _Application.Solution.FullName;
+                }
+
+                var Report = new Report(new object(), SensorPluginEvent.Connection.ToString(), _ProcessId, CurrentSolution, _ReportContentSerializer);
+
+                MyReportAll(Report);
             }
-
-            var Report = new Report(new object(), SensorPluginEvent.Connection.ToString(), _ProcessId, CurrentSolution);
-
-            MyReportAll(Report);
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
         {
+            try
+            {
+                var Report = new Report(new object(), SensorPluginEvent.Disconnection.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
 
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnAddInsUpdate(ref Array custom)
@@ -231,12 +345,28 @@
 
         public void OnStartupComplete(ref Array custom)
         {
-
+            try
+            {
+                var Report = new Report(new object(), SensorPluginEvent.StartupComplete.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnBeginShutdown(ref Array custom)
         {
-
+            try
+            {
+                var Report = new Report(new object(), SensorPluginEvent.BeginShutdown.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnWindowMoved(EnvDTE.Window window, int top, int left, int width, int height)

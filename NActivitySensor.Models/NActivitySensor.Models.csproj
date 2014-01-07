@@ -33,6 +33,10 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="_Source\Models\SolutionRenamedContent.cs" />
+    <Compile Include="_Source\_Interfaces\IReportContentSerializer.cs" />
+    <Compile Include="_Source\JsonReportContentSerializer.cs" />
     <Compile Include="_Source\Models\BuildProjConfigContent.cs" />
     <Compile Include="_Source\Models\BuildReportContent.cs" />
     <Compile Include="_Source\Models\Report.cs" />
@@ -50,10 +57,7 @@
     <Compile Include="_Source\Models\SolutionInfoContent.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NActivitySensor.Common\NActivitySensor.Common.csproj">
-      <Project>{8f07977b-7194-4699-aa8c-076db2799d94}</Project>
-      <Name>NActivitySensor.Common</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

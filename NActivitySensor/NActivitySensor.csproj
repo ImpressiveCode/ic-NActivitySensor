@@ -136,6 +136,10 @@
       <Project>{a80dc199-ca81-4f63-a87a-4ce7eee420e1}</Project>
       <Name>NActivitySensor.DTEActivitySensor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NActivitySensor.Models\NActivitySensor.Models.csproj">
+      <Project>{2de4da6b-b35e-4f26-8ee0-f4b6eac61643}</Project>
+      <Name>NActivitySensor.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NActivitySensor.MSSql\NActivitySensor.MSSql.csproj">
       <Project>{72d8a4ea-573e-4a83-8bb2-c67f97d3ea16}</Project>
       <Name>NActivitySensor.MSSql</Name>
