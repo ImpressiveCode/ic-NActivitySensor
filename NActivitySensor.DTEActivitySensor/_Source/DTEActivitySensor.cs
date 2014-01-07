@@ -490,7 +490,7 @@
                     OldName = oldName
                 };
 
-                var Report = new Report(ProjectItemRenameContent, SensorSelectionEvent.SelectionChange.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                var Report = new Report(ProjectItemRenameContent, SensorFileItemEvent.FileItemRenamed.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -503,7 +503,7 @@
         {
             try
             {
-                var Report = new Report(MyCreateProjectItemInfo(projectItem), SensorSelectionEvent.SelectionChange.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                var Report = new Report(MyCreateProjectItemInfo(projectItem), SensorFileItemEvent.FileItemRemoved.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -516,7 +516,7 @@
         {
             try
             {
-                var Report = new Report(MyCreateProjectItemInfo(projectItem), SensorSelectionEvent.SelectionChange.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                var Report = new Report(MyCreateProjectItemInfo(projectItem), SensorFileItemEvent.FileItemAdded.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
