@@ -1,7 +1,0 @@
-C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.Models\bin\Debug\NActivitySensor.Models.dll
-C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.Models\bin\Debug\NActivitySensor.Models.pdb
-C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.Models\bin\Debug\Newtonsoft.Json.dll
-C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.Models\bin\Debug\Newtonsoft.Json.xml
-C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.Models\obj\Debug\NActivitySensor.Models.csprojResolveAssemblyReference.cache
-C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.Models\obj\Debug\NActivitySensor.Models.dll
-C:\MichalRakoczy\Dev\ic-NActivitySensor\NActivitySensor.Models\obj\Debug\NActivitySensor.Models.pdb
