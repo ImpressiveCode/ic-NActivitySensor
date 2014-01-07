@@ -452,15 +452,7 @@
 
         public void OnSelectionChange()
         {
-            try
-            {
-                var Report = new Report(new object(), SensorSelectionEvent.SelectionChange.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
-                MyReportAll(Report);
-            }
-            catch (Exception exception)
-            {
-                throw new ReporterException(exception.Message, exception);
-            }
+
         }
 
         public void OnLineChanged(EnvDTE.TextPoint startPoint, EnvDTE.TextPoint endPoint, int hint)

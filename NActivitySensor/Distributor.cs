@@ -521,6 +521,9 @@
 
             _ApplicationObject = (DTE2)application;
 
+            // It is neccessary to keep application object events alive
+            GC.KeepAlive(_ApplicationObject);            
+
             // Documents events
             _ApplicationObject.Events.DocumentEvents.DocumentClosing += OnDocumentClosing;
             _ApplicationObject.Events.DocumentEvents.DocumentSaved += OnDocumentSaved;
@@ -605,7 +608,7 @@
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
         {
             MyTickAlive();
-
+            
             // Documents events
             _ApplicationObject.Events.DocumentEvents.DocumentClosing -= OnDocumentClosing;
             _ApplicationObject.Events.DocumentEvents.DocumentSaved -= OnDocumentSaved;
