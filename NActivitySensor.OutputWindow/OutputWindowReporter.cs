@@ -29,13 +29,12 @@
             {
                 throw new ArgumentNullException("connectContext");
             }
-
+            
             try
             {
                 _ConnectContext = connectContext;
 
                 _Application = (DTE2)_ConnectContext.Application;
-
                 _Window = _Application.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
                 _OutputWindow = (OutputWindow)_Window.Object;
                 _OutputWindowPane = _OutputWindow.OutputWindowPanes.Add("NActivitySensor");
