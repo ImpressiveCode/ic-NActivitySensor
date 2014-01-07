@@ -2,10 +2,14 @@
 {
     #region Usings
     using Autofac;
+    using EnvDTE;
+    using EnvDTE80;
     using Extensibility;
+    using Microsoft.VisualStudio.CommandBars;
     using System;
     using System.Collections.Generic;
-
+    using System.Linq;
+    using System.Collections;
     #endregion
 
     /// <summary>The object for implementing an Add-in.</summary>
@@ -35,6 +39,15 @@
             _Bootstrapper = new Bootstrapper(application);
             _Distributor = new Distributor(_Bootstrapper.Scope.Resolve<IEnumerable<IActivitySensor>>());
 
+            // Test - adding menubar
+            // TODO: Create separate menu classes
+            var DTEApplication = (DTE2)application;
+            var CommandBars = (CommandBars)DTEApplication.CommandBars;
+            var MenuBar = CommandBars["MenuBar"];
+            var ToolsCommandBar = CommandBars["Tools"];
+            var HelpCommandBar = CommandBars["Help"];
+            CommandBar SensorCommandBar = (CommandBar)DTEApplication.Commands.AddCommandBar("NAcvititySensor", vsCommandBarType.vsCommandBarTypeMenu, MenuBar, 1);    
+            
             _Distributor.OnConnection(application, connectMode, addInInst, ref custom);
         }
 

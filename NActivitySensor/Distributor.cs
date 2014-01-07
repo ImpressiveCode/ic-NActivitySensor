@@ -15,9 +15,7 @@
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
     public class Distributor : IDisposable
     {
-        #region Private variables
-        private int _NumberOfSecondsToSetInactive = 10;
-
+        #region DTE private variables
         private DTE2 _ApplicationObject;
         private Events _Events;
         private DocumentEvents _DocumentEvents;
@@ -33,7 +31,10 @@
         private TextEditorEvents _TextEditorEvents;
         private WindowEvents _WindowEvents;
         private BuildEvents _BuildEvents;
+        #endregion
 
+        #region Private variables
+        private int _NumberOfSecondsToSetInactive = 10;        
         private bool _IsActive;
         private bool _IsActiveNotified;
         private bool _IsInactiveNotified;
@@ -535,50 +536,20 @@
             _Timer.Start();
 
             _ApplicationObject = (DTE2)application;
-            // GC.KeepAlive(_ApplicationObject);
-
             _Events = _ApplicationObject.Events;
-            // GC.KeepAlive(_Events);
-
             _DocumentEvents = _Events.DocumentEvents;
-            // GC.KeepAlive(_DocumentEvents);
-
             _CommandEvents = _Events.CommandEvents;
-            // GC.KeepAlive(_CommandEvents);
-
             _DebuggerEvents = _Events.DebuggerEvents;
-            // GC.KeepAlive(_DebuggerEvents);
-
             _DocumentEvents = _Events.DocumentEvents;
-            // GC.KeepAlive(_DocumentEvents);
-
             _FindEvents = _Events.FindEvents;
-            // GC.KeepAlive(_FindEvents);
-
             _MiscFilesEvents = _Events.MiscFilesEvents;
-            // GC.KeepAlive(_MiscFilesEvents);
-
             _OutputWindowEvents = _Events.OutputWindowEvents;
-            // GC.KeepAlive(this._OutputWindowEvents);
-
             _SelectionEvents = _Events.SelectionEvents;
-            // GC.KeepAlive(_SelectionEvents);
-
             _SolutionEvents = _Events.SolutionEvents;
-            // GC.KeepAlive(_SolutionEvents);
-
             _SolutionItemsEvents = _Events.SolutionItemsEvents;
-            // GC.KeepAlive(_SolutionItemsEvents);
-
             _TaskListEvents = _Events.TaskListEvents;
-            // GC.KeepAlive(_TaskListEvents);
-
             _TextEditorEvents = _Events.TextEditorEvents;
-            // GC.KeepAlive(_TextEditorEvents);
-
             _WindowEvents = _Events.WindowEvents;
-            // GC.KeepAlive(_WindowEvents);
-
             _BuildEvents = _Events.BuildEvents;
 
             // Documents events
