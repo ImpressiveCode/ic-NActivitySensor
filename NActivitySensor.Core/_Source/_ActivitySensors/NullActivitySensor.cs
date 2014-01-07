@@ -98,6 +98,11 @@
             
         }
 
+        public void OnUserActiveAgain()
+        {
+            
+        }
+
         public void OnConnect(int processId)
         {
             

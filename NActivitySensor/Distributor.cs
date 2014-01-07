@@ -53,6 +53,8 @@
         #region Solution events
         void SolutionEvents_Opened()
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 if (_ApplicationObject != null && _ApplicationObject.Solution != null && _ApplicationObject.Solution.FullName != null)
@@ -64,12 +66,12 @@
                     Sensor.OnSolutionOpened(String.Empty);
                 }
             }
-
-            MyTickAlive();
         }
 
         void SolutionEvents_BeforeClosing()
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 if (_ApplicationObject != null && _ApplicationObject.Solution != null && _ApplicationObject.Solution.FullName != null)
@@ -81,8 +83,6 @@
                     Sensor.OnSolutionBeforeClosing(String.Empty);
                 }
             }
-
-            MyTickAlive();
         }
         #endregion
 
@@ -131,66 +131,66 @@
         #region Window events
         void WindowEvents_WindowMoved(Window window, int top, int left, int width, int height)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowMoved(window, top, left, width, height);
-            }
-
-            MyTickAlive();
+            }            
         }
 
         void WindowEvents_WindowCreated(Window window)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowCreated(window);
-            }
-
-            MyTickAlive();
+            }            
         }
 
         void WindowEvents_WindowClosing(Window window)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowClosing(window);
             }
-
-            MyTickAlive();
         }
 
         void WindowEvents_WindowActivated(Window gotFocus, Window lostFocus)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowActivated(gotFocus, lostFocus);
             }
-
-            MyTickAlive();
         }
         #endregion
 
         #region TextEditor events
         void TextEditorEvents_LineChanged(TextPoint startPoint, TextPoint endPoint, int hint)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnLineChanged(startPoint, endPoint, hint);
-            }
-
-            MyTickAlive();
+            }            
         }
         #endregion
 
         #region TaskList events
         void TaskListEvents_TaskRemoved(TaskItem taskItem)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnTaskRemoved(taskItem);
             }
-
-            MyTickAlive();
         }
 
         void TaskListEvents_TaskNavigated(TaskItem taskItem, ref bool navigateHandled)
@@ -227,249 +227,255 @@
         #region Solution items events
         void SolutionItemsEvents_ItemRenamed(ProjectItem projectItem, string oldName)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnFileItemRenamed(projectItem, oldName);
             }
-
-            MyTickAlive();
         }
 
         void SolutionItemsEvents_ItemRemoved(ProjectItem projectItem)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnFileItemRemoved(projectItem);
             }
-
-            MyTickAlive();
         }
 
         void SolutionItemsEvents_ItemAdded(ProjectItem ProjectItem)
         {
             MyTickAlive();
+
+            foreach (var Sensor in _Sensors)
+            {
+                Sensor.OnFileItemAdded(ProjectItem);
+            }
         }
         #endregion
 
         #region Solution events
         void SolutionEvents_Renamed(string oldName)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnSolutionRenamed(oldName);
             }
-
-            MyTickAlive();
         }
 
         void SolutionEvents_QueryCloseSolution(ref bool fCancel)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnSolutionQueryClose(ref fCancel);
             }
-
-            MyTickAlive();
         }
 
         void SolutionEvents_ProjectRenamed(Project project, string oldName)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnSolutionProjectRenamed(project, oldName);
             }
-
-            MyTickAlive();
         }
 
         void SolutionEvents_ProjectRemoved(Project project)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnSolutionProjectRemoved(project);
             }
-
-            MyTickAlive();
         }
 
         void SolutionEvents_ProjectAdded(Project project)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnSolutionProjectAdded(project);
             }
-
-            MyTickAlive();
         }
 
         void SolutionEvents_AfterClosing()
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnSolutionAfterClosing(String.Empty);
-            }
-
-            MyTickAlive();
+            }            
         }
 
         void SelectionEvents_OnChange()
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnSelectionChange();
             }
-
-            MyTickAlive();
         }
         #endregion
 
         #region Output window events
         void OutputWindowEvents_PaneUpdated(OutputWindowPane pPane)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowPaneAdded(pPane);
             }
-
-            MyTickAlive();
         }
 
         void OutputWindowEvents_PaneClearing(OutputWindowPane pPane)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowPaneClearing(pPane);
             }
-
-            MyTickAlive();
         }
 
         void OutputWindowEvents_PaneAdded(OutputWindowPane pPane)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowPaneAdded(pPane);
             }
-
-            MyTickAlive();
         }
         #endregion
 
         #region Files events
         void MiscFilesEvents_ItemRenamed(ProjectItem projectItem, string oldName)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnFileItemRenamed(projectItem, oldName);
             }
-
-            MyTickAlive();
         }
 
         void MiscFilesEvents_ItemRemoved(ProjectItem projectItem)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnFileItemRemoved(projectItem);
             }
-
-            MyTickAlive();
         }
 
         void MiscFilesEvents_ItemAdded(ProjectItem projectItem)
         {
+
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnFileItemAdded(projectItem);
             }
-
-            MyTickAlive();
         }
         #endregion
 
         #region Find events
         void FindEvents_FindDone(vsFindResult result, bool cancelled)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnFindDone(result, cancelled);
             }
-
-            MyTickAlive();
         }
         #endregion
 
         #region Debugger events
         void DebuggerEvents_OnExceptionThrown(string exceptionType, string name, int code, string description, ref dbgExceptionAction exceptionAction)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDebuggerExceptionThrown(exceptionType, name, code, description, ref exceptionAction);
             }
-
-            MyTickAlive();
         }
 
         void DebuggerEvents_OnExceptionNotHandled(string exceptionType, string name, int code, string description, ref dbgExceptionAction exceptionAction)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDebuggerExceptionNotHandled(exceptionType, name, code, description, ref exceptionAction);
             }
-
-            MyTickAlive();
         }
 
         void DebuggerEvents_OnEnterRunMode(dbgEventReason reason)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDebuggerEnterRunMode(reason);
             }
-
-            MyTickAlive();
         }
 
         void DebuggerEvents_OnEnterDesignMode(dbgEventReason reason)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDebuggerEnterDesignMode(reason);
             }
-
-            MyTickAlive();
         }
 
         void DebuggerEvents_OnEnterBreakMode(dbgEventReason reason, ref dbgExecutionAction executionAction)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDebuggerEnterBreakMode(reason, ref executionAction);
             }
-
-            MyTickAlive();
         }
 
         void DebuggerEvents_OnContextChanged(EnvDTE.Process newProcess, Program newProgram, Thread newThread, EnvDTE.StackFrame newStackFrame)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDebuggerContextChanged(newProcess, newProgram, newThread, newStackFrame);
             }
-
-            MyTickAlive();
         }
         #endregion
 
         #region Command events
         void CommandEvents_BeforeExecute(string guid, int id, object customIn, object customOut, ref bool cancelDefault)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnCommandBeforeExecute(guid, id, customIn, customOut, ref cancelDefault);
             }
-
-            MyTickAlive();
         }
 
         void CommandEvents_AfterExecute(string guid, int id, object customIn, object customOut)
@@ -486,32 +492,32 @@
         #region Document events
         void OnDocumentClosing(Document document)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDocumentClosing(document);
             }
-
-            MyTickAlive();
         }
 
         void OnDocumentSaved(Document document)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDocumentSaved(document);
             }
-
-            MyTickAlive();
         }
 
         void OnDocumentOpened(Document document)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDocumentOpened(document);
             }
-
-            MyTickAlive();
         }
         #endregion
 
@@ -602,12 +608,12 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "1#")]
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnDisconnection(disconnectMode, ref custom);
             }
-
-            MyTickAlive();
         }
 
         /// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary>
@@ -616,12 +622,12 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#")]
         public void OnAddInsUpdate(ref Array custom)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnAddInsUpdate(ref custom);
             }
-
-            MyTickAlive();
         }
 
         /// <summary>Implements the OnStartupComplete method of the IDTExtensibility2 interface. Receives notification that the host application has completed loading.</summary>
@@ -630,12 +636,12 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#")]
         public void OnStartupComplete(ref Array custom)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnStartupComplete(ref custom);
-            }
-
-            MyTickAlive();
+            }            
         }
 
         /// <summary>Implements the OnBeginShutdown method of the IDTExtensibility2 interface. Receives notification that the host application is being unloaded.</summary>
@@ -644,12 +650,12 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#")]
         public void OnBeginShutdown(ref Array custom)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBeginShutdown(ref custom);
-            }
-
-            MyTickAlive();
+            }            
         }
         #endregion
 
@@ -689,6 +695,14 @@
 
         private void MyTickAlive()
         {
+            if (!_IsActive)
+            {
+                foreach (var Sensor in _Sensors)
+                {
+                    Sensor.OnUserActiveAgain();
+                }
+            }
+
             _IsActive = true;
         }
         #endregion

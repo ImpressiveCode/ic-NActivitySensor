@@ -297,6 +297,19 @@
             }
         }
 
+        public void OnUserActiveAgain()
+        {
+            try
+            {
+                var Report = new Report(new object(), SensorUserEvent.UserActiveAgain.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
+        }
+
         public void OnConnect(int processId)
         {
             this._ProcessId = processId;

@@ -25,7 +25,8 @@
 
     public enum SensorUserEvent
     {
-        UserInactive
+        UserInactive,
+        UserActiveAgain
     }
 
     public enum SensorPluginEvent
