@@ -57,14 +57,7 @@
 
             foreach (var Sensor in _Sensors)
             {
-                if (_ApplicationObject != null && _ApplicationObject.Solution != null && _ApplicationObject.Solution.FullName != null)
-                {
-                    Sensor.OnSolutionOpened(_ApplicationObject.Solution.FullName);
-                }
-                else
-                {
-                    Sensor.OnSolutionOpened(String.Empty);
-                }
+                Sensor.OnSolutionOpened();
             }
         }
 
@@ -74,14 +67,7 @@
 
             foreach (var Sensor in _Sensors)
             {
-                if (_ApplicationObject != null && _ApplicationObject.Solution != null && _ApplicationObject.Solution.FullName != null)
-                {
-                    Sensor.OnSolutionBeforeClosing(_ApplicationObject.Solution.FullName);
-                }
-                else
-                {
-                    Sensor.OnSolutionBeforeClosing(String.Empty);
-                }
+                Sensor.OnSolutionBeforeClosing();
             }
         }
         #endregion
@@ -136,7 +122,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowMoved(window, top, left, width, height);
-            }            
+            }
         }
 
         void WindowEvents_WindowCreated(Window window)
@@ -146,7 +132,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowCreated(window);
-            }            
+            }
         }
 
         void WindowEvents_WindowClosing(Window window)
@@ -178,7 +164,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnLineChanged(startPoint, endPoint, hint);
-            }            
+            }
         }
         #endregion
 
@@ -313,8 +299,8 @@
 
             foreach (var Sensor in _Sensors)
             {
-                Sensor.OnSolutionAfterClosing(String.Empty);
-            }            
+                Sensor.OnSolutionAfterClosing();
+            }
         }
 
         void SelectionEvents_OnChange()
@@ -641,7 +627,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnStartupComplete(ref custom);
-            }            
+            }
         }
 
         /// <summary>Implements the OnBeginShutdown method of the IDTExtensibility2 interface. Receives notification that the host application is being unloaded.</summary>
@@ -655,7 +641,7 @@
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBeginShutdown(ref custom);
-            }            
+            }
         }
         #endregion
 

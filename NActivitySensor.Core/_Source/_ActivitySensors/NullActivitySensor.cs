@@ -33,17 +33,17 @@
         #endregion
 
         #region IActivitySensor methods
-        public void OnSolutionAfterClosing(string solutionFullName)
+        public void OnSolutionAfterClosing()
         {
             
         }
 
-        public void OnSolutionOpened(string solutionFullName)
+        public void OnSolutionOpened()
         {
             
         }
 
-        public void OnSolutionBeforeClosing(string solutionFullName)
+        public void OnSolutionBeforeClosing()
         {
             
         }

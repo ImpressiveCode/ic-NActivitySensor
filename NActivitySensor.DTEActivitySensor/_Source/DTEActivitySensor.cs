@@ -16,7 +16,30 @@
         private readonly IReportContentSerializer _ReportContentSerializer;
 
         private DTE2 _Application;
-        private string _SolutionFullName = String.Empty;
+        
+        private string _SolutionFullName
+        {
+            get
+            {
+                if (_Application != null && _Application.Solution != null && _Application.Solution.FullName != null)
+                {
+                    return _Application.Solution.FullName;
+                }
+                else
+                {
+                    return String.Empty;
+                }
+            }
+        }
+
+        private string _SolutionSimpleName
+        {
+            get
+            {
+                return _SolutionFullName;
+            }
+        }
+
         private int? _ProcessId = null;
         #endregion
 
@@ -47,7 +70,7 @@
                 {
                     Action = action.ToString(),
                     Scope = scope.ToString()
-                }, SensorBuildEvent.BuildDone.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                }, SensorBuildEvent.BuildDone.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -68,7 +91,7 @@
                     Platform = platform,
                     SolutionConfig = solutionConfig,
                     Success = success
-                }, SensorBuildEvent.BuildProjConfigDone.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                }, SensorBuildEvent.BuildProjConfigDone.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -86,7 +109,7 @@
                 {
                     Scope = scope.ToString(),
                     Action = action.ToString()
-                }, SensorBuildEvent.BuildBegin.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                }, SensorBuildEvent.BuildBegin.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -106,7 +129,7 @@
                     ProjectConfig = projectConfig,
                     Platform = platform,
                     SolutionConfig = solutionConfig,
-                }, SensorBuildEvent.BuildProjConfigBegin.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                }, SensorBuildEvent.BuildProjConfigBegin.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -118,16 +141,11 @@
         #endregion
 
         #region IActivitySensor methods
-        public void OnSolutionAfterClosing(string solutionFullName)
+        public void OnSolutionAfterClosing()
         {
             try
             {
-                if (solutionFullName != null)
-                {
-                    _SolutionFullName = solutionFullName;
-                }
-
-                var Report = new Report(new object(), SensorSolutionEvent.SolutionAfterClosing.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(new object(), SensorSolutionEvent.SolutionAfterClosing.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -137,15 +155,10 @@
             }
         }
 
-        public void OnSolutionOpened(string solutionFullName)
+        public void OnSolutionOpened()
         {
             try
             {
-                if (solutionFullName != null)
-                {
-                    _SolutionFullName = solutionFullName;
-                }
-
                 List<string> FoundProjects = new List<string>();
                 if (_Application != null && _Application.Solution != null)
                 {
@@ -155,9 +168,9 @@
                         {
                             string ProjectName = String.Empty;
 
-                            if (LoopProject.Name != null && LoopProject.Name is string)
+                            if (LoopProject.UniqueName != null)
                             {
-                                ProjectName = LoopProject.Name;
+                                ProjectName = LoopProject.UniqueName;
                             }
 
                             FoundProjects.Add(ProjectName);
@@ -169,7 +182,7 @@
                 {
                     SolutionName = _SolutionFullName,
                     Projects = FoundProjects
-                }, SensorSolutionEvent.SolutionOpened.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                }, SensorSolutionEvent.SolutionOpened.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
 
             }
@@ -179,16 +192,11 @@
             }
         }
 
-        public void OnSolutionBeforeClosing(string solutionFullName)
+        public void OnSolutionBeforeClosing()
         {
             try
             {
-                if (solutionFullName != null)
-                {
-                    _SolutionFullName = solutionFullName;
-                }
-
-                var Report = new Report(new object(), SensorSolutionEvent.SolutionBeforeClosing.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(new object(), SensorSolutionEvent.SolutionBeforeClosing.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -221,7 +229,7 @@
         {
             try
             {
-                var Report = new Report(new object(), SensorSolutionEvent.SolutionQueryClose.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(new object(), SensorSolutionEvent.SolutionQueryClose.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -239,7 +247,7 @@
                     throw new ArgumentNullException("project");
                 }
 
-                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectRenamed.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectRenamed.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -257,7 +265,7 @@
                     throw new ArgumentNullException("project");
                 }
 
-                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectRemoved.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectRemoved.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -275,7 +283,7 @@
                     throw new ArgumentNullException("project");
                 }
 
-                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectAdded.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectAdded.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -288,7 +296,7 @@
         {
             try
             {
-                var Report = new Report(new object(), SensorUserEvent.UserInactive.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(new object(), SensorUserEvent.UserInactive.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -301,7 +309,7 @@
         {
             try
             {
-                var Report = new Report(new object(), SensorUserEvent.UserActiveAgain.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(new object(), SensorUserEvent.UserActiveAgain.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -341,7 +349,7 @@
         {
             try
             {
-                var Report = new Report(new object(), SensorPluginEvent.Disconnection.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(new object(), SensorPluginEvent.Disconnection.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
@@ -360,7 +368,7 @@
         {
             try
             {
-                var Report = new Report(new object(), SensorPluginEvent.StartupComplete.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(new object(), SensorPluginEvent.StartupComplete.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -373,7 +381,7 @@
         {
             try
             {
-                var Report = new Report(new object(), SensorPluginEvent.BeginShutdown.ToString(), _ProcessId, _SolutionFullName, _ReportContentSerializer);
+                var Report = new Report(new object(), SensorPluginEvent.BeginShutdown.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)

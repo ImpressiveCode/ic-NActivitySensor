@@ -10,9 +10,9 @@
     public interface IActivitySensor
     {
         #region Solution events
-        void OnSolutionAfterClosing(string solutionFullName);
-        void OnSolutionOpened(string solutionFullName);
-        void OnSolutionBeforeClosing(string solutionFullName);
+        void OnSolutionAfterClosing();
+        void OnSolutionOpened();
+        void OnSolutionBeforeClosing();
         void OnSolutionRenamed(string oldName);
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#")]
         void OnSolutionQueryClose(ref bool fCancel);
