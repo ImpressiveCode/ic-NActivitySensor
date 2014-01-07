@@ -16,7 +16,7 @@
     public class Distributor : IDisposable
     {
         #region Private variables
-        private int _NumberOfSecondsToSetInactive = 60;
+        private int _NumberOfSecondsToSetInactive = 10;
 
         private DTE2 _ApplicationObject;
         private Events _Events;
@@ -36,7 +36,8 @@
         private BuildEvents _BuildEvents;
 
         private bool _IsActive;
-        private bool _IsActiveAgain;
+        private bool _IsActiveNotified;
+        private bool _IsInactiveNotified;
         System.Timers.Timer _Timer;
         private int _ProcessId;
         private IEnumerable<IActivitySensor> _Sensors;
@@ -668,7 +669,7 @@
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
         {
             MyTickAlive();
-            
+
             // Documents events
             _ApplicationObject.Events.DocumentEvents.DocumentClosing -= OnDocumentClosing;
             _ApplicationObject.Events.DocumentEvents.DocumentSaved -= OnDocumentSaved;
@@ -818,28 +819,45 @@
         #region My methods
         private void MyOnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+            if (_IsActive)
+            {
+                _IsInactiveNotified = false;
+            }
+
             if (!_IsActive)
             {
-                foreach (var Sensor in _Sensors)
+                if (!_IsInactiveNotified)
                 {
-                    Sensor.OnUserInactive();
+                    foreach (var Sensor in _Sensors)
+                    {
+                        Sensor.OnUserInactive();
+                    }
+
+                    _IsInactiveNotified = true;
                 }
             }
 
             _IsActive = false;
-            _IsActiveAgain = true;
         }
 
         private void MyTickAlive()
         {
-            if (!_IsActive && _IsActiveAgain)
+            if (_IsActive)
             {
-                foreach (var Sensor in _Sensors)
-                {
-                    Sensor.OnUserActiveAgain();
-                }
+                _IsActiveNotified = false;
+            }
 
-                _IsActiveAgain = false;
+            if (!_IsActive)
+            {
+                if (!_IsActiveNotified)
+                {
+                    foreach (var Sensor in _Sensors)
+                    {
+                        Sensor.OnUserActiveAgain();
+                    }
+
+                    _IsActiveNotified = true;
+                }
             }
 
             _IsActive = true;
