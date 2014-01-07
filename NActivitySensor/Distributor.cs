@@ -821,14 +821,15 @@
         #region My methods
         private void MyOnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (_IsActive)
+            lock (_TimerLock)
             {
-                _IsInactiveNotified = false;
-            }
+                if (_IsActive)
+                {
+                    _IsInactiveNotified = false;
+                }
 
-            if (!_IsActive)
-            {
-                if (!_IsInactiveNotified)
+                // No MyTickAlive() execution between timer elapsed method calls means that user is not active
+                if (!_IsActive && !_IsInactiveNotified)
                 {
                     foreach (var Sensor in _Sensors)
                     {
@@ -837,9 +838,10 @@
 
                     _IsInactiveNotified = true;
                 }
-            }
 
-            _IsActive = false;
+                // On each timer elapse set active flag to false
+                _IsActive = false;
+            }
         }
 
         private void MyTickAlive()
@@ -851,17 +853,14 @@
                     _IsActiveNotified = false;
                 }
 
-                if (!_IsActive)
+                if (!_IsActive && !_IsActiveNotified && _IsInactiveNotified)
                 {
-                    if (!_IsActiveNotified)
+                    foreach (var Sensor in _Sensors)
                     {
-                        foreach (var Sensor in _Sensors)
-                        {
-                            Sensor.OnUserActiveAgain();
-                        }
-
-                        _IsActiveNotified = true;
+                        Sensor.OnUserActiveAgain();
                     }
+
+                    _IsActiveNotified = true;
                 }
 
                 _IsActive = true;
