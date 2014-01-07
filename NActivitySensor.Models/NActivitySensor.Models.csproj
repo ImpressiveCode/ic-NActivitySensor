@@ -51,6 +51,7 @@
     <Compile Include="_Source\Models\_ReportContents\DebuggerContextChanged.cs" />
     <Compile Include="_Source\Models\_ReportContents\DebuggerExceptionContent.cs" />
     <Compile Include="_Source\Models\_ReportContents\DebuggerModeContent.cs" />
+    <Compile Include="_Source\Models\_ReportContents\DocumentContent.cs" />
     <Compile Include="_Source\Models\_ReportContents\ProjectInfoContent.cs" />
     <Compile Include="_Source\Models\_ReportContents\ProjectItemInfoContent.cs" />
     <Compile Include="_Source\Models\_ReportContents\ProjectItemRenamedContent.cs" />

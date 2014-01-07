@@ -685,17 +685,41 @@
 
         public void OnDocumentClosing(EnvDTE.Document document)
         {
-
+            try
+            {
+                var Report = new Report(MyCreateDocument(document), SensorDocumentEvent.DocumentClosing.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnDocumentSaved(EnvDTE.Document document)
         {
-
+            try
+            {
+                var Report = new Report(MyCreateDocument(document), SensorDocumentEvent.DocumentSaved.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnDocumentOpened(EnvDTE.Document document)
         {
-
+            try
+            {
+                var Report = new Report(MyCreateDocument(document), SensorDocumentEvent.DocumentOpened.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
         #endregion
 
@@ -725,6 +749,17 @@
                 ExceptionAction = exceptionAction.ToString(),
                 ExceptionType = exceptionType,
                 Name = name
+            };
+        }
+
+        private DocumentContent MyCreateDocument(EnvDTE.Document document)
+        {
+            return new DocumentContent()
+            {
+                Name = document.Name,
+                Kind = document.Kind,
+                Path = document.Path,
+                ProjectInfo = MyCreateProjectItemInfo(document.ProjectItem)
             };
         }
 
