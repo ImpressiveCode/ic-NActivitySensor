@@ -17,12 +17,29 @@
     {
         #region Private variables
         private int _NumberOfSecondsToSetInactive = 60;
+
         private DTE2 _ApplicationObject;
+        private Events _Events;
+        private DocumentEvents _DocumentEvents;
+        private CommandEvents _CommandEvents;
+        private DebuggerEvents _DebuggerEvents;
+        private DTEEvents _DTEEvents;
+        private FindEvents _FindEvents;
+        private ProjectItemsEvents _MiscFilesEvents;
+        private OutputWindowEvents _OutputWindowEvents;
+        private SelectionEvents _SelectionEvents;
+        private SolutionEvents _SolutionEvents;
+        private ProjectItemsEvents _SolutionItemsEvents;
+        private TaskListEvents _TaskListEvents;
+        private TextEditorEvents _TextEditorEvents;
+        private WindowEvents _WindowEvents;
         private BuildEvents _BuildEvents;
+
         private bool _IsActive;
+        private bool _IsActiveAgain;
         System.Timers.Timer _Timer;
         private int _ProcessId;
-        private readonly IEnumerable<IActivitySensor> _Sensors;
+        private IEnumerable<IActivitySensor> _Sensors;
         #endregion
 
         #region Constructors
@@ -520,72 +537,115 @@
             _Timer.Start();
 
             _ApplicationObject = (DTE2)application;
+            GC.KeepAlive(_ApplicationObject);
 
-            // It is neccessary to keep application object events alive
-            GC.KeepAlive(_ApplicationObject);            
+            _Events = _ApplicationObject.Events;
+            GC.KeepAlive(_Events);
+
+            _DocumentEvents = _Events.DocumentEvents;
+            GC.KeepAlive(_DocumentEvents);
+
+            _CommandEvents = _Events.CommandEvents;
+            GC.KeepAlive(_CommandEvents);
+
+            _DebuggerEvents = _Events.DebuggerEvents;
+            GC.KeepAlive(_DebuggerEvents);
+
+            _DocumentEvents = _Events.DocumentEvents;
+            GC.KeepAlive(_DocumentEvents);
+
+            _DTEEvents = _Events.DTEEvents;
+            GC.KeepAlive(_DTEEvents);
+
+            _FindEvents = _Events.FindEvents;
+            GC.KeepAlive(_FindEvents);
+
+            _MiscFilesEvents = _Events.MiscFilesEvents;
+            GC.KeepAlive(_MiscFilesEvents);
+
+            _OutputWindowEvents = _Events.OutputWindowEvents;
+            GC.KeepAlive(this._OutputWindowEvents);
+
+            _SelectionEvents = _Events.SelectionEvents;
+            GC.KeepAlive(_SelectionEvents);
+
+            _SolutionEvents = _Events.SolutionEvents;
+            GC.KeepAlive(_SolutionEvents);
+
+            _SolutionItemsEvents = _Events.SolutionItemsEvents;
+            GC.KeepAlive(_SolutionItemsEvents);
+
+            _TaskListEvents = _Events.TaskListEvents;
+            GC.KeepAlive(_TaskListEvents);
+
+            _TextEditorEvents = _Events.TextEditorEvents;
+            GC.KeepAlive(_TextEditorEvents);
+
+            _WindowEvents = _Events.WindowEvents;
+            GC.KeepAlive(_WindowEvents);
 
             // Documents events
-            _ApplicationObject.Events.DocumentEvents.DocumentClosing += OnDocumentClosing;
-            _ApplicationObject.Events.DocumentEvents.DocumentSaved += OnDocumentSaved;
-            _ApplicationObject.Events.DocumentEvents.DocumentOpened += OnDocumentOpened;
+            _DocumentEvents.DocumentClosing += OnDocumentClosing;
+            _DocumentEvents.DocumentSaved += OnDocumentSaved;
+            _DocumentEvents.DocumentOpened += OnDocumentOpened;
 
             // Command events
             _ApplicationObject.Events.CommandEvents.AfterExecute += CommandEvents_AfterExecute;
             _ApplicationObject.Events.CommandEvents.BeforeExecute += CommandEvents_BeforeExecute;
 
             // Debugger events
-            _ApplicationObject.Events.DebuggerEvents.OnContextChanged += DebuggerEvents_OnContextChanged;
-            _ApplicationObject.Events.DebuggerEvents.OnEnterBreakMode += DebuggerEvents_OnEnterBreakMode;
-            _ApplicationObject.Events.DebuggerEvents.OnEnterDesignMode += DebuggerEvents_OnEnterDesignMode;
-            _ApplicationObject.Events.DebuggerEvents.OnEnterRunMode += DebuggerEvents_OnEnterRunMode;
-            _ApplicationObject.Events.DebuggerEvents.OnExceptionNotHandled += DebuggerEvents_OnExceptionNotHandled;
-            _ApplicationObject.Events.DebuggerEvents.OnExceptionThrown += DebuggerEvents_OnExceptionThrown;
+            _DebuggerEvents.OnContextChanged += DebuggerEvents_OnContextChanged;
+            _DebuggerEvents.OnEnterBreakMode += DebuggerEvents_OnEnterBreakMode;
+            _DebuggerEvents.OnEnterDesignMode += DebuggerEvents_OnEnterDesignMode;
+            _DebuggerEvents.OnEnterRunMode += DebuggerEvents_OnEnterRunMode;
+            _DebuggerEvents.OnExceptionNotHandled += DebuggerEvents_OnExceptionNotHandled;
+            _DebuggerEvents.OnExceptionThrown += DebuggerEvents_OnExceptionThrown;
 
             // Find events
-            _ApplicationObject.Events.FindEvents.FindDone += FindEvents_FindDone;
+            _FindEvents.FindDone += FindEvents_FindDone;
 
             // Misc files events
-            _ApplicationObject.Events.MiscFilesEvents.ItemAdded += MiscFilesEvents_ItemAdded;
-            _ApplicationObject.Events.MiscFilesEvents.ItemRemoved += MiscFilesEvents_ItemRemoved;
-            _ApplicationObject.Events.MiscFilesEvents.ItemRenamed += MiscFilesEvents_ItemRenamed;
+            _MiscFilesEvents.ItemAdded += MiscFilesEvents_ItemAdded;
+            _MiscFilesEvents.ItemRemoved += MiscFilesEvents_ItemRemoved;
+            _MiscFilesEvents.ItemRenamed += MiscFilesEvents_ItemRenamed;
 
             // Output window events
-            _ApplicationObject.Events.OutputWindowEvents.PaneAdded += OutputWindowEvents_PaneAdded;
-            _ApplicationObject.Events.OutputWindowEvents.PaneClearing += OutputWindowEvents_PaneClearing;
-            _ApplicationObject.Events.OutputWindowEvents.PaneUpdated += OutputWindowEvents_PaneUpdated;
+            _OutputWindowEvents.PaneAdded += OutputWindowEvents_PaneAdded;
+            _OutputWindowEvents.PaneClearing += OutputWindowEvents_PaneClearing;
+            _OutputWindowEvents.PaneUpdated += OutputWindowEvents_PaneUpdated;
 
             // Selection events
-            _ApplicationObject.Events.SelectionEvents.OnChange += SelectionEvents_OnChange;
+            _SelectionEvents.OnChange += SelectionEvents_OnChange;
 
             // Solution events
-            _ApplicationObject.Events.SolutionEvents.AfterClosing += SolutionEvents_AfterClosing;
-            _ApplicationObject.Events.SolutionEvents.BeforeClosing += SolutionEvents_BeforeClosing;
-            _ApplicationObject.Events.SolutionEvents.Opened += SolutionEvents_Opened;
-            _ApplicationObject.Events.SolutionEvents.ProjectAdded += SolutionEvents_ProjectAdded;
-            _ApplicationObject.Events.SolutionEvents.ProjectRemoved += SolutionEvents_ProjectRemoved;
-            _ApplicationObject.Events.SolutionEvents.ProjectRenamed += SolutionEvents_ProjectRenamed;
-            _ApplicationObject.Events.SolutionEvents.QueryCloseSolution += SolutionEvents_QueryCloseSolution;
-            _ApplicationObject.Events.SolutionEvents.Renamed += SolutionEvents_Renamed;
+            _SolutionEvents.AfterClosing += SolutionEvents_AfterClosing;
+            _SolutionEvents.BeforeClosing += SolutionEvents_BeforeClosing;
+            _SolutionEvents.Opened += SolutionEvents_Opened;
+            _SolutionEvents.ProjectAdded += SolutionEvents_ProjectAdded;
+            _SolutionEvents.ProjectRemoved += SolutionEvents_ProjectRemoved;
+            _SolutionEvents.ProjectRenamed += SolutionEvents_ProjectRenamed;
+            _SolutionEvents.QueryCloseSolution += SolutionEvents_QueryCloseSolution;
+            _SolutionEvents.Renamed += SolutionEvents_Renamed;
 
             // Solution items events
-            _ApplicationObject.Events.SolutionItemsEvents.ItemAdded += SolutionItemsEvents_ItemAdded;
-            _ApplicationObject.Events.SolutionItemsEvents.ItemRemoved += SolutionItemsEvents_ItemRemoved;
-            _ApplicationObject.Events.SolutionItemsEvents.ItemRenamed += SolutionItemsEvents_ItemRenamed;
+            _SolutionItemsEvents.ItemAdded += SolutionItemsEvents_ItemAdded;
+            _SolutionItemsEvents.ItemRemoved += SolutionItemsEvents_ItemRemoved;
+            _SolutionItemsEvents.ItemRenamed += SolutionItemsEvents_ItemRenamed;
 
             // Task list events
-            _ApplicationObject.Events.TaskListEvents.TaskAdded += TaskListEvents_TaskAdded;
-            _ApplicationObject.Events.TaskListEvents.TaskModified += TaskListEvents_TaskModified;
-            _ApplicationObject.Events.TaskListEvents.TaskNavigated += TaskListEvents_TaskNavigated;
-            _ApplicationObject.Events.TaskListEvents.TaskRemoved += TaskListEvents_TaskRemoved;
+            _TaskListEvents.TaskAdded += TaskListEvents_TaskAdded;
+            _TaskListEvents.TaskModified += TaskListEvents_TaskModified;
+            _TaskListEvents.TaskNavigated += TaskListEvents_TaskNavigated;
+            _TaskListEvents.TaskRemoved += TaskListEvents_TaskRemoved;
 
             // Text editor events
-            _ApplicationObject.Events.TextEditorEvents.LineChanged += TextEditorEvents_LineChanged;
+            _TextEditorEvents.LineChanged += TextEditorEvents_LineChanged;
 
             // Window activated events
-            _ApplicationObject.Events.WindowEvents.WindowActivated += WindowEvents_WindowActivated;
-            _ApplicationObject.Events.WindowEvents.WindowClosing += WindowEvents_WindowClosing;
-            _ApplicationObject.Events.WindowEvents.WindowCreated += WindowEvents_WindowCreated;
-            _ApplicationObject.Events.WindowEvents.WindowMoved += WindowEvents_WindowMoved;
+            _WindowEvents.WindowActivated += WindowEvents_WindowActivated;
+            _WindowEvents.WindowClosing += WindowEvents_WindowClosing;
+            _WindowEvents.WindowCreated += WindowEvents_WindowCreated;
+            _WindowEvents.WindowMoved += WindowEvents_WindowMoved;
 
             // Build events
             _BuildEvents = _ApplicationObject.Events.BuildEvents;
@@ -767,16 +827,19 @@
             }
 
             _IsActive = false;
+            _IsActiveAgain = true;
         }
 
         private void MyTickAlive()
         {
-            if (!_IsActive)
+            if (!_IsActive && _IsActiveAgain)
             {
                 foreach (var Sensor in _Sensors)
                 {
                     Sensor.OnUserActiveAgain();
                 }
+
+                _IsActiveAgain = false;
             }
 
             _IsActive = true;

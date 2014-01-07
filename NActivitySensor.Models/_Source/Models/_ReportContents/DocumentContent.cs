@@ -27,12 +27,6 @@
             get;
             set;
         }
-
-        public ProjectItemInfoContent ProjectInfo
-        {
-            get;
-            set;
-        }
         #endregion
     }
 }

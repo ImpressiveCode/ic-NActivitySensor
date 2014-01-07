@@ -750,8 +750,7 @@
             {
                 Name = document.Name,
                 Kind = document.Kind,
-                Path = document.Path,
-                ProjectInfo = MyCreateProjectItemInfo(document.ProjectItem)
+                Path = document.Path
             };
         }
 
