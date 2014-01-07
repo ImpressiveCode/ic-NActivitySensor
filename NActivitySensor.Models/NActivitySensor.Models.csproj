@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="_Source\Models\ConnectionContent.cs" />
     <Compile Include="_Source\Models\SolutionRenamedContent.cs" />
     <Compile Include="_Source\_Interfaces\IReportContentSerializer.cs" />
     <Compile Include="_Source\JsonReportContentSerializer.cs" />

@@ -16,7 +16,7 @@
         private readonly IReportContentSerializer _ReportContentSerializer;
 
         private DTE2 _Application;
-        
+
         private string _SolutionFullName
         {
             get
@@ -329,13 +329,26 @@
             {
                 _Application = (DTE2)application;
 
-                string CurrentSolution = String.Empty;
-                if (_Application != null && _Application.Solution != null && _Application.Solution.FullName != null)
+                List<string> ActiveWindows = new List<string>();
+                foreach (EnvDTE.Window LoopWindow in _Application.Windows)
                 {
-                    CurrentSolution = _Application.Solution.FullName;
+                    ActiveWindows.Add(LoopWindow.Caption);
                 }
 
-                var Report = new Report(new object(), SensorPluginEvent.Connection.ToString(), _ProcessId, CurrentSolution, _ReportContentSerializer);
+                var Content = new ConnectionContent()
+                {
+                    ActiveWindow = _Application.ActiveWindow.Caption,
+                    Edition = _Application.Edition,
+                    FullName = _Application.FullName,
+                    LocaleId = _Application.LocaleID,
+                    MainWindow = _Application.MainWindow.Caption,
+                    Mode = _Application.Mode.ToString(),
+                    Name = _Application.Name,
+                    Version = _Application.Version,
+                    Windows = ActiveWindows
+                };
+
+                var Report = new Report(Content, SensorPluginEvent.Connection.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
 
                 MyReportAll(Report);
             }
