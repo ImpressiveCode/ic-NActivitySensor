@@ -95,42 +95,42 @@
         #region Build events
         void BuildEvents_OnBuildProjConfigDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBuildProjConfigDone(project, projectConfig, platform, solutionConfig, success);
-            }
-
-            MyTickAlive();
+            }            
         }
 
         void BuildEvents_OnBuildDone(vsBuildScope scope, vsBuildAction action)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBuildDone(scope, action);
-            }
-
-            MyTickAlive();
+            }            
         }
 
         void BuildEvents_OnBuildBegin(vsBuildScope scope, vsBuildAction action)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBuildBegin(scope, action);
-            }
-
-            MyTickAlive();
+            }            
         }
 
         void BuildEvents_OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnBuildProjConfigBegin(project, projectConfig, platform, solutionConfig);
-            }
-
-            MyTickAlive();
+            }            
         }
         #endregion
 
@@ -207,32 +207,32 @@
 
         void TaskListEvents_TaskNavigated(TaskItem taskItem, ref bool navigateHandled)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnTaskNavigated(taskItem, ref navigateHandled);
-            }
-
-            MyTickAlive();
+            }            
         }
 
         void TaskListEvents_TaskModified(TaskItem taskItem, vsTaskListColumn columnModified)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnTaskModified(taskItem, columnModified);
             }
-
-            MyTickAlive();
         }
 
         void TaskListEvents_TaskAdded(TaskItem taskItem)
         {
+            MyTickAlive();
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnTaskAdded(taskItem);
-            }
-
-            MyTickAlive();
+            }            
         }
         #endregion
 
