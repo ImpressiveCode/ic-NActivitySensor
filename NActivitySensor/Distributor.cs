@@ -39,6 +39,8 @@
         private bool _IsActiveNotified;
         private bool _IsInactiveNotified;
         System.Timers.Timer _Timer;
+        private static object _TimerLock = new object();
+
         private int _ProcessId;
         private IEnumerable<IActivitySensor> _Sensors;
         #endregion
@@ -842,25 +844,28 @@
 
         private void MyTickAlive()
         {
-            if (_IsActive)
+            lock (_TimerLock)
             {
-                _IsActiveNotified = false;
-            }
-
-            if (!_IsActive)
-            {
-                if (!_IsActiveNotified)
+                if (_IsActive)
                 {
-                    foreach (var Sensor in _Sensors)
-                    {
-                        Sensor.OnUserActiveAgain();
-                    }
-
-                    _IsActiveNotified = true;
+                    _IsActiveNotified = false;
                 }
-            }
 
-            _IsActive = true;
+                if (!_IsActive)
+                {
+                    if (!_IsActiveNotified)
+                    {
+                        foreach (var Sensor in _Sensors)
+                        {
+                            Sensor.OnUserActiveAgain();
+                        }
+
+                        _IsActiveNotified = true;
+                    }
+                }
+
+                _IsActive = true;
+            }
         }
         #endregion
     }
