@@ -6,17 +6,17 @@
     using System.Linq;
     using System.Text;
     #endregion
-    
-    public class SolutionInfoContent
+
+    public class ProjectRenamedContent
     {
         #region Properties
-        public string SolutionName
+        public ProjectInfoContent Project
         {
             get;
             set;
         }
 
-        public IEnumerable<ProjectInfoContent> Projects
+        public string OldName
         {
             get;
             set;

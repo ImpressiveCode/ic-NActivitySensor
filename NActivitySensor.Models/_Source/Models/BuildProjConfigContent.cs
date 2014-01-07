@@ -8,7 +8,7 @@
     public class BuildProjConfigContent
     {
         #region Properties
-        public string Project
+        public ProjectInfoContent Project
         {
             get;
             set;

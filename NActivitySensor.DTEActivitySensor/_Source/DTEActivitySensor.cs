@@ -5,6 +5,7 @@
     using NActivitySensor.Models;
     using System;
     using System.Collections.Generic;
+    using System.IO;
 
     #endregion
 
@@ -36,7 +37,8 @@
         {
             get
             {
-                return _SolutionFullName;
+                var FileName = Path.GetFileNameWithoutExtension(_SolutionFullName);                
+                return FileName;
             }
         }
 
@@ -86,7 +88,7 @@
             {
                 var Report = new Report(new BuildProjConfigContent
                 {
-                    Project = project,
+                    Project = new ProjectInfoContent() { Name = project },
                     ProjectConfig = projectConfig,
                     Platform = platform,
                     SolutionConfig = solutionConfig,
@@ -125,7 +127,7 @@
             {
                 var Report = new Report(new BuildProjConfigContent
                 {
-                    Project = project,
+                    Project = new ProjectInfoContent() { Name = project },
                     ProjectConfig = projectConfig,
                     Platform = platform,
                     SolutionConfig = solutionConfig,
@@ -159,7 +161,8 @@
         {
             try
             {
-                List<string> FoundProjects = new List<string>();
+                List<ProjectInfoContent> FoundProjects = new List<ProjectInfoContent>();
+
                 if (_Application != null && _Application.Solution != null)
                 {
                     if (_Application.Solution.Projects != null)
@@ -173,7 +176,7 @@
                                 ProjectName = LoopProject.UniqueName;
                             }
 
-                            FoundProjects.Add(ProjectName);
+                            FoundProjects.Add(new ProjectInfoContent() { Name = ProjectName });
                         }
                     }
                 }
@@ -247,7 +250,13 @@
                     throw new ArgumentNullException("project");
                 }
 
-                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectRenamed.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                var ProjectRenamedContent = new ProjectRenamedContent()
+                {
+                    Project = MyCreateProjectInfo(project),
+                    OldName = oldName
+                };
+
+                var Report = new Report(ProjectRenamedContent, SensorSolutionEvent.SolutionProjectRenamed.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -265,7 +274,9 @@
                     throw new ArgumentNullException("project");
                 }
 
-                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectRemoved.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                var ProjectInfo = MyCreateProjectInfo(project);
+
+                var Report = new Report(ProjectInfo, SensorSolutionEvent.SolutionProjectRemoved.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -283,7 +294,9 @@
                     throw new ArgumentNullException("project");
                 }
 
-                var Report = new Report(project.ToString(), SensorSolutionEvent.SolutionProjectAdded.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                var ProjectInfo = MyCreateProjectInfo(project);
+
+                var Report = new Report(ProjectInfo, SensorSolutionEvent.SolutionProjectAdded.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -363,7 +376,6 @@
             try
             {
                 var Report = new Report(new object(), SensorPluginEvent.Disconnection.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
-
                 MyReportAll(Report);
             }
             catch (Exception exception)
@@ -544,6 +556,14 @@
         #endregion
 
         #region My methods
+        private ProjectInfoContent MyCreateProjectInfo(EnvDTE.Project project)
+        {
+            return new ProjectInfoContent()
+            {
+                Name = project.UniqueName
+            };
+        }
+
         private void MyReportAll(Report report)
         {
             foreach (var LoopReporter in _Reporters)

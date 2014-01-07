@@ -14,6 +14,17 @@
             Initializes a new instance of the <see cref="T:NActivitySensor.Bootstrapper"/> class.
             </summary>
         </member>
+        <member name="M:NActivitySensor.Bootstrapper.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:NActivitySensor.Bootstrapper.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
         <member name="P:NActivitySensor.Bootstrapper.Scope">
             <summary>
             Gets the scope.
@@ -57,6 +68,17 @@
             <param term='custom'>Array of parameters that are host application specific.</param>
             <seealso class='IDTExtensibility2' />
         </member>
+        <member name="M:NActivitySensor.Connect.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:NActivitySensor.Connect.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
         <member name="T:NActivitySensor.Distributor">
             <summary>
             Distributes events to the sensors
@@ -96,6 +118,17 @@
             <summary>Implements the OnBeginShutdown method of the IDTExtensibility2 interface. Receives notification that the host application is being unloaded.</summary>
             <param term='custom'>Array of parameters that are host application specific.</param>
             <seealso class='IDTExtensibility2' />
+        </member>
+        <member name="M:NActivitySensor.Distributor.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:NActivitySensor.Distributor.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         </member>
     </members>
 </doc>
