@@ -44,6 +44,7 @@
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
         {
             _Distributor.OnDisconnection(disconnectMode, ref custom);
+            Dispose();
         }
 
         /// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary>
@@ -98,6 +99,7 @@
                 if (_Bootstrapper != null)
                 {
                     _Bootstrapper.Dispose();
+                    _Bootstrapper = null;
                 }
             }
         }
