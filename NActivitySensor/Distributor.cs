@@ -178,7 +178,13 @@
         #region TextEditor events
         void TextEditorEvents_LineChanged(TextPoint startPoint, TextPoint endPoint, int hint)
         {
-            MyTickAlive();
+            // Tick only when changes in scope of documents.
+            // LineChanged event also occurs after adding text into output window.
+            if (startPoint.Parent != null && startPoint.Parent.Parent != null)
+            {
+                MyTickAlive();
+            }
+            
 
             foreach (var Sensor in _Sensors)
             {
@@ -335,9 +341,7 @@
 
         #region Output window events
         void OutputWindowEvents_PaneUpdated(OutputWindowPane pPane)
-        {
-            MyTickAlive();
-
+        {            
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowPaneAdded(pPane);
@@ -345,9 +349,7 @@
         }
 
         void OutputWindowEvents_PaneClearing(OutputWindowPane pPane)
-        {
-            MyTickAlive();
-
+        {            
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowPaneClearing(pPane);
@@ -355,9 +357,7 @@
         }
 
         void OutputWindowEvents_PaneAdded(OutputWindowPane pPane)
-        {
-            MyTickAlive();
-
+        {            
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnWindowPaneAdded(pPane);
@@ -475,8 +475,6 @@
         #region Command events
         void CommandEvents_BeforeExecute(string guid, int id, object customIn, object customOut, ref bool cancelDefault)
         {
-            MyTickAlive();
-
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnCommandBeforeExecute(guid, id, customIn, customOut, ref cancelDefault);
@@ -489,8 +487,6 @@
             {
                 Sensor.OnCommandAfterExecute(guid, id, customIn, customOut);
             }
-
-            MyTickAlive();
         }
         #endregion
 
