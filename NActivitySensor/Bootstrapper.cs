@@ -30,16 +30,21 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
         /// </summary>
-        public Bootstrapper(object application)
+        public Bootstrapper(object application, object addIn)
         {
             if (application == null)
             {
                 throw new ArgumentNullException("application");
             }
 
+            if (addIn == null)
+            {
+                throw new ArgumentNullException("addIn");
+            }
+
             var Builder = new ContainerBuilder();
 
-            Builder.Register(g => new DefaultConnectContext(application)).As<IConnectContext>();
+            Builder.Register(g => new DefaultConnectContext(application, addIn)).As<IConnectContext>();
 
             // Logger
             Builder.RegisterType<FileLogger>().As<ILogger>();

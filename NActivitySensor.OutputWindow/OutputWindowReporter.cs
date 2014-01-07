@@ -19,7 +19,6 @@
         private readonly Window _Window;
         private readonly OutputWindow _OutputWindow;
         private readonly OutputWindowPane _OutputWindowPane;
-        // private 
         #endregion
 
         #region Constructors

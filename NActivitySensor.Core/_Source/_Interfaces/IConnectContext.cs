@@ -9,9 +9,16 @@
 
     public interface IConnectContext
     {
+        #region Methods
         object Application
         {
             get;
         }
+
+        object AddIn
+        {
+            get;
+        }
+        #endregion
     }
 }

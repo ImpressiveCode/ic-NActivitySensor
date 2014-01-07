@@ -36,7 +36,7 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "2#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#")]
         public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            _Bootstrapper = new Bootstrapper(application);
+            _Bootstrapper = new Bootstrapper(application, addInInst);
             _Distributor = new Distributor(_Bootstrapper.Scope.Resolve<IEnumerable<IActivitySensor>>());
 
             // Test - adding menubar
