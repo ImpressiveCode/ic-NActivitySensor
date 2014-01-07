@@ -23,7 +23,6 @@
         private DocumentEvents _DocumentEvents;
         private CommandEvents _CommandEvents;
         private DebuggerEvents _DebuggerEvents;
-        private DTEEvents _DTEEvents;
         private FindEvents _FindEvents;
         private ProjectItemsEvents _MiscFilesEvents;
         private OutputWindowEvents _OutputWindowEvents;
@@ -540,61 +539,63 @@
             _Timer.Start();
 
             _ApplicationObject = (DTE2)application;
-            GC.KeepAlive(_ApplicationObject);
+            // GC.KeepAlive(_ApplicationObject);
 
             _Events = _ApplicationObject.Events;
-            GC.KeepAlive(_Events);
+            // GC.KeepAlive(_Events);
 
             _DocumentEvents = _Events.DocumentEvents;
-            GC.KeepAlive(_DocumentEvents);
+            // GC.KeepAlive(_DocumentEvents);
 
             _CommandEvents = _Events.CommandEvents;
-            GC.KeepAlive(_CommandEvents);
+            // GC.KeepAlive(_CommandEvents);
 
             _DebuggerEvents = _Events.DebuggerEvents;
-            GC.KeepAlive(_DebuggerEvents);
+            // GC.KeepAlive(_DebuggerEvents);
 
             _DocumentEvents = _Events.DocumentEvents;
-            GC.KeepAlive(_DocumentEvents);
+            // GC.KeepAlive(_DocumentEvents);
 
             _DTEEvents = _Events.DTEEvents;
-            GC.KeepAlive(_DTEEvents);
+            // GC.KeepAlive(_DTEEvents);
 
             _FindEvents = _Events.FindEvents;
-            GC.KeepAlive(_FindEvents);
+            // GC.KeepAlive(_FindEvents);
 
             _MiscFilesEvents = _Events.MiscFilesEvents;
-            GC.KeepAlive(_MiscFilesEvents);
+            // GC.KeepAlive(_MiscFilesEvents);
 
             _OutputWindowEvents = _Events.OutputWindowEvents;
-            GC.KeepAlive(this._OutputWindowEvents);
+            // GC.KeepAlive(this._OutputWindowEvents);
 
             _SelectionEvents = _Events.SelectionEvents;
-            GC.KeepAlive(_SelectionEvents);
+            // GC.KeepAlive(_SelectionEvents);
 
             _SolutionEvents = _Events.SolutionEvents;
-            GC.KeepAlive(_SolutionEvents);
+            // GC.KeepAlive(_SolutionEvents);
 
             _SolutionItemsEvents = _Events.SolutionItemsEvents;
-            GC.KeepAlive(_SolutionItemsEvents);
+            // GC.KeepAlive(_SolutionItemsEvents);
 
             _TaskListEvents = _Events.TaskListEvents;
-            GC.KeepAlive(_TaskListEvents);
+            // GC.KeepAlive(_TaskListEvents);
 
             _TextEditorEvents = _Events.TextEditorEvents;
-            GC.KeepAlive(_TextEditorEvents);
+            // GC.KeepAlive(_TextEditorEvents);
 
             _WindowEvents = _Events.WindowEvents;
-            GC.KeepAlive(_WindowEvents);
+            // GC.KeepAlive(_WindowEvents);
+
+            _BuildEvents = _Events.BuildEvents;
 
             // Documents events
             _DocumentEvents.DocumentClosing += OnDocumentClosing;
             _DocumentEvents.DocumentSaved += OnDocumentSaved;
             _DocumentEvents.DocumentOpened += OnDocumentOpened;
-
+            
             // Command events
-            _ApplicationObject.Events.CommandEvents.AfterExecute += CommandEvents_AfterExecute;
-            _ApplicationObject.Events.CommandEvents.BeforeExecute += CommandEvents_BeforeExecute;
+            _CommandEvents.AfterExecute += CommandEvents_AfterExecute;
+            _CommandEvents.BeforeExecute += CommandEvents_BeforeExecute;
 
             // Debugger events
             _DebuggerEvents.OnContextChanged += DebuggerEvents_OnContextChanged;
@@ -650,8 +651,7 @@
             _WindowEvents.WindowCreated += WindowEvents_WindowCreated;
             _WindowEvents.WindowMoved += WindowEvents_WindowMoved;
 
-            // Build events
-            _BuildEvents = _ApplicationObject.Events.BuildEvents;
+            // Build events            
             _BuildEvents.OnBuildBegin += BuildEvents_OnBuildBegin;
             _BuildEvents.OnBuildProjConfigDone += BuildEvents_OnBuildProjConfigDone;
             _BuildEvents.OnBuildDone += BuildEvents_OnBuildDone;
@@ -667,7 +667,7 @@
         /// <param term='disconnectMode'>Describes how the Add-in is being unloaded.</param>
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "1#")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "1#")]
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
         {
             MyTickAlive();
@@ -736,7 +736,6 @@
             _ApplicationObject.Events.WindowEvents.WindowMoved -= WindowEvents_WindowMoved;
 
             // Build events
-            _BuildEvents = _ApplicationObject.Events.BuildEvents;
             _BuildEvents.OnBuildBegin -= BuildEvents_OnBuildBegin;
             _BuildEvents.OnBuildProjConfigDone -= BuildEvents_OnBuildProjConfigDone;
             _BuildEvents.OnBuildDone -= BuildEvents_OnBuildDone;

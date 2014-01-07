@@ -1,6 +1,7 @@
 ﻿namespace NActivitySensor.OutputWindow
 {
     #region Usings
+    using EnvDTE80;
     using NActivitySensor.Models;
     using System;
     using System.Collections.Generic;
@@ -13,6 +14,7 @@
     {
         #region Private variablers
         private readonly IConnectContext _ConnectContext;
+        private readonly DTE2 _Application;
         #endregion
 
         #region Constructors
@@ -24,13 +26,15 @@
             }
 
             _ConnectContext = connectContext;
+
+            _Application = (DTE2)_ConnectContext.Application;
         }
         #endregion
         #region IReporter methods
         public void Report(Report reportModel)
         {
-            
+
         }
-        #endregion       
+        #endregion
     }
 }
