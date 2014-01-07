@@ -183,7 +183,7 @@
 
                 var Report = new Report(new SolutionInfoContent
                 {
-                    SolutionName = _SolutionFullName,
+                    SolutionName = _SolutionSimpleName,
                     Projects = FoundProjects
                 }, SensorSolutionEvent.SolutionOpened.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
                 MyReportAll(Report);
@@ -452,12 +452,20 @@
 
         public void OnSelectionChange()
         {
-
+            try
+            {
+                var Report = new Report(new object(), SensorSelectionEvent.SelectionChange.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnLineChanged(EnvDTE.TextPoint startPoint, EnvDTE.TextPoint endPoint, int hint)
-        {
-
+       {
+            
         }
 
         public void OnTaskRemoved(EnvDTE.TaskItem taskItem)
@@ -482,17 +490,47 @@
 
         public void OnFileItemRenamed(EnvDTE.ProjectItem projectItem, string oldName)
         {
+            try
+            {
+                var ProjectItemRenameContent = new ProjectItemRenamedContent()
+                {
+                    ProjectItem = MyCreateProjectItemInfo(projectItem),
+                    OldName = oldName
+                };
 
+                var Report = new Report(ProjectItemRenameContent, SensorSelectionEvent.SelectionChange.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnFileItemRemoved(EnvDTE.ProjectItem projectItem)
         {
-
+            try
+            {
+                var Report = new Report(MyCreateProjectItemInfo(projectItem), SensorSelectionEvent.SelectionChange.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnFileItemAdded(EnvDTE.ProjectItem projectItem)
         {
-
+            try
+            {
+                var Report = new Report(MyCreateProjectItemInfo(projectItem), SensorSelectionEvent.SelectionChange.ToString(), _ProcessId, _SolutionSimpleName, _ReportContentSerializer);
+                MyReportAll(Report);
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
+            }
         }
 
         public void OnFindDone(EnvDTE.vsFindResult result, bool canceled)
@@ -556,6 +594,14 @@
         #endregion
 
         #region My methods
+        private ProjectItemInfoContent MyCreateProjectItemInfo(EnvDTE.ProjectItem projectItem)
+        {
+            return new ProjectItemInfoContent()
+            {
+                Name = projectItem.Name
+            };
+        }
+
         private ProjectInfoContent MyCreateProjectInfo(EnvDTE.Project project)
         {
             return new ProjectInfoContent()
