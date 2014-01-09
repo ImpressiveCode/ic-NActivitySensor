@@ -10,6 +10,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Collections;
+    using System.Reflection;
     #endregion
 
     /// <summary>The object for implementing an Add-in.</summary>
@@ -26,6 +27,8 @@
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
         public Connect()
         {
+            var PluginConfiguration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+            
             _Logger = new FileLogger();
         }
 
