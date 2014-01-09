@@ -2,9 +2,10 @@
 {
     #region Usings
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
     #endregion
 
     public interface IConnectContext
@@ -16,6 +17,11 @@
         }
 
         object AddIn
+        {
+            get;
+        }
+
+        Configuration Configuration
         {
             get;
         }

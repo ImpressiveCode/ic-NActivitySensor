@@ -5,6 +5,7 @@
     using NActivitySensor.MSSql;
     using NActivitySensor.OutputWindow;
     using System;
+    using System.Configuration;
     #endregion
 
     /// <summary>
@@ -20,7 +21,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
         /// </summary>
-        public Bootstrapper(object application, object addIn, ILogger logger)
+        public Bootstrapper(object application, object addIn, ILogger logger, Configuration configuration)
         {
             if (application == null)
             {
@@ -39,7 +40,7 @@
 
             var Builder = new ContainerBuilder();
 
-            Builder.Register(g => new DefaultConnectContext(application, addIn)).As<IConnectContext>();
+            Builder.Register(g => new DefaultConnectContext(application, addIn, configuration)).As<IConnectContext>();
 
             // Logger
             Builder.Register(g => logger).As<ILogger>();
@@ -61,6 +62,11 @@
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Resolves this instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T Resolve<T>()
         {
             return _Scope.Resolve<T>();

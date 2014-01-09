@@ -9,10 +9,17 @@
             The bootstrapper
             </summary>
         </member>
-        <member name="M:NActivitySensor.Bootstrapper.#ctor(System.Object,System.Object,NActivitySensor.ILogger)">
+        <member name="M:NActivitySensor.Bootstrapper.#ctor(System.Object,System.Object,NActivitySensor.ILogger,System.Configuration.Configuration)">
             <summary>
             Initializes a new instance of the <see cref="T:NActivitySensor.Bootstrapper"/> class.
             </summary>
+        </member>
+        <member name="M:NActivitySensor.Bootstrapper.Resolve``1">
+            <summary>
+            Resolves this instance.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
         </member>
         <member name="M:NActivitySensor.Bootstrapper.Dispose">
             <summary>

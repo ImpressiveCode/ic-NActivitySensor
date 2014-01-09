@@ -21,14 +21,14 @@
         private Distributor _Distributor;
         private Bootstrapper _Bootstrapper;
         private readonly ILogger _Logger;
+        private readonly System.Configuration.Configuration _PluginConfiguration;
         #endregion
 
         #region Public
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
         public Connect()
         {
-            var PluginConfiguration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
-            
+            _PluginConfiguration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);            
             _Logger = new FileLogger();
         }
 
@@ -42,7 +42,7 @@
         {
             try
             {
-                _Bootstrapper = new Bootstrapper(application, addInInst, _Logger);
+                _Bootstrapper = new Bootstrapper(application, addInInst, _Logger, _PluginConfiguration);
                 _Distributor = new Distributor(_Bootstrapper.Resolve<IEnumerable<IActivitySensor>>());
 
                 // Test - adding menubar
