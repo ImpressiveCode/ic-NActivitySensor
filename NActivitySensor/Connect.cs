@@ -19,13 +19,14 @@
         #region Private variables
         private Distributor _Distributor;
         private Bootstrapper _Bootstrapper;
+        private readonly ILogger _Logger;
         #endregion
 
         #region Public
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
         public Connect()
         {
-            
+            _Logger = new FileLogger();
         }
 
         /// <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>
@@ -33,57 +34,95 @@
         /// <param term='connectMode'>Describes how the Add-in is being loaded.</param>
         /// <param term='addInInst'>Object representing this Add-in.</param>
         /// <seealso class='IDTExtensibility2' />
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "2#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "2#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#")]
         public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            _Bootstrapper = new Bootstrapper(application, addInInst);
-            _Distributor = new Distributor(_Bootstrapper.Scope.Resolve<IEnumerable<IActivitySensor>>());
+            try
+            {
+                _Bootstrapper = new Bootstrapper(application, addInInst, _Logger);
+                _Distributor = new Distributor(_Bootstrapper.Resolve<IEnumerable<IActivitySensor>>());
 
-            // Test - adding menubar
-            // TODO: Create separate menu classes
-            var DTEApplication = (DTE2)application;
-            var CommandBars = (CommandBars)DTEApplication.CommandBars;
-            var MenuBar = CommandBars["MenuBar"];
-            var ToolsCommandBar = CommandBars["Tools"];
-            var HelpCommandBar = CommandBars["Help"];
-            CommandBar SensorCommandBar = (CommandBar)DTEApplication.Commands.AddCommandBar("NAcvititySensor", vsCommandBarType.vsCommandBarTypeMenu, MenuBar, 1);    
-            
-            _Distributor.OnConnection(application, connectMode, addInInst, ref custom);
+                // Test - adding menubar
+                // TODO: Create separate menu classes
+                //var DTEApplication = (DTE2)application;
+                //var CommandBars = (CommandBars)DTEApplication.CommandBars;
+                //var MenuBar = CommandBars["MenuBar"];
+                //var ToolsCommandBar = CommandBars["Tools"];
+                //var HelpCommandBar = CommandBars["Help"];
+                //CommandBar SensorCommandBar = (CommandBar)DTEApplication.Commands.AddCommandBar("NAcvititySensor", vsCommandBarType.vsCommandBarTypeMenu, MenuBar, 1);
+
+                _Distributor.OnConnection(application, connectMode, addInInst, ref custom);
+            }
+            catch (Exception exception)
+            {
+                _Logger.Log(exception.Message);
+            }
         }
 
         /// <summary>Implements the OnDisconnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being unloaded.</summary>
         /// <param term='disconnectMode'>Describes how the Add-in is being unloaded.</param>
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#")]
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
         {
-            _Distributor.OnDisconnection(disconnectMode, ref custom);
-            Dispose();
+            try
+            {
+                _Distributor.OnDisconnection(disconnectMode, ref custom);
+                Dispose();
+            }
+            catch (Exception exception)
+            {
+                _Logger.Log(exception.Message);
+            }
         }
 
         /// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary>
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />		
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public void OnAddInsUpdate(ref Array custom)
         {
-            _Distributor.OnAddInsUpdate(ref custom);
+            try
+            {
+                _Distributor.OnAddInsUpdate(ref custom);
+            }
+            catch (Exception exception)
+            {
+                _Logger.Log(exception.Message);
+            }
         }
 
         /// <summary>Implements the OnStartupComplete method of the IDTExtensibility2 interface. Receives notification that the host application has completed loading.</summary>
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public void OnStartupComplete(ref Array custom)
         {
-            _Distributor.OnStartupComplete(ref custom);
+            try
+            {
+                _Distributor.OnStartupComplete(ref custom);
+            }
+            catch (Exception exception)
+            {
+                _Logger.Log(exception.Message);
+            }
         }
 
         /// <summary>Implements the OnBeginShutdown method of the IDTExtensibility2 interface. Receives notification that the host application is being unloaded.</summary>
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public void OnBeginShutdown(ref Array custom)
         {
-            _Distributor.OnBeginShutdown(ref custom);
+            try
+            {
+                _Distributor.OnBeginShutdown(ref custom);
+            }
+            catch (Exception exception)
+            {
+                _Logger.Log(exception.Message);
+            }
         }
         #endregion
 

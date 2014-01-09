@@ -12,25 +12,15 @@
     /// </summary>
     public class Bootstrapper : IDisposable
     {
-        #region Properties
-        /// <summary>
-        /// Gets the scope.
-        /// </summary>
-        /// <value>
-        /// The scope.
-        /// </value>
-        public ILifetimeScope Scope
-        {
-            get;
-            private set;
-        }
+        #region Private variables
+        private ILifetimeScope _Scope;
         #endregion
 
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
         /// </summary>
-        public Bootstrapper(object application, object addIn)
+        public Bootstrapper(object application, object addIn, ILogger logger)
         {
             if (application == null)
             {
@@ -42,12 +32,17 @@
                 throw new ArgumentNullException("addIn");
             }
 
+            if (logger == null)
+            {
+                throw new ArgumentNullException("logger");
+            }
+
             var Builder = new ContainerBuilder();
 
             Builder.Register(g => new DefaultConnectContext(application, addIn)).As<IConnectContext>();
 
             // Logger
-            Builder.RegisterType<FileLogger>().As<ILogger>();
+            Builder.Register(g => logger).As<ILogger>();
 
             // Reporters
             Builder.RegisterType<MSSqlReporter>().As<IReporter>().WithMetadata("MSSqlReporter", new object());
@@ -61,7 +56,14 @@
 
             var Container = Builder.Build();
 
-            Scope = Container.BeginLifetimeScope();
+            _Scope = Container.BeginLifetimeScope();
+        }
+        #endregion
+
+        #region Methods
+        public T Resolve<T>()
+        {
+            return _Scope.Resolve<T>();
         }
         #endregion
 
@@ -83,9 +85,9 @@
         {
             if (disposing)
             {
-                if (Scope != null)
+                if (_Scope != null)
                 {
-                    Scope.Dispose();
+                    _Scope.Dispose();
                 }
             }
         }

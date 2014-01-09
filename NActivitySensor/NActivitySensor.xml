@@ -9,7 +9,7 @@
             The bootstrapper
             </summary>
         </member>
-        <member name="M:NActivitySensor.Bootstrapper.#ctor(System.Object,System.Object)">
+        <member name="M:NActivitySensor.Bootstrapper.#ctor(System.Object,System.Object,NActivitySensor.ILogger)">
             <summary>
             Initializes a new instance of the <see cref="T:NActivitySensor.Bootstrapper"/> class.
             </summary>
@@ -24,14 +24,6 @@
             Releases unmanaged and - optionally - managed resources.
             </summary>
             <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        </member>
-        <member name="P:NActivitySensor.Bootstrapper.Scope">
-            <summary>
-            Gets the scope.
-            </summary>
-            <value>
-            The scope.
-            </value>
         </member>
         <member name="T:NActivitySensor.Connect">
             <summary>The object for implementing an Add-in.</summary>
