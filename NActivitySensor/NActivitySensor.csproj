@@ -12,6 +12,8 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>NActivitySensor</AssemblyName>
     <DeploymentDirectory>.\bin\</DeploymentDirectory>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,6 +26,7 @@
     <DocumentationFile>NActivitySensor.xml</DocumentationFile>
     <CodeAnalysisRuleSet>..\CodeAnalysis\CodefusionRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +40,7 @@
     <CodeAnalysisRuleSet>..\CodeAnalysis\CodefusionRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <DebugType>pdbonly</DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>NActivitySensor</RootNamespace>
@@ -51,7 +55,6 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.2\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.configuration" />
@@ -146,6 +149,10 @@
     <ProjectReference Include="..\NActivitySensor.OutputWindow\NActivitySensor.OutputWindow.csproj">
       <Project>{c37d78af-c5eb-459a-86fe-d1a6351eb2f4}</Project>
       <Name>NActivitySensor.OutputWindow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NActivitySensor.TestsActivitySensor\NActivitySensor.TestsActivitySensor.csproj">
+      <Project>{ebb0719c-81f8-4d4a-9c05-fb38d3c3d597}</Project>
+      <Name>NActivitySensor.TestsActivitySensor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

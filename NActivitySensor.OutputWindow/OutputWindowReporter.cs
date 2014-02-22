@@ -28,7 +28,7 @@
             {
                 throw new ArgumentNullException("connectContext");
             }
-            
+
             try
             {
                 _ConnectContext = connectContext;

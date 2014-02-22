@@ -50,7 +50,7 @@
             Builder.RegisterType<OutputWindowReporter>().As<IReporter>().WithMetadata("OutputWindowReporter", new object()).PreserveExistingDefaults();
 
             // Activity sensors
-            Builder.RegisterType<DTEActivitySensor>().As<IActivitySensor>();
+            //Builder.RegisterType<TestsActivitySensor>().As<IActivitySensor>();
 
             // Serializer
             Builder.RegisterType<JsonReportContentSerializer>().As<IReportContentSerializer>();
