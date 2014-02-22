@@ -8,6 +8,7 @@ using NActivitySensor.Models;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.TestTools.Execution;
 
 namespace NActivitySensor
 {   
@@ -16,12 +17,9 @@ namespace NActivitySensor
     /// </summary>
     public class TestsActivitySensor : IActivitySensor
     {
-        [Import]
-        public IOperationState OperationState
-        {
-            get;
-            set;
-        }
+        private IServiceProvider _ServiceProvider;
+        private IComponentModel _ComponentModel;
+        private IOperationState _OperationState;
 
         private readonly IEnumerable<IReporter> _Reporters;
 
@@ -121,8 +119,14 @@ namespace NActivitySensor
         public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {            
             Microsoft.VisualStudio.OLE.Interop.IServiceProvider InteropServiceProvider = application as Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
-            ServiceProvider Sp = new ServiceProvider(InteropServiceProvider);
-            var ComponentModel = (IComponentModel)Sp.GetService(typeof(SComponentModel));
+            _ServiceProvider = new ServiceProvider(InteropServiceProvider);
+            _ComponentModel = (IComponentModel)_ServiceProvider.GetService(typeof(SComponentModel));
+            _OperationState = _ComponentModel.GetService<IOperationState>();
+            _OperationState.StateChanged += _OperationState_StateChanged;
+        }
+
+        void _OperationState_StateChanged(object sender, OperationStateChangedEventArgs e)
+        {            
         }
 
         public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
