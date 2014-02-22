@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using NActivitySensor.Models;
+using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace NActivitySensor
 {   
@@ -14,8 +15,8 @@ namespace NActivitySensor
     [Export]
     public class TestsActivitySensor : IActivitySensor
     {
-        //[Import(typeof(IOperationState))]
-        //public IOperationState OperationState;
+        [Import(typeof(IOperationState))]
+        public IOperationState OperationState;
 
         private readonly IEnumerable<IReporter> _Reporters;
 
