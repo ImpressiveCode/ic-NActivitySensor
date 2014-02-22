@@ -12,11 +12,14 @@ namespace NActivitySensor
     /// <summary>
     /// C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow
     /// </summary>
-    [Export]
     public class TestsActivitySensor : IActivitySensor
     {
-        [Import(typeof(IOperationState))]
-        public IOperationState OperationState;
+        [Import]
+        public IOperationState OperationState
+        {
+            get;
+            set;
+        }
 
         private readonly IEnumerable<IReporter> _Reporters;
 
@@ -115,7 +118,8 @@ namespace NActivitySensor
 
         public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            
+            EnvDTE80.DTE2 App = application as EnvDTE80.DTE2;
+
         }
 
         public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
