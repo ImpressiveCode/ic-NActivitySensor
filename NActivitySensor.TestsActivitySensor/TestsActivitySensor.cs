@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using NActivitySensor.Models;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
+using Microsoft.VisualStudio.ComponentModelHost;
+using Microsoft.VisualStudio.Shell;
 
 namespace NActivitySensor
 {   
@@ -117,9 +119,10 @@ namespace NActivitySensor
         }
 
         public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
-        {
-            EnvDTE80.DTE2 App = application as EnvDTE80.DTE2;
-
+        {            
+            Microsoft.VisualStudio.OLE.Interop.IServiceProvider InteropServiceProvider = application as Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
+            ServiceProvider Sp = new ServiceProvider(InteropServiceProvider);
+            var ComponentModel = (IComponentModel)Sp.GetService(typeof(SComponentModel));
         }
 
         public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
