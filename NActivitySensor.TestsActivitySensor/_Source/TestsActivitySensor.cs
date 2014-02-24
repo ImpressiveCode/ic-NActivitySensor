@@ -110,8 +110,6 @@
 
         private void MyOnTestExecutionFinishedAsync(TestRunRequest request)
         {
-            TestRunRequest Request = request;
-
             lock (_GetTestsLock)
             {
                 Thread GetTestsAsync = new Thread(new ThreadStart(() =>
@@ -123,12 +121,12 @@
 
                         ReceivedTests.Wait();
 
-                        var ReportModel = new TestExecutionFinishedReportModel(Request, ReceivedTestList);
+                        var ReportModel = new TestExecutionFinishedReportModel(request, ReceivedTestList);
                         MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
                     }
                     catch (Exception exception)
                     {
-                        throw new ReporterException(exception.Message, exception);
+                        throw new SensorException(exception.Message, exception);
                     }
                 }));
 
