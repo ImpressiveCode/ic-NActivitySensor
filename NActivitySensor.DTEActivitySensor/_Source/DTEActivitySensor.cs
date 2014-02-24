@@ -9,7 +9,7 @@
     #endregion
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DTE")]
-    public class DTEActivitySensor : IActivitySensor
+    public class DTEActivitySensor : BaseActivitySensor
     {
         #region Private variables
         private readonly IEnumerable<IReporter> _Reporters;
@@ -62,8 +62,8 @@
         }
         #endregion
 
-        #region IAcvititySensor implemented methods
-        public void OnBuildDone(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
+        #region IActivitySensor methods
+        public override void OnBuildDone(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
         {
             try
             {
@@ -81,7 +81,7 @@
             }
         }
 
-        public void OnBuildProjConfigDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
+        public override void OnBuildProjConfigDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
         {
             try
             {
@@ -102,7 +102,7 @@
             }
         }
 
-        public void OnBuildBegin(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
+        public override void OnBuildBegin(EnvDTE.vsBuildScope scope, EnvDTE.vsBuildAction action)
         {
             try
             {
@@ -120,7 +120,7 @@
             }
         }
 
-        public void OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
+        public override void OnBuildProjConfigBegin(string project, string projectConfig, string platform, string solutionConfig)
         {
             try
             {
@@ -139,10 +139,8 @@
                 throw new ReporterException(exception.Message, exception);
             }
         }
-        #endregion
 
-        #region IActivitySensor methods
-        public void OnSolutionAfterClosing()
+        public override void OnSolutionAfterClosing()
         {
             try
             {
@@ -156,7 +154,7 @@
             }
         }
 
-        public void OnSolutionOpened()
+        public override void OnSolutionOpened()
         {
             try
             {
@@ -194,7 +192,7 @@
             }
         }
 
-        public void OnSolutionBeforeClosing()
+        public override void OnSolutionBeforeClosing()
         {
             try
             {
@@ -207,7 +205,7 @@
             }
         }
 
-        public void OnSolutionRenamed(string oldName)
+        public override void OnSolutionRenamed(string oldName)
         {
             try
             {
@@ -227,7 +225,7 @@
             }
         }
 
-        public void OnSolutionQueryClose(ref bool fCancel)
+        public override void OnSolutionQueryClose(ref bool fCancel)
         {
             try
             {
@@ -240,7 +238,7 @@
             }
         }
 
-        public void OnSolutionProjectRenamed(EnvDTE.Project project, string oldName)
+        public override void OnSolutionProjectRenamed(EnvDTE.Project project, string oldName)
         {
             try
             {
@@ -264,7 +262,7 @@
             }
         }
 
-        public void OnSolutionProjectRemoved(EnvDTE.Project project)
+        public override void OnSolutionProjectRemoved(EnvDTE.Project project)
         {
             try
             {
@@ -284,7 +282,7 @@
             }
         }
 
-        public void OnSolutionProjectAdded(EnvDTE.Project project)
+        public override void OnSolutionProjectAdded(EnvDTE.Project project)
         {
             try
             {
@@ -304,7 +302,7 @@
             }
         }
 
-        public void OnUserInactive()
+        public override void OnUserInactive()
         {
             try
             {
@@ -317,7 +315,7 @@
             }
         }
 
-        public void OnUserActive()
+        public override void OnUserActive()
         {
             try
             {
@@ -330,12 +328,12 @@
             }
         }
 
-        public void OnConnect(int processId)
+        public override void OnConnect(int processId)
         {
             this._ProcessId = processId;
         }
 
-        public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
+        public override void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
             try
             {
@@ -370,7 +368,7 @@
             }
         }
 
-        public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
+        public override void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
         {
             try
             {
@@ -383,12 +381,12 @@
             }
         }
 
-        public void OnAddInsUpdate(ref Array custom)
+        public override void OnAddInsUpdate(ref Array custom)
         {
 
         }
 
-        public void OnStartupComplete(ref Array custom)
+        public override void OnStartupComplete(ref Array custom)
         {
             try
             {
@@ -401,7 +399,7 @@
             }
         }
 
-        public void OnBeginShutdown(ref Array custom)
+        public override void OnBeginShutdown(ref Array custom)
         {
             try
             {
@@ -412,74 +410,9 @@
             {
                 throw new ReporterException(exception.Message, exception);
             }
-        }
+        }   
 
-        public void OnWindowMoved(EnvDTE.Window window, int top, int left, int width, int height)
-        {
-
-        }
-
-        public void OnWindowCreated(EnvDTE.Window window)
-        {
-
-        }
-
-        public void OnWindowClosing(EnvDTE.Window window)
-        {
-
-        }
-
-        public void OnWindowActivated(EnvDTE.Window gotFocus, EnvDTE.Window lostFocus)
-        {
-
-        }
-
-        public void OnWindowPaneUpdated(EnvDTE.OutputWindowPane pPane)
-        {
-
-        }
-
-        public void OnWindowPaneClearing(EnvDTE.OutputWindowPane pPane)
-        {
-
-        }
-
-        public void OnWindowPaneAdded(EnvDTE.OutputWindowPane pPane)
-        {
-
-        }
-
-        public void OnSelectionChange()
-        {
-
-        }
-
-        public void OnLineChanged(EnvDTE.TextPoint startPoint, EnvDTE.TextPoint endPoint, int hint)
-        {
-            
-        }
-
-        public void OnTaskRemoved(EnvDTE.TaskItem taskItem)
-        {
-
-        }
-
-        public void OnTaskNavigated(EnvDTE.TaskItem taskItem, ref bool navigateHandled)
-        {
-
-        }
-
-        public void OnTaskModified(EnvDTE.TaskItem taskItem, EnvDTE.vsTaskListColumn columnModified)
-        {
-
-        }
-
-        public void OnTaskAdded(EnvDTE.TaskItem taskItem)
-        {
-
-        }
-
-        public void OnFileItemRenamed(EnvDTE.ProjectItem projectItem, string oldName)
+        public override void OnFileItemRenamed(EnvDTE.ProjectItem projectItem, string oldName)
         {
             try
             {
@@ -498,7 +431,7 @@
             }
         }
 
-        public void OnFileItemRemoved(EnvDTE.ProjectItem projectItem)
+        public override void OnFileItemRemoved(EnvDTE.ProjectItem projectItem)
         {
             try
             {
@@ -511,7 +444,7 @@
             }
         }
 
-        public void OnFileItemAdded(EnvDTE.ProjectItem projectItem)
+        public override void OnFileItemAdded(EnvDTE.ProjectItem projectItem)
         {
             try
             {
@@ -524,7 +457,7 @@
             }
         }
 
-        public void OnFindDone(EnvDTE.vsFindResult result, bool canceled)
+        public override void OnFindDone(EnvDTE.vsFindResult result, bool canceled)
         {
             try
             {
@@ -537,7 +470,7 @@
             }
         }
 
-        public void OnDebuggerExceptionThrown(string exceptionType, string name, int code, string description, ref EnvDTE.dbgExceptionAction exceptionAction)
+        public override void OnDebuggerExceptionThrown(string exceptionType, string name, int code, string description, ref EnvDTE.dbgExceptionAction exceptionAction)
         {
             try
             {
@@ -551,7 +484,7 @@
             }
         }
 
-        public void OnDebuggerExceptionNotHandled(string exceptionType, string name, int code, string description, ref EnvDTE.dbgExceptionAction exceptionAction)
+        public override void OnDebuggerExceptionNotHandled(string exceptionType, string name, int code, string description, ref EnvDTE.dbgExceptionAction exceptionAction)
         {
             try
             {
@@ -565,7 +498,7 @@
             }
         }
 
-        public void OnDebuggerEnterRunMode(EnvDTE.dbgEventReason reason)
+        public override void OnDebuggerEnterRunMode(EnvDTE.dbgEventReason reason)
         {
             try
             {
@@ -583,7 +516,7 @@
             }
         }
 
-        public void OnDebuggerEnterDesignMode(EnvDTE.dbgEventReason reason)
+        public override void OnDebuggerEnterDesignMode(EnvDTE.dbgEventReason reason)
         {
             try
             {
@@ -601,7 +534,7 @@
             }
         }
 
-        public void OnDebuggerEnterBreakMode(EnvDTE.dbgEventReason reason, ref EnvDTE.dbgExecutionAction executionAction)
+        public override void OnDebuggerEnterBreakMode(EnvDTE.dbgEventReason reason, ref EnvDTE.dbgExecutionAction executionAction)
         {
             try
             {
@@ -620,7 +553,7 @@
             }
         }
 
-        public void OnDebuggerContextChanged(EnvDTE.Process newProcess, EnvDTE.Program newProgram, EnvDTE.Thread newThread, EnvDTE.StackFrame newStackFrame)
+        public override void OnDebuggerContextChanged(EnvDTE.Process newProcess, EnvDTE.Program newProgram, EnvDTE.Thread newThread, EnvDTE.StackFrame newStackFrame)
         {
             try
             {
@@ -664,17 +597,7 @@
             }
         }
 
-        public void OnCommandBeforeExecute(string guid, int id, object customIn, object customOut, ref bool cancelDefault)
-        {
-
-        }
-
-        public void OnCommandAfterExecute(string guid, int id, object customIn, object customOut)
-        {
-
-        }
-
-        public void OnDocumentClosing(EnvDTE.Document document)
+        public override void OnDocumentClosing(EnvDTE.Document document)
         {
             try
             {
@@ -687,7 +610,7 @@
             }
         }
 
-        public void OnDocumentSaved(EnvDTE.Document document)
+        public override void OnDocumentSaved(EnvDTE.Document document)
         {
             try
             {
@@ -700,7 +623,7 @@
             }
         }
 
-        public void OnDocumentOpened(EnvDTE.Document document)
+        public override void OnDocumentOpened(EnvDTE.Document document)
         {
             try
             {

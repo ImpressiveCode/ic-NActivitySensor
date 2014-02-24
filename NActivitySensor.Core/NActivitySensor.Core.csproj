@@ -87,6 +87,7 @@
     </COMReference>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_Source\BaseActivitySensor.cs" />
     <Compile Include="_Source\DefaultConnectContext.cs" />
     <Compile Include="_Source\_Enums\Enums.cs" />
     <Compile Include="_Source\_ActivitySensors\NullActivitySensor.cs" />
