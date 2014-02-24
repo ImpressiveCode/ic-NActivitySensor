@@ -11,6 +11,7 @@
     using Microsoft.VisualStudio.TestWindow.Extensibility;
     using Microsoft.VisualStudio.ComponentModelHost;
     using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.TestWindow.Controller;
     #endregion
 
     /// <summary>
@@ -79,7 +80,10 @@
         {
             try
             {
-                if (eventArgs != null)
+                OperationData OperationData = sender as OperationData;
+                TestRunRequest Request = eventArgs.Operation as TestRunRequest;
+
+                if (Request != null && OperationData != null)
                 {
                     switch (eventArgs.State)
                     {
@@ -87,7 +91,7 @@
                             MyReportAll(new Report(eventArgs.State, eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
                             break;
                         case TestOperationStates.TestExecutionFinished:
-
+                            MyOnTestExecutionFinished(OperationData, Request);
                             break;
                     }
                 }
@@ -96,6 +100,11 @@
             {
                 throw new SensorException(exception.Message, exception);
             }
+        }
+
+        private void MyOnTestExecutionFinished(OperationData operationData, TestRunRequest request)
+        {
+            
         }
         #endregion
 
