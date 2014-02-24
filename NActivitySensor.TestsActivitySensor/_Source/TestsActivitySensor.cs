@@ -28,6 +28,8 @@
 
         private readonly IEnumerable<IReporter> _Reporters;
         private readonly IReportContentSerializer _ReportContentSerializer;
+
+        private object _GetTestsLock = new object();
         #endregion
 
         #region Constructors
@@ -85,36 +87,52 @@
             try
             {
                 OperationData OperationData = sender as OperationData;
-                TestRunRequest Request = eventArgs.Operation as TestRunRequest;               
-                
-                Thread GetTestsAsync = new Thread(new ThreadStart(() =>
+                TestRunRequest Request = eventArgs.Operation as TestRunRequest;
+
+                if (Request != null && OperationData != null)
                 {
-                    // Get tests async
-                    var ReceivedTests = _TestsService.GetTests();
-                    ReceivedTests.Wait();
-                    
-                    var ReceivedTestList = ReceivedTests.Result.ToList();
-
-                    if (Request != null && OperationData != null)
+                    switch (eventArgs.State)
                     {
-                        switch (eventArgs.State)
-                        {
-                            case TestOperationStates.TestExecutionStarted:
-                                MyReportAll(new Report(eventArgs.State.ToString(), eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
-                                break;
-                            case TestOperationStates.TestExecutionFinished:
-                                var ReportModel = new TestExecutionFinishedReportModel(Request, ReceivedTestList);
-                                MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
-                                break;
-                        }
+                        case TestOperationStates.TestExecutionStarted:
+                            MyReportAll(new Report(eventArgs.State.ToString(), eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                            break;
+                        case TestOperationStates.TestExecutionFinished:
+                            MyOnTestExecutionFinishedAsync(Request);
+                            break;
                     }
-                }));
-
-                GetTestsAsync.Start();               
+                }
             }
             catch (Exception exception)
             {
                 throw new SensorException(exception.Message, exception);
+            }
+        }
+
+        private void MyOnTestExecutionFinishedAsync(TestRunRequest request)
+        {
+            TestRunRequest Request = request;
+
+            lock (_GetTestsLock)
+            {
+                Thread GetTestsAsync = new Thread(new ThreadStart(() =>
+                {
+                    try
+                    {
+                        var ReceivedTests = _TestsService.GetTests();
+                        var ReceivedTestList = ReceivedTests.Result.ToList();
+
+                        ReceivedTests.Wait();
+
+                        var ReportModel = new TestExecutionFinishedReportModel(Request, ReceivedTestList);
+                        MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                    }
+                    catch (Exception exception)
+                    {
+                        throw new ReporterException(exception.Message, exception);
+                    }
+                }));
+
+                GetTestsAsync.Start();
             }
         }
         #endregion

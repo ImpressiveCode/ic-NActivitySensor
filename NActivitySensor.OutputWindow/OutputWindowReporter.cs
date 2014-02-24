@@ -19,6 +19,8 @@
         private readonly Window _Window;
         private readonly OutputWindow _OutputWindow;
         private readonly OutputWindowPane _OutputWindowPane;
+
+        private object _Lock = new object();
         #endregion
 
         #region Constructors
@@ -49,18 +51,21 @@
         #region IReporter methods
         public void Report(Report reportModel)
         {
-            try
+            lock (_Lock)
             {
-                if (_OutputWindowPane != null)
+                try
                 {
-                    string Format = "[{0}] [{1}] {2}\n";
-                    string OutputMessage = String.Format(Format, reportModel.Date, reportModel.Event, reportModel.Content);
-                    _OutputWindowPane.OutputString(OutputMessage);
+                    if (_OutputWindowPane != null)
+                    {
+                        string Format = "[{0}] [{1}] {2}\n";
+                        string OutputMessage = String.Format(Format, reportModel.Date, reportModel.Event, reportModel.Content);
+                        _OutputWindowPane.OutputString(OutputMessage);
+                    }
                 }
-            }
-            catch (Exception exception)
-            {
-                throw new ReporterException(exception.Message, exception);
+                catch (Exception exception)
+                {
+                    throw new ReporterException(exception.Message, exception);
+                }
             }
         }
         #endregion
