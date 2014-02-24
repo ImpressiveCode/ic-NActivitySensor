@@ -11,7 +11,6 @@
     using Microsoft.VisualStudio.TestWindow.Extensibility;
     using Microsoft.VisualStudio.ComponentModelHost;
     using Microsoft.VisualStudio.Shell;
-    using Microsoft.VisualStudio.TestTools.Execution;
     #endregion
 
     /// <summary>
