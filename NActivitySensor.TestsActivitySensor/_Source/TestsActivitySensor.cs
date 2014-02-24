@@ -17,10 +17,10 @@
     /// <summary>
     /// C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow
     /// </summary>
-    public class TestsActivitySensor : BaseActivitySensor
+    public class TestsActivitySensor : BaseActivitySensor, IDisposable
     {
         #region Private variables
-        private IServiceProvider _ServiceProvider;
+        private ServiceProvider _ServiceProvider;
         private IComponentModel _ComponentModel;
         private IOperationState _OperationState;
 
@@ -46,15 +46,8 @@
         }
         #endregion
 
-        private void MyReportAll(Report report)
-        {
-            foreach (var LoopReporter in _Reporters)
-            {
-                LoopReporter.Report(report);
-            }
-        }
-
         #region Override methods
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Inst"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#")]
         public override void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
             try
@@ -75,15 +68,54 @@
         #endregion
 
         #region My methods
-        private void MyTestStateChanged(object sender, OperationStateChangedEventArgs e)
+        private void MyReportAll(Report report)
+        {
+            foreach (var LoopReporter in _Reporters)
+            {
+                LoopReporter.Report(report);
+            }
+        }
+
+        private void MyTestStateChanged(object sender, OperationStateChangedEventArgs eventArgs)
         {
             try
             {
-                MyReportAll(new Report(e.State, e.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                if (eventArgs != null)
+                {
+                    switch (eventArgs.State)
+                    {
+                        default:
+                            MyReportAll(new Report(eventArgs.State, eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                            break;
+                        case TestOperationStates.TestExecutionFinished:
+
+                            break;
+                    }
+                }
             }
             catch (Exception exception)
             {
                 throw new SensorException(exception.Message, exception);
+            }
+        }
+        #endregion
+
+        #region IDisposable methods
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_ServiceProvider != null)
+                {
+                    _ServiceProvider.Dispose();
+                    _ServiceProvider = null;
+                }
             }
         }
         #endregion

@@ -13,7 +13,12 @@
     public abstract class BaseActivitySensor : IActivitySensor
     {
         #region Properties
-        protected DTE2 DTEApplication;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DTE")]
+        protected DTE2 DTEApplication
+        {
+            get;
+            set;
+        }
 
         protected string SolutionFullName
         {
@@ -39,7 +44,11 @@
             }
         }
 
-        protected int? ProcessId = null;
+        protected int? ProcessId
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region IActivitySensor methods

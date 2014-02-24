@@ -46,8 +46,8 @@
             Builder.Register(g => logger).As<ILogger>();
 
             // Reporters
-            // Builder.RegisterType<MSSqlReporter>().As<IReporter>().WithMetadata("MSSqlReporter", new object());
-            Builder.RegisterType<OutputWindowReporter>().As<IReporter>().WithMetadata("OutputWindowReporter", new object()).PreserveExistingDefaults();
+            Builder.RegisterType<MSSqlReporter>().As<IReporter>().WithMetadata("MSSqlReporter", new object()).SingleInstance();
+            Builder.RegisterType<OutputWindowReporter>().As<IReporter>().WithMetadata("OutputWindowReporter", new object()).PreserveExistingDefaults().SingleInstance();
 
             // Activity sensors
             Builder.RegisterType<TestsActivitySensor>().As<IActivitySensor>().WithMetadata("TestActivitySensor", new object());
