@@ -12,6 +12,7 @@
     using Microsoft.VisualStudio.ComponentModelHost;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.TestWindow.Controller;
+    using System.Threading;
     #endregion
 
     /// <summary>
@@ -23,6 +24,7 @@
         private ServiceProvider _ServiceProvider;
         private IComponentModel _ComponentModel;
         private IOperationState _OperationState;
+        private ITestsService _TestsService;
 
         private readonly IEnumerable<IReporter> _Reporters;
         private readonly IReportContentSerializer _ReportContentSerializer;
@@ -59,6 +61,8 @@
                 _ComponentModel = (IComponentModel)_ServiceProvider.GetService(typeof(SComponentModel));
                 _OperationState = _ComponentModel.GetService<IOperationState>();
                 _OperationState.StateChanged += MyTestStateChanged;
+
+                _TestsService = _ComponentModel.GetService<Microsoft.VisualStudio.TestWindow.Extensibility.ITestsService>();
             }
             catch (Exception exception)
             {
@@ -81,21 +85,32 @@
             try
             {
                 OperationData OperationData = sender as OperationData;
-                TestRunRequest Request = eventArgs.Operation as TestRunRequest;
-
-                if (Request != null && OperationData != null)
+                TestRunRequest Request = eventArgs.Operation as TestRunRequest;               
+                
+                Thread GetTestsAsync = new Thread(new ThreadStart(() =>
                 {
-                    switch (eventArgs.State)
+                    // Get tests async
+                    var ReceivedTests = _TestsService.GetTests();
+                    ReceivedTests.Wait();
+                    
+                    var ReceivedTestList = ReceivedTests.Result.ToList();
+
+                    if (Request != null && OperationData != null)
                     {
-                        case TestOperationStates.TestExecutionStarted:
-                            MyReportAll(new Report(eventArgs.State.ToString(), eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
-                            break;
-                        case TestOperationStates.TestExecutionFinished:
-                            var ReportModel = new TestExecutionFinishedReportModel(Request);
-                            MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
-                            break;
+                        switch (eventArgs.State)
+                        {
+                            case TestOperationStates.TestExecutionStarted:
+                                MyReportAll(new Report(eventArgs.State.ToString(), eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                                break;
+                            case TestOperationStates.TestExecutionFinished:
+                                var ReportModel = new TestExecutionFinishedReportModel(Request, ReceivedTestList);
+                                MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                                break;
+                        }
                     }
-                }
+                }));
+
+                GetTestsAsync.Start();               
             }
             catch (Exception exception)
             {

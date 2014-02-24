@@ -38,20 +38,41 @@ using System.Threading.Tasks;
             get;
             set;
         }
+
+        public IList<TestModel> Tests
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Constructors
-        public TestExecutionFinishedReportModel(TestRunRequest request)
+        public TestExecutionFinishedReportModel()
+        {
+        }
+
+        public TestExecutionFinishedReportModel(TestRunRequest request, IEnumerable<ITest> tests)
         {
             if (request == null)
             {
                 throw new ArgumentNullException("request");
             }
 
+            if (tests == null)
+            {
+                throw new ArgumentNullException("tests");
+            }
+
             ExecutedTestCount = request.TotalTestCount;
             RuntimeTotalMilliseconds = request.TotalRuntime.TotalMilliseconds;
             DominantTaskState = request.DominantTestState.ToString();
             RunStats = request.RunStats;
+
+            Tests = new List<TestModel>();
+            foreach (var LoopTest in tests)
+            {
+                Tests.Add(new TestModel(LoopTest));
+            }
         }
         #endregion
     }
