@@ -1,8 +1,10 @@
 ﻿namespace NActivitySensor
 {
     #region Usings
+    using EnvDTE80;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -10,6 +12,36 @@
 
     public abstract class BaseActivitySensor : IActivitySensor
     {
+        #region Properties
+        protected DTE2 DTEApplication;
+
+        protected string SolutionFullName
+        {
+            get
+            {
+                if (DTEApplication != null && DTEApplication.Solution != null && DTEApplication.Solution.FullName != null)
+                {
+                    return DTEApplication.Solution.FullName;
+                }
+                else
+                {
+                    return String.Empty;
+                }
+            }
+        }
+
+        protected string SolutionSimpleName
+        {
+            get
+            {
+                var FileName = Path.GetFileNameWithoutExtension(SolutionFullName);
+                return FileName;
+            }
+        }
+
+        protected int? ProcessId = null;
+        #endregion
+
         #region IActivitySensor methods
         public virtual void OnSolutionAfterClosing()
         {
@@ -82,12 +114,12 @@
 
         public virtual void OnConnect(int processId)
         {
-
+            this.ProcessId = processId;
         }
 
         public virtual void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-
+            this.DTEApplication = (DTE2)application;
         }
 
         public virtual void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
