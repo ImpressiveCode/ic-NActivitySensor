@@ -10,7 +10,7 @@
         #region IReportContentSerializer
         public string Serialize(object content)
         {
-            return JsonConvert.SerializeObject(content);
+            return JsonConvert.SerializeObject(content, Formatting.Indented);
         }
         #endregion
     }
