@@ -33,7 +33,7 @@ using System.Threading.Tasks;
             set;
         }
 
-        public TestRunRequestStats RunStats
+        public Dictionary<string, int> RunStats
         {
             get;
             set;
@@ -63,11 +63,22 @@ using System.Threading.Tasks;
                 throw new ArgumentNullException("tests");
             }
 
+            // Basic information
             ExecutedTestCount = request.TotalTestCount;
             RuntimeTotalMilliseconds = request.TotalRuntime.TotalMilliseconds;
             DominantTaskState = request.DominantTestState.ToString();
-            RunStats = request.RunStats;
 
+            // Convert stats
+            RunStats = new Dictionary<string, int>();
+            if (request.RunStats != null && request.RunStats.Stats != null)
+            {
+                foreach (var LoopStat in request.RunStats.Stats)
+                {
+                    RunStats.Add(LoopStat.Key.ToString(), LoopStat.Value);
+                }
+            }
+
+            // Convert tests
             Tests = new List<TestModel>();
             foreach (var LoopTest in tests)
             {
