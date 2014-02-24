@@ -87,11 +87,12 @@
                 {
                     switch (eventArgs.State)
                     {
-                        default:
-                            MyReportAll(new Report(eventArgs.State, eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                        case TestOperationStates.TestExecutionStarted:
+                            MyReportAll(new Report(eventArgs.State.ToString(), eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
                             break;
                         case TestOperationStates.TestExecutionFinished:
-                            MyOnTestExecutionFinished(OperationData, Request);
+                            var ReportModel = new TestExecutionFinishedReportModel(Request);
+                            MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
                             break;
                     }
                 }
@@ -100,11 +101,6 @@
             {
                 throw new SensorException(exception.Message, exception);
             }
-        }
-
-        private void MyOnTestExecutionFinished(OperationData operationData, TestRunRequest request)
-        {
-            
         }
         #endregion
 
