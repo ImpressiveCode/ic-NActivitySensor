@@ -88,7 +88,7 @@
             ProjectId = test.ProjectId;
             Source = test.Source;
             TestState = test.State.ToString();
-            Results = test.Results;
+            // Results = test.Results;
         }
         #endregion
     }
