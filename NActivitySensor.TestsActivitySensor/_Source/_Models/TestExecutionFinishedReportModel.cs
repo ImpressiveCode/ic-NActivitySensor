@@ -20,7 +20,8 @@ using System.Threading.Tasks;
             set;
         }
 
-        public double TotalRunTimeMs
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ms")]
+        public double RuntimeTotalMilliseconds
         {
             get;
             set;
@@ -48,7 +49,7 @@ using System.Threading.Tasks;
             }
 
             ExecutedTestCount = request.TotalTestCount;
-            TotalRunTimeMs = request.TotalRuntime.TotalMilliseconds;
+            RuntimeTotalMilliseconds = request.TotalRuntime.TotalMilliseconds;
             DominantTaskState = request.DominantTestState.ToString();
             RunStats = request.RunStats;
         }
