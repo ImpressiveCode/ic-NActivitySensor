@@ -72,6 +72,7 @@
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "1#")]
         public override void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
         {
             base.OnDisconnection(disconnectMode, ref custom);

@@ -53,9 +53,13 @@
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "NActivitySensor.FileLogger.Log(System.String)")]
         public void Log(Exception exception)
         {
-            Log(string.Format("{0} {1}", exception.Message, exception.StackTrace));
+            if (exception != null && exception.Message != null && exception.StackTrace != null)
+            {
+                Log(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} {1}", exception.Message, exception.StackTrace));
+            }            
         }
         #endregion
     }

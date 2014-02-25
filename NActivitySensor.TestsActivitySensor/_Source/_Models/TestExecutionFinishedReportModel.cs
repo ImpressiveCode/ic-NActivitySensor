@@ -46,13 +46,13 @@
         public Dictionary<string, int> RunStats
         {
             get;
-            set;
+            private set;
         }
 
         public IList<TestModel> Tests
         {
             get;
-            set;
+            private set;
         }
         #endregion
 
