@@ -108,7 +108,7 @@
                     switch (eventArgs.State)
                     {
                         case TestOperationStates.TestExecutionStarted:
-                            MyReportAll(new Report(new object(), TestOperationStates.TestExecutionStarted.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                            MyReportAll(new Report(new object(), TestOperationStates.TestExecutionStarted.ToString(), base.ProcessId, base.SolutionName, _ReportContentSerializer));
                             break;
                         case TestOperationStates.TestExecutionFinished:
                             MyOnTestExecutionFinishedAsync(Request, OperationData.LastConfig);
@@ -143,7 +143,7 @@
                         }
                         
                         var ReportModel = new TestExecutionFinishedReportModel(request, SelectedTests);
-                        MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                        MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionName, _ReportContentSerializer));
                     }
                     catch (Exception exception)
                     {

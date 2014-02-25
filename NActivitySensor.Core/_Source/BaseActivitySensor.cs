@@ -20,7 +20,7 @@
             set;
         }
 
-        protected string SolutionFullName
+        protected string SolutionNameWithPath
         {
             get
             {
@@ -35,11 +35,11 @@
             }
         }
 
-        protected string SolutionSimpleName
+        protected string SolutionName
         {
             get
             {
-                var FileName = Path.GetFileNameWithoutExtension(SolutionFullName);
+                var FileName = Path.GetFileNameWithoutExtension(SolutionNameWithPath);
                 return FileName;
             }
         }
