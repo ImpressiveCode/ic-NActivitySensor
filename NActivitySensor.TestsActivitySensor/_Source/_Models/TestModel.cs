@@ -60,7 +60,7 @@
             set;
         }
 
-        public IEnumerable<IResult> Results
+        public IEnumerable<TestResultModel> Results
         {
             get;
             set;
@@ -88,7 +88,11 @@
             ProjectId = test.ProjectId;
             Source = test.Source;
             TestState = test.State.ToString();
-            // Results = test.Results;
+
+            if (test.Results != null)
+            {
+                Results = test.Results.Select(Result => new TestResultModel(Result)).ToList();
+            }
         }
         #endregion
     }

@@ -97,7 +97,7 @@
                             MyReportAll(new Report(eventArgs.State.ToString(), eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
                             break;
                         case TestOperationStates.TestExecutionFinished:
-                            MyOnTestExecutionFinishedAsync(Request);
+                            MyOnTestExecutionFinishedAsync(Request, OperationData.LastConfig);
                             break;
                     }
                 }
@@ -108,7 +108,7 @@
             }
         }
 
-        private void MyOnTestExecutionFinishedAsync(TestRunRequest request)
+        private void MyOnTestExecutionFinishedAsync(TestRunRequest request, TestRunConfiguration testRunConfiguration)
         {
             lock (_GetTestsLock)
             {
@@ -116,9 +116,19 @@
                 GetTestTask.ContinueWith(Task =>
                 {
                     try
-                    {                        
-                        var ReceivedTestList = Task.Result.ToList();
-                        var ReportModel = new TestExecutionFinishedReportModel(request, ReceivedTestList);
+                    {
+                        // Filter by current request configuration                        
+                        List<ITest> SelectedTests = Task.Result.ToList();
+
+                        var SelectedTestCases = testRunConfiguration.Tests.Select(TestCase => TestCase.Id).ToList();
+                        // If TestRunConfiguration.Test.Count == 0 it means user fired Run All Tests command
+
+                        if (SelectedTestCases.Count > 0)
+                        {
+                            SelectedTests = SelectedTests.Where(SingleTask => SelectedTestCases.Any(TestCase => TestCase.Equals(SingleTask.Id))).ToList();
+                        }
+                        
+                        var ReportModel = new TestExecutionFinishedReportModel(request, SelectedTests);
                         MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
                     }
                     catch (Exception exception)

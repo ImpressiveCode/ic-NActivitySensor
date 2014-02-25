@@ -80,6 +80,10 @@
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestWindow">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestWindow.dll</HintPath>
     </Reference>
@@ -107,6 +111,7 @@
     <Compile Include="_Source\TestsActivitySensor.cs" />
     <Compile Include="_Source\_Models\TestExecutionFinishedReportModel.cs" />
     <Compile Include="_Source\_Models\TestModel.cs" />
+    <Compile Include="_Source\_Models\TestResultModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NActivitySensor.Core\NActivitySensor.Core.csproj">
