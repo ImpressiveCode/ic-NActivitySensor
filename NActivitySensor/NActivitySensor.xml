@@ -83,7 +83,7 @@
             Distributes events to the sensors
             </summary>
         </member>
-        <member name="M:NActivitySensor.Distributor.#ctor(System.Collections.Generic.IEnumerable{NActivitySensor.IActivitySensor},NActivitySensor.IConnectContext)">
+        <member name="M:NActivitySensor.Distributor.#ctor(System.Collections.Generic.IEnumerable{NActivitySensor.IActivitySensor},NActivitySensor.IConnectContext,NActivitySensor.ILogger)">
             <summary>
             Initializes a new instance of the <see cref="T:NActivitySensor.Distributor"/> class.
             </summary>

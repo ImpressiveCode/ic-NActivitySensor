@@ -6,6 +6,8 @@
     using Extensibility;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
 
     #endregion
 
@@ -15,6 +17,10 @@
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
     public class Distributor : IDisposable
     {
+        #region Private constants
+        private const string _ConstConfigFileName = "NActivitySensor.config";
+        #endregion
+
         #region DTE private variables
         private DTE2 _ApplicationObject;
         private Events _Events;
@@ -41,6 +47,8 @@
 
         private int _ProcessId;
         private IEnumerable<IActivitySensor> _Sensors;
+        private readonly IConnectContext _ConnectContext;
+        private readonly ILogger _Logger;
         #endregion
 
         #region Constructors
@@ -49,7 +57,7 @@
         /// </summary>
         /// <param name="sensors">The sensors.</param>
         /// <exception cref="System.ArgumentNullException">sensors</exception>
-        public Distributor(IEnumerable<IActivitySensor> sensors, IConnectContext context)
+        public Distributor(IEnumerable<IActivitySensor> sensors, IConnectContext context, ILogger logger)
         {
             if (context == null)
             {
@@ -61,9 +69,17 @@
                 throw new ArgumentNullException("sensors");
             }
 
+            if (logger == null)
+            {
+                throw new ArgumentNullException("logger");
+            }
+
             _Sensors = sensors;
+            _ConnectContext = context;
+            _Logger = logger;
 
             _ProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
+
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnConnect(_ProcessId);
@@ -77,10 +93,31 @@
         void SolutionEvents_Opened()
         {
             MyTickAlive();
+            TryOpenConfig();
 
             foreach (var Sensor in _Sensors)
             {
                 Sensor.OnSolutionOpened();
+            }
+        }
+
+        void TryOpenConfig()
+        {
+            try
+            {
+                var SolutionDirectory = Path.GetDirectoryName(_ApplicationObject.Solution.FullName);
+                string ConfigFilePath = Path.Combine(SolutionDirectory, _ConstConfigFileName);
+
+                if (File.Exists(ConfigFilePath))
+                {
+                    ExeConfigurationFileMap ConfigMap = new ExeConfigurationFileMap();
+                    ConfigMap.ExeConfigFilename = ConfigFilePath;
+                    _ConnectContext.CurrentSolutionConfiguration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(ConfigMap, ConfigurationUserLevel.None);
+                }
+            }
+            catch(Exception exception)
+            {
+                _Logger.Log(exception.Message);
             }
         }
 
@@ -325,6 +362,7 @@
         void SolutionEvents_AfterClosing()
         {
             MyTickAlive();
+            _ConnectContext.CurrentSolutionConfiguration = null;
 
             foreach (var Sensor in _Sensors)
             {

@@ -24,6 +24,12 @@
         {
 
         }
+
+        public Context(string connectionString)
+            : base(connectionString)
+        {
+            this.Database.CreateIfNotExists();
+        }
         #endregion
 
         #region Properties

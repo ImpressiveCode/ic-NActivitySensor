@@ -59,9 +59,9 @@
 
         public Configuration DefaultConfiguration
         {
-            get 
-            { 
-                return _Configuration; 
+            get
+            {
+                return _Configuration;
             }
         }
 
@@ -70,6 +70,24 @@
             get;
             set;
         }
-        #endregion
+
+        public string GetAppSetting(string key)
+        {
+            if (CurrentSolutionConfiguration != null && CurrentSolutionConfiguration.AppSettings != null)
+            {
+                if (CurrentSolutionConfiguration.AppSettings.Settings[key] != null)
+                {
+                    return CurrentSolutionConfiguration.AppSettings.Settings[key].Value;
+                }
+            }
+
+            if (DefaultConfiguration.AppSettings != null && DefaultConfiguration.AppSettings.Settings[key] != null)
+            {
+                return DefaultConfiguration.AppSettings.Settings[key].Value;
+            }
+
+            return null;
+        }
+        #endregion        
     }
 }
