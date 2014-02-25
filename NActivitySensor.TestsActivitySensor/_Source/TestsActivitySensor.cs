@@ -108,7 +108,7 @@
                     switch (eventArgs.State)
                     {
                         case TestOperationStates.TestExecutionStarted:
-                            MyReportAll(new Report(eventArgs.State.ToString(), eventArgs.State.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
+                            MyReportAll(new Report(new object(), TestOperationStates.TestExecutionStarted.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
                             break;
                         case TestOperationStates.TestExecutionFinished:
                             MyOnTestExecutionFinishedAsync(Request, OperationData.LastConfig);
