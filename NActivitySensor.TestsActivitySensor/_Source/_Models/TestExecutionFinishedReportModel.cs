@@ -2,17 +2,27 @@
 {
     #region Usings
     using Microsoft.VisualStudio.TestWindow.Controller;
-using Microsoft.VisualStudio.TestWindow.Data;
-using Microsoft.VisualStudio.TestWindow.Extensibility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+    using Microsoft.VisualStudio.TestWindow.Data;
+    using Microsoft.VisualStudio.TestWindow.Extensibility;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
     #endregion
 
     public class TestExecutionFinishedReportModel
     {
+        #region Private constants
+        private static readonly IReadOnlyCollection<TestState> ConstTestStatesToReport = new ReadOnlyCollection<TestState>(
+            new List<TestState>()
+            {
+                TestState.Failed,
+                TestState.Passed
+            });
+        #endregion
+
         #region Properties
         public int ExecutedTestCount
         {
@@ -78,9 +88,13 @@ using System.Threading.Tasks;
                 }
             }
 
+            // Take only specified tests
+            var FilteredTests = tests.Where(Test => ConstTestStatesToReport.Contains(Test.State)).ToList();
+
             // Convert tests
             Tests = new List<TestModel>();
-            foreach (var LoopTest in tests)
+
+            foreach (var LoopTest in FilteredTests)
             {
                 Tests.Add(new TestModel(LoopTest));
             }

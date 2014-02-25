@@ -112,15 +112,12 @@
         {
             lock (_GetTestsLock)
             {
-                Thread GetTestsAsync = new Thread(new ThreadStart(() =>
+                var GetTestTask = _TestsService.GetTests();
+                GetTestTask.ContinueWith(Task =>
                 {
                     try
-                    {
-                        var ReceivedTests = _TestsService.GetTests();
-                        var ReceivedTestList = ReceivedTests.Result.ToList();
-
-                        ReceivedTests.Wait();
-
+                    {                        
+                        var ReceivedTestList = Task.Result.ToList();
                         var ReportModel = new TestExecutionFinishedReportModel(request, ReceivedTestList);
                         MyReportAll(new Report(ReportModel, TestOperationStates.TestExecutionFinished.ToString(), base.ProcessId, base.SolutionFullName, _ReportContentSerializer));
                     }
@@ -128,9 +125,7 @@
                     {
                         throw new SensorException(exception.Message, exception);
                     }
-                }));
-
-                GetTestsAsync.Start();
+                });
             }
         }
         #endregion
