@@ -12,6 +12,11 @@
         {
             Console.WriteLine(message);
         }
+
+        public void Log(Exception exception)
+        {
+            Console.WriteLine(string.Format("{0} : {1}", exception.Message, exception.StackTrace));
+        }
         #endregion
     }
 }

@@ -49,7 +49,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -70,7 +70,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -88,7 +88,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -108,7 +108,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -122,7 +122,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -160,7 +160,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -173,7 +173,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -193,7 +193,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -206,7 +206,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -230,7 +230,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -250,7 +250,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -270,7 +270,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -283,7 +283,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -296,7 +296,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -332,7 +332,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -346,7 +346,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -364,7 +364,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -377,7 +377,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }   
 
@@ -396,7 +396,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -409,7 +409,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -422,7 +422,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -435,7 +435,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -449,7 +449,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -463,7 +463,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -481,7 +481,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -499,7 +499,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -518,7 +518,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -562,7 +562,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -575,7 +575,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -588,7 +588,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
 
@@ -601,7 +601,7 @@
             }
             catch (Exception exception)
             {
-                throw new ReporterException(exception.Message, exception);
+                throw new SensorException(exception.Message, exception);
             }
         }
         #endregion

@@ -1,4 +1,5 @@
-﻿namespace NActivitySensor
+﻿using System;
+namespace NActivitySensor
 {
     #region Usings
 
@@ -8,6 +9,8 @@
     {
         #region Methods
         void Log(string message);
+
+        void Log(Exception exception);
         #endregion
     }
 }

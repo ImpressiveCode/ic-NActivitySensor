@@ -52,6 +52,11 @@
                 System.IO.File.AppendAllText(_FilePath, FullMessage.ToString());
             }
         }
+
+        public void Log(Exception exception)
+        {
+            Log(string.Format("{0} {1}", exception.Message, exception.StackTrace));
+        }
         #endregion
     }
 }

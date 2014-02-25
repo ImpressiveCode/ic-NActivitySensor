@@ -71,6 +71,20 @@
                 throw new SensorException(exception.Message, exception);
             }
         }
+
+        public override void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
+        {
+            base.OnDisconnection(disconnectMode, ref custom);
+
+            try
+            {
+                _OperationState.StateChanged -= MyTestStateChanged;
+            }
+            catch (Exception exception)
+            {
+                throw new SensorException(exception.Message, exception);
+            }
+        }
         #endregion
 
         #region My methods
