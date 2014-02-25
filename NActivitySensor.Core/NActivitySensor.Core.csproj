@@ -93,6 +93,7 @@
     <Compile Include="_Source\_ActivitySensors\NullActivitySensor.cs" />
     <Compile Include="_Source\_Exceptions\ReporterException.cs" />
     <Compile Include="_Source\_Exceptions\SensorException.cs" />
+    <Compile Include="_Source\_Helpers\PathHelper.cs" />
     <Compile Include="_Source\_Interfaces\IActivitySensor.cs" />
     <Compile Include="_Source\_Interfaces\IConnectContext.cs" />
     <Compile Include="_Source\_Interfaces\ILogger.cs" />

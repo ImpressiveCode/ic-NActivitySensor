@@ -57,6 +57,8 @@
                 {
                     if (_OutputWindowPane != null)
                     {
+                        _OutputWindowPane.Activate();
+
                         string Format = "[{0}] [{1}] {2}\n";
                         string OutputMessage = String.Format(Format, reportModel.Date, reportModel.Event, reportModel.Content);
                         _OutputWindowPane.OutputString(OutputMessage);

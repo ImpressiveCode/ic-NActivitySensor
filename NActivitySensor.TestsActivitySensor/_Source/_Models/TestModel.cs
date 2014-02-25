@@ -4,6 +4,7 @@
     using Microsoft.VisualStudio.TestWindow.Extensibility;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -80,13 +81,13 @@
                 throw new ArgumentNullException("test");
             }
 
-            FilePath = test.FilePath;
+            FilePath = PathHelper.TryGetFileName(test.FilePath);            
             DurationInMilliseconds = test.Duration.TotalMilliseconds;
             DisplayName = test.DisplayName;
             Id = test.Id;
             LineNumber = test.LineNumber;
             ProjectId = test.ProjectId;
-            Source = test.Source;
+            Source = PathHelper.TryGetFileName(test.Source);
             TestState = test.State.ToString();
 
             if (test.Results != null)
