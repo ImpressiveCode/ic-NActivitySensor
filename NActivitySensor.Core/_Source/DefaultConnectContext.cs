@@ -57,12 +57,18 @@
             }
         }
 
-        public Configuration Configuration
+        public Configuration DefaultConfiguration
         {
             get 
             { 
                 return _Configuration; 
             }
+        }
+
+        public Configuration CurrentSolutionConfiguration
+        {
+            get;
+            set;
         }
         #endregion
     }

@@ -49,8 +49,13 @@
         /// </summary>
         /// <param name="sensors">The sensors.</param>
         /// <exception cref="System.ArgumentNullException">sensors</exception>
-        public Distributor(IEnumerable<IActivitySensor> sensors)
+        public Distributor(IEnumerable<IActivitySensor> sensors, IConnectContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
             if (sensors == null)
             {
                 throw new ArgumentNullException("sensors");

@@ -9,7 +9,7 @@
             The bootstrapper
             </summary>
         </member>
-        <member name="M:NActivitySensor.Bootstrapper.#ctor(System.Object,System.Object,NActivitySensor.ILogger,System.Configuration.Configuration)">
+        <member name="M:NActivitySensor.Bootstrapper.#ctor(System.Object,System.Object,NActivitySensor.ILogger,NActivitySensor.IConnectContext)">
             <summary>
             Initializes a new instance of the <see cref="T:NActivitySensor.Bootstrapper"/> class.
             </summary>
@@ -83,7 +83,7 @@
             Distributes events to the sensors
             </summary>
         </member>
-        <member name="M:NActivitySensor.Distributor.#ctor(System.Collections.Generic.IEnumerable{NActivitySensor.IActivitySensor})">
+        <member name="M:NActivitySensor.Distributor.#ctor(System.Collections.Generic.IEnumerable{NActivitySensor.IActivitySensor},NActivitySensor.IConnectContext)">
             <summary>
             Initializes a new instance of the <see cref="T:NActivitySensor.Distributor"/> class.
             </summary>

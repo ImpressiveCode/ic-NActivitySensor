@@ -21,7 +21,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
         /// </summary>
-        public Bootstrapper(object application, object addIn, ILogger logger, Configuration configuration)
+        public Bootstrapper(object application, object addIn, ILogger logger, IConnectContext connectContext)
         {
             if (application == null)
             {
@@ -38,9 +38,16 @@
                 throw new ArgumentNullException("logger");
             }
 
+            if (connectContext == null)
+            {
+                throw new ArgumentNullException("connectContext");
+            }
+
             var Builder = new ContainerBuilder();
 
-            Builder.Register(g => new DefaultConnectContext(application, addIn, configuration)).As<IConnectContext>();
+            Builder.RegisterType<Distributor>().As<Distributor>();
+
+            Builder.Register(g => connectContext).As<IConnectContext>();
 
             // Logger
             Builder.Register(g => logger).As<ILogger>();

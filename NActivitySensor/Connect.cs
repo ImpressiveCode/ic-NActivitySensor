@@ -22,6 +22,7 @@
         private Bootstrapper _Bootstrapper;
         private readonly ILogger _Logger;
         private readonly System.Configuration.Configuration _PluginConfiguration;
+        private IConnectContext _ConnectContext;
         #endregion
 
         #region Public
@@ -42,8 +43,11 @@
         {
             try
             {
-                _Bootstrapper = new Bootstrapper(application, addInInst, _Logger, _PluginConfiguration);
-                _Distributor = new Distributor(_Bootstrapper.Resolve<IEnumerable<IActivitySensor>>());
+                _ConnectContext = new DefaultConnectContext(application, addInInst, _PluginConfiguration);
+
+                _Bootstrapper = new Bootstrapper(application, addInInst, _Logger, _ConnectContext);
+
+                _Distributor = _Bootstrapper.Resolve<Distributor>();
 
                 // Test - adding menubar
                 // TODO: Create separate menu classes

@@ -21,7 +21,12 @@ using System.Text;
             get;
         }
 
-        Configuration Configuration
+        Configuration DefaultConfiguration
+        {
+            get;
+        }
+
+        Configuration CurrentSolutionConfiguration
         {
             get;
         }
