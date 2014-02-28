@@ -17,4 +17,5 @@ copy .\bin\* %AddinContentDir%\
 echo %AddinDir%
 copy .\NActivitySensor.AddIn "%AddinDir%\"
 
+echo Installation complete
 PAUSE
