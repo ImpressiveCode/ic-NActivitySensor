@@ -11,6 +11,7 @@
     {
         #region Private constants
         private const string _ConstAppSettingsConnectionStringKey = "NActivitySensor.MSSql.ConnectionString";
+        private bool _HasFailed = false;
         #endregion
 
         #region Private variables
@@ -34,6 +35,11 @@
         #region IReporter methods
         public void Report(Report reportModel)
         {
+            if (_HasFailed)
+            {
+                return;
+            }
+
             lock (_Lock)
             {
                 try
@@ -60,6 +66,7 @@
                 }
                 catch (Exception exception)
                 {
+                    _HasFailed = true;
                     throw new ReporterException(exception.Message, exception);
                 }
             }

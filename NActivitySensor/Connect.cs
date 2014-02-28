@@ -20,7 +20,7 @@
         #region Private variables
         private Distributor _Distributor;
         private Bootstrapper _Bootstrapper;
-        private readonly ILogger _Logger;
+        private ILogger _Logger;
         private readonly System.Configuration.Configuration _PluginConfiguration;
         private IConnectContext _ConnectContext;
         #endregion
@@ -29,7 +29,7 @@
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
         public Connect()
         {
-            _PluginConfiguration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);            
+            _PluginConfiguration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
             _Logger = new FileLogger();
         }
 
@@ -44,6 +44,7 @@
             try
             {
                 _ConnectContext = new DefaultConnectContext(application, addInInst, _PluginConfiguration);
+                _Logger = new Log4NetLogger(_ConnectContext);
 
                 _Bootstrapper = new Bootstrapper(application, addInInst, _Logger, _ConnectContext);
 
@@ -62,7 +63,7 @@
             }
             catch (Exception exception)
             {
-                _Logger.Log(exception.Message);
+                _Logger.Log(exception);
             }
         }
 
@@ -80,7 +81,7 @@
             }
             catch (Exception exception)
             {
-                _Logger.Log(exception.Message);
+                _Logger.Log(exception);
             }
         }
 
@@ -96,7 +97,7 @@
             }
             catch (Exception exception)
             {
-                _Logger.Log(exception.Message);
+                _Logger.Log(exception);
             }
         }
 
@@ -112,7 +113,7 @@
             }
             catch (Exception exception)
             {
-                _Logger.Log(exception.Message);
+                _Logger.Log(exception);
             }
         }
 
@@ -128,7 +129,7 @@
             }
             catch (Exception exception)
             {
-                _Logger.Log(exception.Message);
+                _Logger.Log(exception);
             }
         }
         #endregion

@@ -1228,29 +1228,37 @@
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void MyTickAlive()
         {
             lock (_UserActivityTimerLock)
             {
-                // If timer does not exists yet
-                if (_UserActivityTimer == null)
+                try
                 {
-                    _UserActivityTimer = new System.Timers.Timer();
-                    _UserActivityTimer.Elapsed += MyOnUserActivityTimerElapsed;
-                }
-
-                // Notify if timer is enabling after elapsed
-                if (!_UserActivityTimer.Enabled)
-                {
-                    foreach (var Sensor in _Sensors)
+                    // If timer does not exists yet
+                    if (_UserActivityTimer == null)
                     {
-                        Sensor.OnUserActive();
+                        _UserActivityTimer = new System.Timers.Timer();
+                        _UserActivityTimer.Elapsed += MyOnUserActivityTimerElapsed;
                     }
-                }
 
-                // Set timer on each tick
-                _UserActivityTimer.Interval = _NumberOfSecondsToSetInactive * 1000;
-                _UserActivityTimer.Enabled = true;
+                    // Notify if timer is enabling after elapsed
+                    if (!_UserActivityTimer.Enabled)
+                    {
+                        foreach (var Sensor in _Sensors)
+                        {
+                            Sensor.OnUserActive();
+                        }
+                    }
+
+                    // Set timer on each tick
+                    _UserActivityTimer.Interval = _NumberOfSecondsToSetInactive * 1000;
+                    _UserActivityTimer.Enabled = true;
+                }
+                catch (Exception exception)
+                {
+                    _Logger.Log(exception);
+                }
             }
         }
         #endregion

@@ -36,7 +36,7 @@
             }
 
             this.Content = reportContentSerializer.Serialize(content);
-            this.ContentType = content.GetType().Name;
+            this.ContentType = content.GetType().FullName;
             this.Date = DateTime.Now;
             this.Event = eventName;
             this.ProcessId = processId;
