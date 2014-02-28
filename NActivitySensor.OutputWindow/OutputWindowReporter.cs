@@ -59,7 +59,7 @@
                     {
                         _OutputWindowPane.Activate();
 
-                        string Format = "[{0}] [{1}] {2}\n";
+                        string Format = "[{0}] [{1}] {2}" + Environment.NewLine;
                         string OutputMessage = String.Format(Format, reportModel.Date, reportModel.Event, reportModel.Content);
                         _OutputWindowPane.OutputString(OutputMessage);
                     }
