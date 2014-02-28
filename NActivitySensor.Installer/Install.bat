@@ -1,4 +1,10 @@
 @ECHO off
+if not exist .\bin (
+    echo Build solution first
+    PAUSE
+    exit
+)
+
 set AddinDir=%userprofile%\Documents\Visual Studio 2012\Addins
 set AddinFileName=NActivitySensor.AddIn
 
