@@ -22,7 +22,7 @@
         public Context()
             : base()
         {
-
+            this.Database.CreateIfNotExists();
         }
 
         public Context(string connectionString)

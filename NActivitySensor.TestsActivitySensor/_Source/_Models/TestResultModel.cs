@@ -12,6 +12,11 @@
     public class TestResultModel
     {
         #region Constructors
+        public TestResultModel()
+        {
+
+        }
+
         public TestResultModel(IResult anotherResult)
         {
             if (anotherResult == null)

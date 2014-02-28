@@ -40,7 +40,7 @@
         #endregion
 
         #region Private variables
-        private int _NumberOfSecondsToSetInactive = 10;
+        private int _NumberOfSecondsToSetInactive = 60;
 
         private System.Timers.Timer _UserActivityTimer;
         private static object _UserActivityTimerLock = new object();
