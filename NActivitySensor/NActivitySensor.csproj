@@ -161,8 +161,9 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>if not exist $(SolutionDir)NActivitySensor.Installer\bin mkdir $(SolutionDir)NActivitySensor.Installer\bin
+del -Q $(SolutionDir)\NActivitySensor.Installer\bin\*
+copy $(TargetDir)* $(SolutionDir)\NActivitySensor.Installer\bin\</PostBuildEvent>
   </PropertyGroup>
   <ProjectExtensions />
   <Target Name="AfterBuild">
