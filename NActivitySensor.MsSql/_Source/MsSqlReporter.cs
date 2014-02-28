@@ -47,18 +47,8 @@
                     var ReportEntity = new ReportEntity(reportModel);
 
                     _ConnectionString = _Context.GetAppSetting(_ConstAppSettingsConnectionStringKey);
-
-                    Context DatabaseContext = null;
-                    if (String.IsNullOrEmpty(_ConnectionString))
-                    {
-                        DatabaseContext = new Context();
-                    }
-                    else
-                    {
-                        DatabaseContext = new Context(_ConnectionString);
-                    }
-
-                    using (DatabaseContext)
+                    
+                    using (Context DatabaseContext = MyCreateDatabaseContext())
                     {
                         DatabaseContext.Reports.Add(ReportEntity);
                         DatabaseContext.SaveChanges();
@@ -70,6 +60,22 @@
                     throw new ReporterException(exception.Message, exception);
                 }
             }
+        }
+        #endregion
+
+        #region My methods
+        private Context MyCreateDatabaseContext()
+        {
+            Context DatabaseContext = null;
+            if (String.IsNullOrEmpty(_ConnectionString))
+            {
+                DatabaseContext = new Context();
+            }
+            else
+            {
+                DatabaseContext = new Context(_ConnectionString);
+            }
+            return DatabaseContext;
         }
         #endregion
     }

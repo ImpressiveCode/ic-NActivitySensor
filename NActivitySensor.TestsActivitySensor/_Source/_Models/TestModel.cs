@@ -81,13 +81,17 @@
                 throw new ArgumentNullException("test");
             }
 
-            FilePath = PathHelper.TryGetFileName(test.FilePath);            
+            string ParsedPath = String.Empty;
+
+            PathHelper.TryGetFileName(test.FilePath, out ParsedPath);
+            FilePath = ParsedPath;
             DurationInMilliseconds = test.Duration.TotalMilliseconds;
             DisplayName = test.DisplayName;
             Id = test.Id;
             LineNumber = test.LineNumber;
             ProjectId = test.ProjectId;
-            Source = PathHelper.TryGetFileName(test.Source);
+            PathHelper.TryGetFileName(test.FilePath, out ParsedPath);
+            Source = ParsedPath;
             TestState = test.State.ToString();
 
             if (test.Results != null)

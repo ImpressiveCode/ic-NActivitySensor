@@ -12,19 +12,16 @@
     public static class PathHelper
     {
         #region Methods
-        /// <summary>
-        /// Gets the file name if path is valid or returns path from parameter
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static string TryGetFileName(string path)
+        public static bool TryGetFileName(string path, out string output)
         {
             if (File.Exists(path))
             {
-                return Path.GetFileName(path);
+                output = Path.GetFileName(path);
+                return true;
             }
 
-            return path;
+            output = path;
+            return false;
         }
         #endregion
     }
