@@ -526,16 +526,6 @@
         {
             try
             {
-                if (newProcess == null)
-                {
-                    throw new ArgumentNullException("newProcess");
-                }
-
-                if (newProgram == null)
-                {
-                    throw new ArgumentNullException("newProgram");
-                }
-
                 if (newThread == null)
                 {
                     throw new ArgumentNullException("newThread");
@@ -546,12 +536,29 @@
                     throw new ArgumentNullException("newStackFrame");
                 }
 
+                int NewProcessId = 0;
+                String NewProcessName = String.Empty;
+                int NewProgramProcessId = 0;
+                String NewProgramName = String.Empty;
+
+                if (newProcess != null)
+                {
+                    NewProcessId = newProcess.ProcessID;
+                    NewProcessName = newProcess.Name;
+                }
+
+                if (newProgram != null)
+                {
+                    NewProgramName = newProgram.Name;
+                    NewProgramProcessId = newProgram.Process.ProcessID;
+                }
+
                 var DebuggerContextContent = new DebuggerContextChanged()
                 {
-                    ProcessId = newProcess.ProcessID,
-                    ProcessName = newProcess.Name,
-                    ProgramName = newProgram.Name,
-                    ProgramProcessId = newProgram.Process.ProcessID,
+                    ProcessId = NewProcessId,
+                    ProcessName = NewProcessName,
+                    ProgramName = NewProgramName,
+                    ProgramProcessId = NewProgramProcessId,
                     ThreadId = newThread.ID,
                     ThreadName = newThread.Name,
                     StackFrameFunctionName = newStackFrame.FunctionName
