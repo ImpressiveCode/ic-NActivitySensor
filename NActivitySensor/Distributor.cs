@@ -919,6 +919,8 @@
         {
             try
             {
+                TryOpenConfig();
+
                 _UserActivityTimer.Elapsed += MyOnUserActivityTimerElapsed;
                 _UserActivityTimer.Start();
 

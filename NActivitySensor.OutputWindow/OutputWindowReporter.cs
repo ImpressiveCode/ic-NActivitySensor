@@ -39,7 +39,6 @@
                 _Window = _Application.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
                 _OutputWindow = (OutputWindow)_Window.Object;
                 _OutputWindowPane = _OutputWindow.OutputWindowPanes.Add("NActivitySensor");
-                _OutputWindowPane.Activate();
             }
             catch (Exception exception)
             {
@@ -57,8 +56,6 @@
                 {
                     if (_OutputWindowPane != null)
                     {
-                        _OutputWindowPane.Activate();
-
                         string Format = "[{0}] [{1}] {2}" + Environment.NewLine;
                         string OutputMessage = String.Format(Format, reportModel.Date, reportModel.Event, reportModel.Content);
                         _OutputWindowPane.OutputString(OutputMessage);
