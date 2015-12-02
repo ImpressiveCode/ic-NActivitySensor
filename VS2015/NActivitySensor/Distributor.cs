@@ -1025,7 +1025,7 @@
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "1#")]
-        public void OnDisconnection(ref Array custom)
+        public void OnDisconnection()
         {
             try
             {
