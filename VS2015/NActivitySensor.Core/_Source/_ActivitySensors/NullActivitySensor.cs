@@ -108,12 +108,12 @@
             
         }
 
-        public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
+        public void OnConnection(object application)
         {
             
         }
 
-        public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
+        public void OnDisconnection()
         {
             
         }

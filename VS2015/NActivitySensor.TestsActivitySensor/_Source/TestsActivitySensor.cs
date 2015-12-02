@@ -52,11 +52,11 @@
 
         #region Override methods
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Inst"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#")]
-        public override void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
+        public override void OnConnection(object application)
         {
             try
             {
-                base.OnConnection(application, connectMode, addInInst, ref custom);
+                base.OnConnection(application);
 
                 Microsoft.VisualStudio.OLE.Interop.IServiceProvider InteropServiceProvider = application as Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
                 _ServiceProvider = new ServiceProvider(InteropServiceProvider);
@@ -73,9 +73,9 @@
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1061:DoNotHideBaseClassMethods"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "1#")]
-        public override void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
+        public override void OnDisconnection()
         {
-            base.OnDisconnection(disconnectMode, ref custom);
+            base.OnDisconnection();
 
             try
             {
@@ -127,7 +127,7 @@
         {
             lock (_GetTestsLock)
             {
-                var GetTestTask = _TestsService.GetTests();
+                var GetTestTask = _TestsService.GetTestsAsync();
                 GetTestTask.ContinueWith(Task =>
                 {
                     try

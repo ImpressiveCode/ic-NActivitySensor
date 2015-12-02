@@ -5,7 +5,6 @@
     using NActivitySensor.MSSql;
     using NActivitySensor.OutputWindow;
     using System;
-    using System.Configuration;
     #endregion
 
     /// <summary>
@@ -21,16 +20,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
         /// </summary>
-        public Bootstrapper(object application, object addIn, ILogger logger, IConnectContext connectContext)
+        public Bootstrapper(object application, ILogger logger, IConnectContext connectContext)
         {
             if (application == null)
             {
                 throw new ArgumentNullException("application");
-            }
-
-            if (addIn == null)
-            {
-                throw new ArgumentNullException("addIn");
             }
 
             if (logger == null)

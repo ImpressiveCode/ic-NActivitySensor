@@ -3,7 +3,6 @@
     #region Usings
     using EnvDTE;
     using EnvDTE80;
-    using Extensibility;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -915,7 +914,7 @@
         /// <param term='addInInst'>Object representing this Add-in.</param>
         /// <seealso class='IDTExtensibility2' />
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "addInInst"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "custom"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "connectMode"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Inst")]
-        public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
+        public void OnConnection(object application)
         {
             try
             {
@@ -1012,7 +1011,7 @@
 
                 foreach (var Sensor in _Sensors)
                 {
-                    Sensor.OnConnection(application, connectMode, addInInst, ref custom);
+                    Sensor.OnConnection(application);
                 }
             }
             catch (Exception exception)
@@ -1026,7 +1025,7 @@
         /// <param term='custom'>Array of parameters that are host application specific.</param>
         /// <seealso class='IDTExtensibility2' />
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "1#")]
-        public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
+        public void OnDisconnection(ref Array custom)
         {
             try
             {
@@ -1103,7 +1102,7 @@
 
                 foreach (var Sensor in _Sensors)
                 {
-                    Sensor.OnDisconnection(disconnectMode, ref custom);
+                    Sensor.OnDisconnection();
                 }
             }
             catch (Exception exception)

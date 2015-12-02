@@ -126,14 +126,13 @@
             this.ProcessId = processId;
         }
 
-        public virtual void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
+        public virtual void OnConnection(object application)
         {
             this.DTEApplication = (DTE2)application;
         }
 
-        public virtual void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
+        public virtual void OnDisconnection()
         {
-
         }
 
         public virtual void OnAddInsUpdate(ref Array custom)

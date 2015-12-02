@@ -16,11 +16,6 @@ using System.Text;
             get;
         }
 
-        object AddIn
-        {
-            get;
-        }
-
         Configuration DefaultConfiguration
         {
             get;

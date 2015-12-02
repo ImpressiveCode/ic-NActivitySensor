@@ -39,9 +39,9 @@
         #region Plugin lifetime events
         void OnConnect(int processId);
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "3#"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Inst")]
-        void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom);
+        void OnConnection(object application);
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "1#")]
-        void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom);
+        void OnDisconnection();
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#")]
         void OnAddInsUpdate(ref Array custom);
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#")]
