@@ -78,7 +78,7 @@
                         _HasFailed = true;
 
                         _Logger.Log(exception);
-                    } 
+                    }
                 }
             });
         }

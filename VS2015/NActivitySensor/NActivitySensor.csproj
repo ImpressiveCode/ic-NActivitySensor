@@ -52,7 +52,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Connect.cs" />
     <Compile Include="Distributor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="NActivitySensorPackage.cs" />

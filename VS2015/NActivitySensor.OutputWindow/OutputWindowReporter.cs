@@ -16,9 +16,12 @@
         #region Private variablers
         private readonly IConnectContext _ConnectContext;
         private readonly DTE2 _Application;
-        private readonly Window _Window;
-        private readonly OutputWindow _OutputWindow;
-        private readonly OutputWindowPane _OutputWindowPane;
+        private readonly List<Report> _ReportsToShow;
+
+        private Window _Window;
+        private OutputWindow _OutputWindow;
+        private OutputWindowPane _OutputWindowPane;
+        private bool _IsInitialized;
 
         private object _Lock = new object();
         #endregion
@@ -31,14 +34,35 @@
                 throw new ArgumentNullException("connectContext");
             }
 
+            _ConnectContext = connectContext;
+            _Application = (DTE2)_ConnectContext.Application;
+            _ReportsToShow = new List<Models.Report>();
+        }
+        #endregion
+
+        #region IReporter methods
+        public void Report(Report reportModel)
+        {
+            _ReportsToShow.Add(reportModel);
+
+            if (!_IsInitialized)
+            {
+                _IsInitialized = MyTryInitialize();
+            }
+
+            if (!_IsInitialized)
+            {
+                return;
+            }
+
             try
             {
-                _ConnectContext = connectContext;
-
-                _Application = (DTE2)_ConnectContext.Application;
-                _Window = _Application.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
-                _OutputWindow = (OutputWindow)_Window.Object;
-                _OutputWindowPane = _OutputWindow.OutputWindowPanes.Add("NActivitySensor");
+                foreach (var loopReport in _ReportsToShow)
+                {
+                    string Format = "[{0}] [{1}] {2}" + Environment.NewLine;
+                    string OutputMessage = String.Format(Format, loopReport.Date, loopReport.Event, loopReport.Content);
+                    _OutputWindowPane.OutputString(OutputMessage);
+                }
             }
             catch (Exception exception)
             {
@@ -47,24 +71,31 @@
         }
         #endregion
 
-        #region IReporter methods
-        public void Report(Report reportModel)
+        #region My methods
+        private bool MyTryInitialize()
         {
-            lock (_Lock)
+            try
             {
-                try
+                if (_Application.Windows == null)
                 {
-                    if (_OutputWindowPane != null)
-                    {
-                        string Format = "[{0}] [{1}] {2}" + Environment.NewLine;
-                        string OutputMessage = String.Format(Format, reportModel.Date, reportModel.Event, reportModel.Content);
-                        _OutputWindowPane.OutputString(OutputMessage);
-                    }
+                    return false;
                 }
-                catch (Exception exception)
+
+                _Window = _Application.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
+
+                _OutputWindow = (OutputWindow)_Window.Object;
+                _OutputWindowPane = _OutputWindow.OutputWindowPanes.Add("NActivitySensor");
+
+                if (_OutputWindowPane == null)
                 {
-                    throw new ReporterException(exception.Message, exception);
+                    return false;
                 }
+
+                return true;
+            }
+            catch (Exception exception)
+            {
+                throw new ReporterException(exception.Message, exception);
             }
         }
         #endregion

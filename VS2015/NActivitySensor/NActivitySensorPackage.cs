@@ -58,11 +58,12 @@ namespace NActivitySensor
         #region My methods
         private void MyInitialize()
         {
-            _PluginConfiguration = System.Configuration.ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+            _PluginConfiguration = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+            
             _Logger = new FileLogger();
 
-            EnvDTE80.DTE2 dte2;
-            dte2 = (EnvDTE80.DTE2)Marshal.GetActiveObject("VisualStudio.DTE.14.0");
+            var dte = GetService(typeof(EnvDTE.DTE));
+            EnvDTE80.DTE2 dte2 = (EnvDTE80.DTE2)dte;
 
             _ConnectContext = new DefaultConnectContext(dte2, _PluginConfiguration);
             _Logger = new Log4NetLogger(_ConnectContext);
