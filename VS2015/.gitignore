@@ -3,3 +3,8 @@
 _ReSharper.*
 bin
 obj
+
+# Included dll
+!lib/**/*.dll
+!lib/**/*.xml
+!lib/**/*.exe
