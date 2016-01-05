@@ -54,15 +54,12 @@
             {
                 return;
             }
-
+            
             try
             {
-                foreach (var loopReport in _ReportsToShow)
-                {
-                    string Format = "[{0}] [{1}] {2}" + Environment.NewLine;
-                    string OutputMessage = String.Format(Format, loopReport.Date, loopReport.Event, loopReport.Content);
-                    _OutputWindowPane.OutputString(OutputMessage);
-                }
+                string Format = "[{0}] [{1}] {2}" + Environment.NewLine;
+                string OutputMessage = String.Format(Format, reportModel.Date, reportModel.Event, reportModel.Content);
+                _OutputWindowPane.OutputString(OutputMessage);
             }
             catch (Exception exception)
             {
